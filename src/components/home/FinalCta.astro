@@ -1,0 +1,27 @@
+---
+import site from '../../data/site.json';
+const wa = `${site.whatsapp.href}?text=${encodeURIComponent(site.whatsapp.text)}`;
+---
+<section class="photo-bg final">
+  <img class="photo-bg__img" src="/img/bg-beach.webp" alt="" loading="lazy">
+  <span class="photo-bg__shade"></span>
+  <div class="final__text">
+    <h2 class="final__title"><span class="l">Напишите даты —</span><span>подберём волну</span></h2>
+    <p>Отвечаем в Telegram и WhatsApp {site.hours} по времени Нячанга.</p>
+  </div>
+  <div class="btns">
+    <a class="btn btn--primary" href="#quiz">Подобрать урок</a>
+    <a class="btn btn--light" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_final">Telegram</a>
+    <a class="btn btn--light" href={wa} target="_blank" rel="noopener" data-goal="wa_final">WhatsApp</a>
+  </div>
+</section>
+
+<style>
+  .final { margin: var(--sec-y) clamp(8px, 1.2vw, 16px) 0; padding: clamp(48px, 7vw, 104px) var(--gutter); display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between; }
+  .final > .photo-bg__shade { background: rgb(var(--shade) / .75); }
+  .final__text { flex: 999 1 520px; min-width: 0; }
+  .final__title { text-transform: uppercase; font-size: clamp(36px, 6vw, 92px); line-height: 1.04; letter-spacing: -.035em; font-weight: 800; }
+  .final__title span { display: block; }
+  .final__title .l { font-weight: 300; }
+  .final p { margin-top: 20px; color: var(--on-dark); max-width: 48ch; }
+</style>

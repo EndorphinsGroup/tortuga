@@ -1,0 +1,30 @@
+---
+import Section from '../Section.astro';
+import site from '../../data/site.json';
+const rows = [
+  ['Трансфер из отелей Камрани', '10–20 мин'],
+  ['Трансфер из Нячанга', '≈ 40 мин'],
+  ['Трансфер туда и обратно', 'входит в урок'],
+  ['Своим ходом', 'парковка байков и авто на базе'],
+  ['От центра Нячанга', '≈ 20 км'],
+];
+---
+<Section id="route" rail="Как добраться" bold="Как" light="добраться">
+  <div class="grid" style="--min: 420px">
+    <div class="card route">
+      <dl>{rows.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}</dl>
+      <p class="muted">{site.address}</p>
+      <a class="link" href="/plyazh-bai-dai/">пляж Бай Дай: как добраться самостоятельно</a>
+    </div>
+    <iframe title="Tortuga на карте" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src={`https://www.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=15&output=embed`}></iframe>
+  </div>
+</Section>
+
+<style>
+  .route { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+  dl { display: grid; grid-template-columns: 1fr auto; margin: 0; font-size: 16px; }
+  dt, dd { padding: 16px 0; border-bottom: 1px solid var(--line); margin: 0; }
+  dd { padding-left: 16px; font-weight: 600; text-align: right; }
+  .route .link { margin-top: auto; }
+  iframe { width: 100%; height: 100%; min-height: 420px; border: 0; border-radius: var(--r-l); background: var(--sand-3); }
+</style>

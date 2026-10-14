@@ -1,0 +1,95 @@
+---
+import Section from '../Section.astro';
+const zones = [
+  { id: 'base', name: 'Домик', left: 29.1, top: 31.3, img: '/img/z-base.webp', alt: 'Домик базы с досками у стены и душем',
+    text: 'Здесь переодеваются, подбирают лайкру или гидрокостюм и оставляют вещи на время урока. После воды — горячий душ.',
+    chips: ['Горячий душ', 'Туалет', 'Переодевалка', 'Хранение вещей', 'Парковка байков'] },
+  { id: 'lounge', name: 'Лаундж', left: 56, top: 43, img: '/img/z-lounge.webp', alt: 'Лаундж под навесом с диванами и гамаком',
+    text: 'Терраса под навесом: диванчики, гамаки, кухня. Тут обедают после урока, знакомятся и ждут трансфер. Рядом обычно дремлет Калипсо — риджбек базы.',
+    chips: ['Тень', 'Wi-Fi', 'Кухня', 'Вегетарианское меню'] },
+  { id: 'bbq', name: 'Гриль', left: 47.6, top: 21.5, img: '/img/z-bbq.webp', alt: 'Каменный гриль и круглый стол за лаунджем',
+    text: 'Каменный гриль и большой круглый стол в глубине сада. После ночной SUP-прогулки к светящемуся планктону здесь накрывают BBQ-ужин.',
+    chips: ['BBQ-ужин', 'Стол на компанию'], link: { href: '/svetyashchijsya-plankton/', label: 'ночная экскурсия к светящемуся планктону' } },
+  { id: 'surf', name: 'Серф-пойнт', left: 87.2, top: 24.1, right: true, img: '/img/z-surf.webp', alt: 'Пляж с досками для серфинга и зонтом',
+    text: 'Из арки — направо по дороге, и через пару минут пляж. Песчаное дно, пологий вход, новички учатся в пене у берега. Пока вы в воде, близкие ждут в тени.',
+    chips: ['Душ', 'Туалет', 'Переодевалка', 'Шезлонги в тени', 'Бар и Wi-Fi', 'Спасатель и аптечка'] },
+];
+---
+<Section id="base" rail="База" bold="Наша" light="база" lead="Домик с горячим душем, лаундж с кухней и гриль в тропическом саду. До пляжа пара минут по дороге. Нажмите на точку.">
+  <div class="split camp">
+    <div class="main camp__map">
+      <div class="camp__in">
+        <img src="/img/map-camp.webp" alt="Иллюстрация базы Tortuga: арка у дороги, домик слева, лаундж справа, гриль за лаунджем, пляж в стороне" loading="lazy">
+        {zones.map((z, i) => (
+          <button type="button" class:list={['spot', { 'spot--right': z.right }]} data-zone={z.id} aria-pressed={String(i === 0)} style={`left:${z.left}%;top:${z.top}%`}>
+            <span class="spot__dot"><span class="spot__ping"></span></span><span class="spot__name">{z.name}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="camp__tabs" role="tablist" aria-label="Зоны базы">
+      {zones.map((z, i) => <button type="button" role="tab" data-zone={z.id} aria-selected={String(i === 0)}>{z.name}</button>)}
+    </div>
+    <div class="side camp__card">
+      {zones.map((z, i) => (
+        <div class="zone" data-zone={z.id} hidden={i !== 0}>
+          <img src={z.img} alt={z.alt} loading="lazy">
+          <div class="zone__body">
+            <h3 class="h3">{z.name}</h3>
+            <p>{z.text}</p>
+            <ul class="chips">{z.chips.map((c) => <li class="chip">{c}</li>)}</ul>
+            {z.link && <a class="link" href={z.link.href}>{z.link.label}</a>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Section>
+
+<style>
+  .camp__map { border-radius: var(--r-l); overflow: hidden; align-self: flex-start; }
+  .camp__in { position: relative; aspect-ratio: 1376 / 768; }
+  .camp__in > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .spot { position: absolute; transform: translate(-11px, -50%); display: flex; align-items: center; gap: 8px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; }
+  .spot--right { flex-direction: row-reverse; transform: translate(calc(-100% + 11px), -50%); }
+  .spot__dot { position: relative; width: 22px; height: 22px; border-radius: 50%; flex: none; background: var(--terra); box-shadow: 0 0 0 5px rgb(255 255 255 / .95), 0 6px 16px rgb(var(--shade) / .35); }
+  .spot__ping { position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--terra); animation: ping 2.2s ease-out infinite; }
+  .spot__name { font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: var(--pill); background: var(--cream); color: var(--ink); box-shadow: 0 6px 16px rgb(var(--shade) / .25); white-space: nowrap; }
+  .spot[aria-pressed="true"] .spot__dot { background: var(--sea); box-shadow: 0 0 0 5px var(--terra), 0 6px 16px rgb(var(--shade) / .35); }
+  .spot[aria-pressed="true"] .spot__ping { display: none; }
+  .spot[aria-pressed="true"] .spot__name { background: var(--sea); color: #fff; }
+  @keyframes ping { from { transform: scale(1); opacity: .9; } to { transform: scale(2.4); opacity: 0; } }
+  .camp__card { background: var(--sand-2); border-radius: var(--r-l); overflow: hidden; }
+  .zone > img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .zone__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; font-size: 16px; color: var(--ink-soft); }
+  .zone__body .h3 { font-size: 26px; color: var(--ink); }
+  .zone:not([hidden]) { animation: zin .28s ease-out; }
+  @keyframes zin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .camp__tabs { display: none; }
+  @media (max-width: 700px) {
+    .camp__map { overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; }
+    .camp__map::-webkit-scrollbar { display: none; }
+    .camp__in { width: 200%; }
+    .spot__name { display: none; }
+    .camp__tabs { display: flex; flex: 1 1 100%; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+    .camp__tabs button { flex: none; height: 44px; padding: 0 16px; border-radius: var(--pill); border: 0; background: var(--sand-2); color: var(--ink); font: 500 15px var(--font); cursor: pointer; }
+    .camp__tabs button[aria-selected="true"] { background: var(--sea); color: #fff; }
+  }
+</style>
+
+<script>
+  const map = document.querySelector<HTMLElement>('.camp__map')!;
+  const center = (id: string) => {
+    if (map.scrollWidth <= map.clientWidth) return;
+    const s = document.querySelector<HTMLElement>(`.spot[data-zone="${id}"]`)!;
+    map.scrollLeft = s.offsetLeft - map.clientWidth / 2;
+  };
+  const show = (id: string) => {
+    document.querySelectorAll('.spot').forEach((s) => s.setAttribute('aria-pressed', String((s as HTMLElement).dataset.zone === id)));
+    document.querySelectorAll('.camp__tabs [role=tab]').forEach((t) => t.setAttribute('aria-selected', String((t as HTMLElement).dataset.zone === id)));
+    document.querySelectorAll<HTMLElement>('.zone').forEach((z) => { z.hidden = z.dataset.zone !== id; });
+    center(id);
+  };
+  document.querySelectorAll<HTMLElement>('.spot, .camp__tabs [role=tab]').forEach((b) => b.addEventListener('click', () => show(b.dataset.zone!)));
+  requestAnimationFrame(() => { map.style.scrollBehavior = 'auto'; center('base'); map.style.scrollBehavior = ''; });
+</script>

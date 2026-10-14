@@ -1,0 +1,65 @@
+---
+import site from '../../data/site.json';
+const levels = [['new', 'Нет, впервые'], ['some', 'Да, пару раз'], ['pro', 'Катаюсь сам']];
+const whos = [['solo', 'Один'], ['pair', 'Вдвоём'], ['kid', 'С ребёнком'], ['group', 'Компания 3–4']];
+---
+<section id="quiz" class="sec">
+  <span class="sec__rail">Подбор</span>
+  <div class="wrap quiz">
+    <div class="quiz__q">
+      <h2 class="h2">Подберём <span class="l">урок</span></h2>
+      <fieldset>
+        <legend>Вы уже стояли на доске?</legend>
+        <div class="quiz__opts">{levels.map(([v, t], i) => <button type="button" class="quiz__o" data-q="level" data-v={v} aria-pressed={String(i === 0)}>{t}</button>)}</div>
+      </fieldset>
+      <fieldset>
+        <legend>Кто едет?</legend>
+        <div class="quiz__opts">{whos.map(([v, t], i) => <button type="button" class="quiz__o" data-q="who" data-v={v} aria-pressed={String(i === 0)}>{t}</button>)}</div>
+      </fieldset>
+    </div>
+    <div class="quiz__rec" aria-live="polite">
+      <span class="quiz__hint">Вам подойдёт</span>
+      <b class="quiz__title" data-rec="title">Индивидуальный урок</b>
+      <span class="quiz__price" data-rec="price">2 100 000 ₫ ≈ $80</span>
+      <p data-rec="text">Самый быстрый старт: всё внимание инструктора вам, работа под ваш темп.</p>
+      <a class="btn btn--primary" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_quiz">Записаться на этот формат</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quiz { background: var(--sea); color: #fff; border-radius: 32px; padding: clamp(28px, 4vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 40px; }
+  .quiz .h2 { font-size: clamp(32px, 4vw, 60px); }
+  .quiz__q { display: flex; flex-direction: column; gap: 28px; }
+  fieldset { border: 0; margin: 0; padding: 0; }
+  legend { font-weight: 600; margin-bottom: 12px; padding: 0; }
+  .quiz__opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .quiz__o { height: 44px; padding: 0 18px; border-radius: var(--pill); border: 0; font: 500 15px var(--font); cursor: pointer; background: rgb(255 255 255 / .1); color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .3); }
+  .quiz__o[aria-pressed="true"] { background: var(--terra); box-shadow: none; }
+  .quiz__rec { background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); border-radius: var(--r-l); padding: 32px; display: flex; flex-direction: column; gap: 14px; color: var(--on-dark-2); }
+  .quiz__hint { font-size: 15px; color: var(--sea-2); }
+  .quiz__title { font-size: clamp(22px, 2.4vw, 32px); line-height: 1.1; text-transform: uppercase; color: #fff; }
+  .quiz__price { font-size: 24px; font-weight: 700; color: #fff; }
+  .quiz__rec .btn { margin-top: auto; align-self: flex-start; }
+</style>
+
+<script>
+  const RECS: Record<string, [string, string, string]> = {
+    pro: ['Аренда доски', '200 000 ₫ ≈ $8', 'Берёте доску на базе и катаетесь сами. Лайкра, цинк, панамка, парковка и хранение вещей — на базе, кухня работает.'],
+    kid: ['Детский урок', 'от 1 100 000 ₫ ≈ $42', '1,5 или 2,5 часа, до двух детей на инструктора. Пока ребёнок в воде, вы ждёте в тени на пляже.'],
+    some: ['Абонемент на 5 уроков', 'от 6 500 000 ₫ ≈ $245', 'Выход на лайн-ап, первые повороты и эскимо-ролл. В группе, в паре или индивидуально.'],
+    group: ['Урок в группе', '1 400 000 ₫ ≈ $52', 'До 4 человек на инструктора, трансфер, обед и съёмка включены.'],
+    pair: ['Парный урок', '1 800 000 ₫ ≈ $60', 'Вы вдвоём и инструктор: больше внимания, чем в группе, одинаковый темп.'],
+    solo: ['Индивидуальный урок', '2 100 000 ₫ ≈ $80', 'Самый быстрый старт: всё внимание инструктора вам, работа под ваш темп.'],
+  };
+  const st: Record<string, string> = { level: 'new', who: 'solo' };
+  const pick = () => st.level === 'pro' ? 'pro' : st.who === 'kid' ? 'kid' : st.level === 'some' ? 'some' : st.who === 'group' ? 'group' : st.who === 'pair' ? 'pair' : 'solo';
+  document.querySelectorAll<HTMLButtonElement>('.quiz__o').forEach((b) => b.addEventListener('click', () => {
+    st[b.dataset.q!] = b.dataset.v!;
+    document.querySelectorAll(`.quiz__o[data-q="${b.dataset.q}"]`).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    const [title, price, text] = RECS[pick()];
+    document.querySelector('[data-rec="title"]')!.textContent = title;
+    document.querySelector('[data-rec="price"]')!.textContent = price;
+    document.querySelector('[data-rec="text"]')!.textContent = text;
+  }));
+</script>

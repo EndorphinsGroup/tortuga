@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import About from '../components/home/About.astro';
+import Prices from '../components/home/Prices.astro';
+import Passes from '../components/home/Passes.astro';
+import Quiz from '../components/home/Quiz.astro';
+import CampMap from '../components/home/CampMap.astro';
+import Day from '../components/home/Day.astro';
+import Riders from '../components/home/Riders.astro';
+import Facts from '../components/home/Facts.astro';
+import Community from '../components/home/Community.astro';
+import Team from '../components/home/Team.astro';
+import Reviews from '../components/home/Reviews.astro';
+import Route from '../components/home/Route.astro';
+import Seasons from '../components/home/Seasons.astro';
+import Faq from '../components/home/Faq.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import site from '../data/site.json';
+import prices from '../data/prices.json';
+import faq from '../data/faq.json';
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', '@id': `${site.url}/#org`, name: site.name, url: `${site.url}/`, logo: `${site.url}/img/logo-dark.png`,
+      email: site.email, telephone: site.phone.href.replace('tel:', ''), sameAs: [site.instagram, site.telegram.href] },
+    { '@type': 'SportsActivityLocation', '@id': `${site.url}/#school`, name: 'Школа серфинга Tortuga',
+      description: 'Первая сертифицированная серф-школа в Нячанге: уроки серфинга на пляже Бай Дай для взрослых и детей с 7 лет, трансфер включён.',
+      parentOrganization: { '@id': `${site.url}/#org` }, url: `${site.url}/`, telephone: site.phone.href.replace('tel:', ''),
+      image: `${site.url}/img/bg-beach.webp`,
+      address: { '@type': 'PostalAddress', streetAddress: '83-3 đường 2, Cam Hải Đông', addressLocality: 'Cam Lâm', addressRegion: 'Khánh Hòa', addressCountry: 'VN' },
+      geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng }, hasMap: site.mapsUrl,
+      amenityFeature: ['Горячий душ', 'Туалет', 'Переодевалка', 'Хранение вещей', 'Парковка', 'Wi-Fi', 'Кухня'].map((n) => ({ '@type': 'LocationFeatureSpecification', name: n, value: true })),
+      knowsLanguage: ['ru', 'en'],
+      makesOffer: prices.lessons.filter((l) => /^\d/.test(l.vnd)).map((l) => ({ '@type': 'Offer', name: `Урок серфинга: ${l.title.toLowerCase()}`, price: l.vnd.replace(/\s/g, ''), priceCurrency: 'VND' })) },
+    { '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  ],
+};
+---
+<Base
+  title="Серфинг в Нячанге и Камрани — уроки с трансфером из отеля | Tortuga"
+  description="Первая сертифицированная серф-школа в Нячанге. Уроки серфинга на пляже Бай Дай для взрослых и детей с 7 лет: трансфер, обед, экипировка, фото и видео включены. Абонементы на 3, 5 и 7 уроков."
+  jsonld={jsonld}
+>
+  <link slot="head" rel="preload" as="image" href="/img/bg-beach.webp">
+  <Hero />
+  <About />
+  <Prices />
+  <Passes />
+  <Quiz />
+  <CampMap />
+  <Day />
+  <Riders />
+  <Facts />
+  <Community />
+  <Team />
+  <Reviews />
+  <Route />
+  <Seasons />
+  <Faq />
+  <FinalCta />
+</Base>

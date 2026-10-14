@@ -1,0 +1,24 @@
+---
+import Section from '../Section.astro';
+---
+<Section rail="О школе" bold="Школа серфинга" light="Tortuga">
+  <div class="about">
+    <div class="about__text">
+      <p><strong>Tortuga — первая сертифицированная серф-школа в Нячанге.</strong> Мы на пляже Бай Дай (Bãi Dài), между Нячангом и Камранью, около 20 км от центра.</p>
+      <p class="muted">Учим с нуля и помогаем расти тем, кто катается год-два. Детей берём с 7 лет. Тем, кто приезжает кататься сам, база даёт доску, душ, парковку и кухню.</p>
+    </div>
+    <div class="about__facts">
+      <div class="card fact"><b>с 2023</b><span>работаем на Бай Дай</span></div>
+      <div class="card fact"><b>7+ лет</b><span>берём детей</span></div>
+      <div class="card fact"><b>10–40 мин</b><span>трансфер из Камрани и Нячанга</span></div>
+      <div class="card fact"><b>до 4 человек</b><span>в группе на инструктора</span></div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .about { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 32px clamp(32px, 5vw, 80px); align-items: start; }
+  .about__text { display: flex; flex-direction: column; gap: 18px; font-size: clamp(19px, 1.6vw, 23px); line-height: 1.45; }
+  .about__facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .about__facts .card { padding: 20px; }
+</style>

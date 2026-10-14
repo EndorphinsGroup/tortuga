@@ -1,0 +1,53 @@
+---
+import Section from '../Section.astro';
+const months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const surf = ['hi', 'hi', 'hi', 'lo', 'lo', 'lo', 'lo', 'lo', 'lo', 'hi', 'hi', 'hi'];
+const reef = [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
+const plankton = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0];
+---
+<Section rail="Сезоны" bold="Когда" light="ехать">
+  <div class="months" role="img" aria-label="Уроки серфинга круглый год, когда есть волны: с октября по март волны сильнее, с апреля по сентябрь небольшие волны для новичков. Рифовый спот — с ноября по февраль. Планктон — с апреля по сентябрь.">
+    <span></span>{months.map((m) => <span class="months__h">{m}</span>)}
+    <span class="months__row">Серфинг</span>{surf.map((s) => <span class={`months__c months__c--${s}`}></span>)}
+    <span class="months__row">Риф</span>{reef.map((r) => <span class:list={['months__c', { 'months__c--reef': r }]}></span>)}
+    <span class="months__row">Планктон</span>{plankton.map((p) => <span class:list={['months__c', { 'months__c--pl': p }]}></span>)}
+  </div>
+  <div class="legend">
+    <span><i class="months__c--hi"></i>волны сильнее — для продолжающих</span>
+    <span><i class="months__c--lo"></i>небольшие волны — идеально для новичков</span>
+    <span><i class="months__c--reef"></i>рифовый спот, 2–3 дня в неделю</span>
+    <span><i class="months__c--pl"></i>сезон планктона</span>
+  </div>
+  <div class="grid seasons" style="--min: 340px">
+    <div class="card"><b>Октябрь — март</b><p>Северо-восточный муссон приносит волны, самые сильные — в декабре и январе. Время для продолжающих. С ноября по февраль 2–3 дня в неделю работает рифовый спот. В декабре и январе выдаём гидрокостюмы.</p></div>
+    <div class="card"><b>Апрель — сентябрь</b><p>Волны небольшие — и это плюс: спокойно встать на доску впервые, отработать технику на песке и в пене. Уроки идут, когда есть волны. Вечерами — светящийся планктон.</p></div>
+  </div>
+  <a class="link more" href="/sezony/">когда ехать в Нячанг на серфинг — по месяцам</a>
+</Section>
+
+<script>
+  document.querySelectorAll('.months__h')[new Date().getMonth()]?.classList.add('now');
+</script>
+
+<style>
+  .months { display: grid; grid-template-columns: 110px repeat(12, minmax(0, 1fr)); gap: 4px; font-size: 14px; align-items: center; }
+  .months__h { text-align: center; padding-bottom: 6px; color: var(--muted); }
+  .months__h:global(.now) { color: var(--ink); font-weight: 700; }
+  .months__row { font-weight: 600; }
+  .months__c { height: 44px; border-radius: 10px; background: var(--sand-2); }
+  .months__c--hi { background: var(--sea); }
+  .months__c--lo { background: var(--sea-2); }
+  .months__c--reef { background: var(--terra); }
+  .months__c--pl { background: var(--night); }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .legend span { display: flex; align-items: center; gap: 8px; }
+  .legend i { width: 14px; height: 14px; border-radius: 4px; }
+  .seasons { margin-top: 28px; }
+  .seasons b { display: block; font-size: 20px; margin-bottom: 6px; }
+  .seasons p { font-size: 16px; color: var(--ink-soft); }
+  .more { display: inline-block; margin-top: 24px; }
+  @media (max-width: 700px) {
+    .months { grid-template-columns: 64px repeat(12, minmax(0, 1fr)); gap: 2px; font-size: 10px; }
+    .months__c { height: 30px; border-radius: 6px; }
+  }
+</style>

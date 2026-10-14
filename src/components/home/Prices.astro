@@ -1,0 +1,73 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import prices from '../../data/prices.json';
+import site from '../../data/site.json';
+---
+<Section id="prices" rail="Форматы и цены" bold="Форматы" light="и цены" lead={prices.note}>
+  <div class="grid lessons" style="--min: 260px">
+    {prices.lessons.map((l) => (
+      <article class:list={['lesson', { 'lesson--featured': l.featured }]}>
+        <div class="lesson__photo">
+          <img src={l.img} alt={l.alt} loading="lazy">
+          <span class:list={['badge', { 'badge--accent': l.featured }]}>{l.badge}</span>
+        </div>
+        <div class="lesson__body">
+          <h3 class="h3">{l.title}</h3>
+          <p class="lesson__price">{l.from && 'от '}{l.vnd} ₫ <span>≈ ${l.usd}</span></p>
+          <p>{l.text}</p>
+          <p>{l.fit}</p>
+          <a class:list={['btn', l.featured ? 'btn--primary' : 'btn--dark']} href={site.telegram.href} target="_blank" rel="noopener" data-goal={`tg_${l.id}`}>Записаться</a>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="included">
+    <h3 class="h3">В стоимость урока включено</h3>
+    <ul class="included__list">
+      {prices.included.map((i) => (
+        <li><span class="included__icon"><Icon name={i.icon} /></span><span><b>{i.title}</b>{i.text}</span></li>
+      ))}
+    </ul>
+  </div>
+
+  <a class="photo-bg plankton" href="/svetyashchijsya-plankton/">
+    <img class="photo-bg__img" src="/img/c-sea.webp" alt="Бирюзовое море с волнами у берега" loading="lazy">
+    <span class="photo-bg__shade"></span>
+    <span class="plankton__text">
+      <span class="badge badge--peach">Сезон с апреля по сентябрь</span>
+      <b class="h3">Вечером — светящийся планктон</b>
+      <span>Ночная SUP-прогулка и снорклинг, потом BBQ-ужин на базе. Около 5 часов с дорогой, трансфер включён.</span>
+    </span>
+    <span class="plankton__price">{prices.plankton.vnd} ₫<small>≈ ${prices.plankton.usd}</small></span>
+  </a>
+</Section>
+
+<style>
+  .lesson { border-radius: var(--r-l); overflow: hidden; display: flex; flex-direction: column; background: var(--sand-2); }
+  .lesson--featured { background: var(--sea); color: #fff; }
+  .lesson__photo { position: relative; aspect-ratio: 4 / 3; }
+  .lesson__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .lesson__photo .badge { position: absolute; left: 16px; top: 16px; }
+  .lesson__body { padding: 24px 24px 26px; display: flex; flex-direction: column; gap: 12px; flex: 1; font-size: 15px; color: var(--ink-soft); }
+  .lesson--featured .lesson__body { color: var(--on-dark-2); }
+  .lesson__body .h3 { color: var(--ink); }
+  .lesson--featured .lesson__body .h3, .lesson--featured .lesson__price { color: #fff; }
+  .lesson__price { font-size: 26px; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
+  .lesson__price span { font-size: 17px; font-weight: 500; opacity: .7; }
+  .lesson__body .btn { margin-top: auto; }
+
+  .included { margin-top: var(--gap); border-radius: var(--r-l); background: var(--peach); padding: 28px; }
+  .included__list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 18px 24px; }
+  .included__list li { display: flex; gap: 14px; align-items: flex-start; font-size: 15px; color: var(--ink-soft); }
+  .included__list b { display: block; color: var(--ink); font-size: 17px; }
+  .included__icon { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--sea); color: #fff; display: grid; place-items: center; }
+
+  .plankton { margin-top: var(--gap); border-radius: var(--r-l); display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; padding: 32px; min-height: 180px; text-decoration: none; }
+  .plankton .photo-bg__shade { background: linear-gradient(90deg, rgb(15 29 34 / .92) 0%, rgb(15 29 34 / .6) 60%, rgb(15 29 34 / .3) 100%); }
+  .plankton__text { display: flex; flex-direction: column; gap: 8px; max-width: 60ch; color: var(--on-dark-2); }
+  .plankton__text .h3 { color: #fff; font-size: 28px; }
+  .plankton__price { font-size: 34px; font-weight: 800; line-height: 1.1; white-space: nowrap; }
+  .plankton__price small { display: block; font-size: 17px; font-weight: 500; opacity: .75; }
+</style>

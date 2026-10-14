@@ -1,0 +1,16 @@
+---
+import site from '../data/site.json';
+const wa = `${site.whatsapp.href}?text=${encodeURIComponent(site.whatsapp.text)}`;
+---
+<div class="sticky" aria-label="Записаться">
+  <a class="btn btn--primary" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_sticky">Telegram</a>
+  <a class="btn btn--light" href={wa} target="_blank" rel="noopener" data-goal="wa_sticky">WhatsApp</a>
+</div>
+
+<style>
+  .sticky { display: none; }
+  @media (max-width: 700px) {
+    .sticky { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; gap: 8px; padding: 8px; background: rgb(var(--shade) / .92); backdrop-filter: blur(8px); border-radius: var(--pill); box-shadow: 0 10px 30px rgb(var(--shade) / .3); }
+    .sticky a { flex: 1; height: 48px; }
+  }
+</style>

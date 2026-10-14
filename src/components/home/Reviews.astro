@@ -1,0 +1,49 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import site from '../../data/site.json';
+const reels = [
+  ['/img/ph-wave.webp', '/video/guest-surf.mp4', 'первый урок серфинга'],
+  ['/img/ph-couple.webp', '/video/guest-plankton.mp4', 'ночная SUP-прогулка и BBQ'],
+];
+---
+<Section id="reviews" rail="Отзывы" bold="Как это было" light="у гостей">
+  <div class="grid" style="--min: 280px">
+    {reels.map(([poster, video, label]) => (
+      <div class="reel">
+        <img src={poster} alt="" loading="lazy">
+        <video src={video} preload="none" playsinline hidden></video>
+        <button type="button" class="reel__play" aria-label={`Смотреть видеоотзыв: ${label}`}><Icon name="play" size={26} /></button>
+        <span class="reel__cap">Видеоотзыв: {label}</span>
+      </div>
+    ))}
+    <div class="card ext">
+      <h3 class="h3">Отзывы на площадках</h3>
+      <p class="muted">Читайте, что пишут гости, там, где отзывы не редактируем мы.</p>
+      <div class="ext__links">
+        {site.reviews.map((r) => <a href={r.href} target="_blank" rel="noopener">{r.label} <Icon name="out" size={18} /></a>)}
+      </div>
+      <a class="link" href="/otzyvy/">все отзывы о школе</a>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .reel { position: relative; border-radius: var(--r-l); overflow: hidden; min-height: 460px; background: var(--ink); }
+  .reel img, .reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .reel video { z-index: 2; }
+  .reel__play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 72px; height: 72px; border-radius: 50%; border: 0; background: var(--cream); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+  .reel__cap { position: absolute; left: 14px; right: 14px; bottom: 14px; color: #fff; font-size: 15px; background: rgb(var(--shade) / .72); padding: 10px 14px; border-radius: 14px; }
+  .reel.playing .reel__play, .reel.playing .reel__cap { display: none; }
+  .ext { display: flex; flex-direction: column; gap: 14px; min-height: 460px; padding: 28px; }
+  .ext__links { margin-top: auto; display: flex; flex-direction: column; }
+  .ext__links a { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-top: 1px solid var(--line); text-decoration: none; font-weight: 500; font-size: 18px; }
+  .ext__links a:last-child { border-bottom: 1px solid var(--line); }
+</style>
+
+<script>
+  document.querySelectorAll('.reel').forEach((r) => {
+    const v = r.querySelector('video')!;
+    r.querySelector('.reel__play')!.addEventListener('click', () => { r.classList.add('playing'); v.hidden = false; v.controls = true; v.play(); });
+  });
+</script>

@@ -1,0 +1,25 @@
+---
+import Section from '../Section.astro';
+const photos = [
+  ['/img/ph-camp.webp', 'Гости общаются в тени пальм у навесов'],
+  ['/img/ph-girls.webp', 'Две девушки отдыхают на песке у доски'],
+  ['/img/ph-instructors.webp', 'Сёрферы с досками заходят в воду'],
+  ['/img/ph-beachrest.webp', 'Компания отдыхает на пляже после катания'],
+  ['/img/ph-boards.webp', 'Доски для серфинга у дерева'],
+];
+---
+<Section rail="Комьюнити" bold="Приезжайте одни —" light="уедете с друзьями" lead="На базе всегда есть люди: после урока обедают вместе, вечером собираются на планктон и BBQ. Многие приезжают в Нячанг одни и находят здесь компанию на всю поездку.">
+  <div class="gallery">
+    {photos.map(([src, alt]) => <img src={src} alt={alt} loading="lazy">)}
+  </div>
+</Section>
+
+<style>
+  .gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 250px 250px; gap: var(--gap); }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-l); }
+  .gallery img:first-child { grid-column: span 2; grid-row: span 2; }
+  @media (max-width: 700px) {
+    .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: 180px; }
+    .gallery img:first-child { grid-column: span 2; grid-row: span 1; }
+  }
+</style>

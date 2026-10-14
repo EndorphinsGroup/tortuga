@@ -1,0 +1,42 @@
+/* Tortuga design tokens. Change colors, type and spacing here — every component reads these. */
+:root {
+  /* palette */
+  --sand: #F5EFE4;        /* page ground */
+  --sand-2: #ECE2CF;      /* soft cards */
+  --sand-3: #E7DECD;
+  --peach: #E3C6A5;       /* warm accent cards */
+  --cream: #FFF8EC;       /* light surfaces */
+  --ink: #3B2618;         /* main text */
+  --ink-2: #23170E;
+  --ink-soft: #5A3E2B;    /* body text on light */
+  --muted: #6B4A33;       /* captions */
+  --muted-2: #A08A6E;     /* rails, hints */
+  --line: #DDD0BB;
+  --terra: #A4502C;       /* buttons, accents */
+  --terra-dark: #8E4224;
+  --sea: #1E4D57;         /* dark surfaces */
+  --sea-2: #7FB3B4;
+  --night: #0F1D22;
+  --on-dark: #F1E6D6;     /* text on dark */
+  --on-dark-2: #E9DCC8;
+  --shade: 35 23 14;      /* rgb for overlays: rgb(var(--shade) / .6) */
+
+  /* type */
+  --font: Onest, system-ui, sans-serif;
+  --fs-body: 17px;
+  --fs-small: 15px;
+  --fs-h1: clamp(34px, min(6vw, 9vh), 100px);
+  --fs-h2: clamp(34px, 5.2vw, 80px);
+  --fs-h3: 22px;
+
+  /* layout */
+  --gutter: clamp(16px, 3vw, 48px);
+  --rail: 88px;
+  --sec-y: clamp(72px, 9vw, 128px);
+  --max: 1240px;
+  --r-xl: 36px;
+  --r-l: 24px;
+  --r-m: 16px;
+  --pill: 999px;
+  --gap: 12px;
+}

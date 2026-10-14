@@ -1,0 +1,17 @@
+---
+/** Section shell: vertical rail label + two-weight uppercase title + optional lead. */
+interface Props { id?: string; rail: string; bold?: string; light?: string; lead?: string; class?: string; }
+const { id, rail, bold, light, lead, class: cls = '' } = Astro.props;
+---
+<section id={id} class={`sec ${cls}`}>
+  <span class="sec__rail">{rail}</span>
+  <div class="wrap">
+    {(bold || light) && (
+      <div class="sec__head">
+        <h2 class="h2">{bold}{light && <span class="l"> {light}</span>}</h2>
+        {lead && <p class="sec__lead">{lead}</p>}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>

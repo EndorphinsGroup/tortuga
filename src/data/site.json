@@ -1,0 +1,48 @@
+{
+  "name": "Tortuga Surf Camp",
+  "url": "https://tortuga-surf.com",
+  "phone": { "label": "+84 77 597 3710", "href": "tel:+84775973710" },
+  "telegram": { "label": "@Tortuga_Surf", "href": "https://t.me/Tortuga_Surf" },
+  "whatsapp": { "label": "+7 999 781 01 46", "href": "https://wa.me/79997810146", "text": "Здравствуйте! Хочу на урок серфинга" },
+  "email": "tortuga.surfcamp@gmail.com",
+  "instagram": "https://www.instagram.com/tortuga_surf_camp/",
+  "hours": "с 10:00 до 21:00",
+  "address": "83-3 đường 2, Cam Hải Đông, Cam Lâm, Khánh Hòa",
+  "geo": { "lat": 12.11115, "lng": 109.19318 },
+  "mapsUrl": "https://www.google.com/maps/place/?q=place_id:ChIJmRs2GrJncDERfiarPyZ55kQ",
+  "reviews": [
+    { "label": "Google Карты", "href": "https://www.google.com/maps/place/?q=place_id:ChIJmRs2GrJncDERfiarPyZ55kQ" },
+    { "label": "Яндекс Карты", "href": "#" },
+    { "label": "TripAdvisor", "href": "#" }
+  ],
+  "menu": [
+    { "label": "Серфинг", "children": [
+      { "label": "Уроки серфинга", "href": "/uroki-serfinga/" },
+      { "label": "Абонементы и курсы", "href": "/kursy-serfinga/" }
+    ]},
+    { "label": "Светящийся планктон", "href": "/svetyashchijsya-plankton/" },
+    { "label": "Полезное", "children": [
+      { "label": "Пляж Бай Дай", "href": "/plyazh-bai-dai/" },
+      { "label": "Сезоны", "href": "/sezony/" },
+      { "label": "FAQ", "href": "/faq/" },
+      { "label": "Блог", "href": "/blog/" }
+    ]},
+    { "label": "Отзывы", "href": "/otzyvy/" },
+    { "label": "Контакты", "href": "#contacts" }
+  ],
+  "footer": [
+    { "title": "Услуги", "links": [
+      { "label": "Уроки серфинга", "href": "/uroki-serfinga/" },
+      { "label": "Абонементы и курсы", "href": "/kursy-serfinga/" },
+      { "label": "Светящийся планктон", "href": "/svetyashchijsya-plankton/" },
+      { "label": "Аренда доски", "href": "/#arenda" }
+    ]},
+    { "title": "Полезное", "links": [
+      { "label": "Пляж Бай Дай", "href": "/plyazh-bai-dai/" },
+      { "label": "Сезоны", "href": "/sezony/" },
+      { "label": "FAQ", "href": "/faq/" },
+      { "label": "Отзывы", "href": "/otzyvy/" },
+      { "label": "Блог", "href": "/blog/" }
+    ]}
+  ]
+}

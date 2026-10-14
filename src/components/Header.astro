@@ -1,0 +1,68 @@
+---
+import site from '../data/site.json';
+const wa = `${site.whatsapp.href}?text=${encodeURIComponent(site.whatsapp.text)}`;
+---
+<header class="hdr">
+  <a class="hdr__logo" href="/" aria-label="Tortuga Surf Camp — на главную"><img src="/img/logo-dark.png" alt="Tortuga Surf Camp" width="138" height="46"></a>
+  <nav class="hdr__nav" aria-label="Основное меню">
+    {site.menu.map((item) => item.children ? (
+      <div class="dd">
+        <button type="button" aria-expanded="false">{item.label}
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        </button>
+        <ul>{item.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+      </div>
+    ) : <a href={item.href}>{item.label}</a>)}
+    <a class="btn btn--outline btn--sm hdr__quiz" href="/#quiz">Подобрать урок</a>
+  </nav>
+  <div class="book">
+    <button class="btn btn--primary btn--sm" type="button" aria-expanded="false" aria-haspopup="true">Записаться</button>
+    <div class="book__menu">
+      <a href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_header">Telegram</a>
+      <a href={wa} target="_blank" rel="noopener" data-goal="wa_header">WhatsApp</a>
+    </div>
+  </div>
+  <button class="hdr__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M3 8h20M3 18h20" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+</header>
+
+<style>
+  .hdr { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 12px 24px; padding: 14px var(--gutter); background: var(--sand); border-bottom: 1px solid var(--line); }
+  .hdr__logo img { height: 46px; width: auto; }
+  .hdr__nav { display: flex; align-items: center; gap: 4px; margin-left: auto; font-size: 15px; font-weight: 500; }
+  .hdr__nav > a:not(.btn), .dd > button { color: var(--ink); text-decoration: none; padding: 10px 14px; border-radius: var(--pill); background: none; border: 0; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .hdr__nav > a:not(.btn):hover, .dd > button:hover { background: rgb(var(--shade) / .07); }
+  .hdr__quiz { margin-left: 8px; }
+  .dd { position: relative; }
+  .dd ul { position: absolute; top: calc(100% + 8px); left: 0; min-width: 230px; list-style: none; margin: 0; padding: 8px; background: var(--cream); border-radius: var(--r-m); box-shadow: 0 18px 40px rgb(var(--shade) / .18); display: none; }
+  .dd.open ul { display: block; }
+  .dd li a, .book__menu a { display: block; padding: 10px 12px; border-radius: 10px; text-decoration: none; color: var(--ink); font-weight: 500; }
+  .dd li a:hover, .book__menu a:hover { background: var(--sand-2); }
+  .book { position: relative; }
+  .book__menu { position: absolute; right: 0; top: calc(100% + 8px); background: var(--cream); border-radius: var(--r-m); padding: 8px; min-width: 200px; box-shadow: 0 18px 40px rgb(var(--shade) / .2); display: none; }
+  .book.open .book__menu { display: block; }
+  .hdr__burger { display: none; margin-left: auto; background: none; border: 0; color: var(--ink); width: 44px; height: 44px; cursor: pointer; place-items: center; }
+  @media (max-width: 1100px) {
+    .hdr__nav, .book { display: none; }
+    .hdr__burger { display: grid; }
+    .hdr.menu-open .hdr__nav { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--sand); border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 20px; gap: 2px; }
+    .hdr.menu-open .dd ul { position: static; box-shadow: none; background: transparent; padding: 0 0 0 14px; display: block; }
+    .hdr.menu-open .hdr__quiz { margin: 8px 0 0; }
+  }
+</style>
+
+<script>
+  const closeAll = (except?: Element) => document.querySelectorAll('.dd.open, .book.open').forEach((x) => {
+    if (x !== except) { x.classList.remove('open'); x.querySelector('button')?.setAttribute('aria-expanded', 'false'); }
+  });
+  document.querySelectorAll('.dd, .book').forEach((root) => {
+    const btn = root.querySelector('button')!;
+    btn.addEventListener('click', (e) => { e.stopPropagation(); closeAll(root); const o = root.classList.toggle('open'); btn.setAttribute('aria-expanded', String(o)); });
+  });
+  document.addEventListener('click', () => closeAll());
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+  const hdr = document.querySelector('.hdr')!, burger = document.querySelector('.hdr__burger')!;
+  burger.addEventListener('click', () => { const o = hdr.classList.toggle('menu-open'); burger.setAttribute('aria-expanded', String(o)); });
+  hdr.querySelectorAll('.hdr__nav a').forEach((a) => a.addEventListener('click', () => hdr.classList.remove('menu-open')));
+</script>

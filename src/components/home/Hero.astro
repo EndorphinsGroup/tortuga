@@ -1,0 +1,45 @@
+---
+import site from '../../data/site.json';
+---
+<section class="hero photo-bg">
+  <img class="photo-bg__img" src="/img/bg-beach.webp" alt="Пляж с волнами и зелёными холмами" fetchpriority="high">
+  <span class="photo-bg__shade"></span>
+  <div class="hero__body">
+    <h1 class="hero__title">
+      <span>Серфинг</span><span class="l">в Нячанге —</span><span>школа на пляже</span><span class="l">Бай Дай</span>
+    </h1>
+    <p class="hero__lead">Первая сертифицированная серф-школа в Нячанге. Уроки с нуля для взрослых и детей с 7 лет. Трансфер, доска, лайкра и обед уже в цене.</p>
+    <div class="btns">
+      <a class="btn btn--primary" href="#quiz">Подобрать урок</a>
+      <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_hero">Написать в Telegram</a>
+    </div>
+  </div>
+  <div class="hero__facts">
+    <div class="glass"><b>2,5 часа</b>урок: песок, вода, разбор</div>
+    <div class="glass"><b>от 1 400 000 ₫</b>≈ $52 с человека</div>
+    <div class="glass"><b>Трансфер включён</b>из отелей Нячанга и Камрани</div>
+    <div class="glass"><b>RU · EN</b>инструкторы говорят по-русски и по-английски</div>
+  </div>
+</section>
+
+<style>
+  .hero { border-radius: 0 0 var(--r-xl) var(--r-xl); height: min(calc(100vh - 74px), 880px); min-height: 500px; display: flex; flex-direction: column; padding: clamp(32px, 7vh, 80px) var(--gutter) clamp(20px, 3.5vh, 36px) calc(var(--rail) + var(--gutter)); }
+  .photo-bg__shade { background: linear-gradient(90deg, rgb(var(--shade) / .85) 0%, rgb(var(--shade) / .55) 45%, rgb(var(--shade) / .1) 80%), linear-gradient(0deg, rgb(var(--shade) / .65) 0%, transparent 40%); }
+  .hero__body { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+  .hero__title { text-transform: uppercase; font-size: var(--fs-h1); line-height: .96; letter-spacing: -.035em; font-weight: 800; }
+  .hero__title span { display: block; }
+  .hero__title .l { font-weight: 300; }
+  .hero__lead { margin: clamp(14px, 2.6vh, 28px) 0 clamp(16px, 3vh, 32px); font-size: clamp(16px, 1.3vw, 19px); max-width: 50ch; color: var(--on-dark); }
+  .hero__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: clamp(16px, 3vh, 32px); max-width: var(--max); font-size: 14px; line-height: 1.35; color: var(--on-dark); }
+  .hero__facts b { display: block; color: #fff; font-size: 19px; margin-bottom: 2px; }
+  @media (min-width: 901px) and (max-height: 760px) {
+    .hero__title { font-size: clamp(34px, min(6vw, 8vh), 100px); }
+    .hero__lead { margin: 12px 0 16px; }
+    .hero__facts .glass { padding: 10px 14px; font-size: 12.5px; }
+    .hero__facts b { font-size: 16px; }
+  }
+  @media (max-width: 900px) {
+    .hero { height: auto; min-height: calc(100svh - 74px); padding-left: var(--gutter); }
+    .hero__facts { grid-template-columns: 1fr 1fr; }
+  }
+</style>

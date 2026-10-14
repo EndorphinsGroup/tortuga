@@ -1,0 +1,36 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+const steps = [
+  ['Трансфер', 'Забираем из отеля: из Камрани 10–20 минут, из Нячанга около 40.'],
+  ['База', 'Переодеться, подобрать лайкру, оставить вещи.'],
+  ['Урок 2,5 часа', 'Разминка, техника на песке, вода, разбор. Снимаем на фото и видео.'],
+  ['Обед и отдых', 'Горячий душ, обед в лаундже, гамак, Wi-Fi.'],
+  ['Обратно', 'Отвозим в отель, когда отдохнёте.'],
+];
+const bring = ['Купальник', 'Полотенце', 'Пляжную обувь', 'Резинку для волос'];
+---
+<Section rail="Как устроен день" bold="День урока" light="без забот">
+  <div class="split">
+    <ol class="main card day">
+      {steps.map(([t, d], i) => <li><span class="day__n">{i + 1}</span><h3>{t}</h3><p>{d}</p></li>)}
+    </ol>
+    <div class="side card card--peach bring">
+      <h3 class="h3">Что взять с собой</h3>
+      <ul>{bring.map((b) => <li><Icon name="check" size={18} />{b}</li>)}</ul>
+      <p>Лайкру, панамку, SPF и воду выдаём на месте.</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .day { list-style: none; margin: 0; padding: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; }
+  .day__n { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--sea); color: #fff; font-size: 15px; font-weight: 700; }
+  .day h3 { margin: 14px 0 6px; font-size: 20px; line-height: 1.15; }
+  .day p { font-size: 15px; color: var(--muted); }
+  .bring { display: flex; flex-direction: column; gap: 14px; padding: 28px; }
+  .bring ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .bring li { display: flex; gap: 10px; align-items: center; }
+  .bring li :global(svg) { color: var(--sea); }
+  .bring p { margin-top: auto; font-size: 15px; color: var(--muted); }
+</style>
