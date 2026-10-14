@@ -1,0 +1,21 @@
+---
+/** Breadcrumbs. Pass the trail without «Главная» — it is added automatically. */
+interface Props { items: { label: string; href?: string }[]; dark?: boolean; }
+const { items, dark = false } = Astro.props;
+const trail = [{ label: 'Главная', href: '/' }, ...items];
+---
+<nav class:list={['crumbs', { 'crumbs--dark': dark }]} aria-label="Хлебные крошки">
+  <ol>
+    {trail.map((c, i) => (
+      <li>{c.href && i < trail.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 0; font-size: 14px; color: var(--muted); }
+  .crumbs li + li::before { content: '/'; margin: 0 10px; opacity: .6; }
+  .crumbs a { text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .crumbs--dark ol { color: var(--on-dark); }
+</style>

@@ -1,0 +1,43 @@
+---
+import Section from '../Section.astro';
+import lessons from '../../data/lessons.json';
+import site from '../../data/site.json';
+const k = lessons.kids;
+const wa = `${site.whatsapp.href}?text=${encodeURIComponent('Здравствуйте! Хочу записать ребёнка на урок серфинга, возраст: ')}`;
+---
+<Section id="deti" rail="С детьми" bold="Детский" light="серфинг" lead={k.lead}>
+  <div class="kids">
+    <div class="kids__photo"><img src="/img/ph-kid.webp" alt="Инструктор учит ученика вставать на доску на песке" loading="lazy"></div>
+    <div class="card kids__body">
+      <div class="kids__facts">{k.facts.map(([b, t]) => <div class="fact"><b>{b}</b><span>{t}</span></div>)}</div>
+      <div class="kids__prices">
+        {k.prices.map((p) => <div><span>{p.label}</span><b>{p.vnd} ₫</b><small>≈ ${p.usd}</small></div>)}
+      </div>
+      <p>{k.safety}</p>
+      <p class="muted">{k.parents}</p>
+      <a class="btn btn--dark" href={wa} target="_blank" rel="noopener" data-goal="wa_lesson_kids">Записать ребёнка</a>
+    </div>
+  </div>
+</Section>
+
+<style>
+  #deti { scroll-margin-top: 60px; }
+  .kids { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--gap); }
+  .kids__photo { border-radius: var(--r-l); overflow: hidden; min-height: 360px; position: relative; }
+  .kids__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .kids__body { padding: 28px; display: flex; flex-direction: column; gap: 18px; color: var(--ink-soft); }
+  .kids__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .kids__facts .fact b { font-size: 21px; color: var(--ink); }
+  .kids__prices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kids__prices div { background: var(--cream); border-radius: var(--r-m); padding: 16px 18px; display: flex; flex-direction: column; }
+  .kids__prices span { font-size: 14px; color: var(--muted); }
+  .kids__prices b { font-size: 22px; color: var(--ink); white-space: nowrap; }
+  .kids__prices small { font-size: 14px; color: var(--muted); }
+  .kids .btn { margin-top: auto; align-self: flex-start; }
+  @media (max-width: 520px) {
+    .kids__body { padding: 22px 18px; }
+    .kids__facts { grid-template-columns: 1fr; }
+    .kids__prices div { padding: 14px; }
+    .kids__prices b { font-size: 18px; }
+  }
+</style>

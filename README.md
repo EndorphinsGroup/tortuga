@@ -38,3 +38,14 @@ npm install
 npm run dev      # http://localhost:4321
 npm run build    # готовый сайт в dist/
 ```
+
+## Страница «Уроки серфинга» — /uroki-serfinga/
+
+| Что | Файл |
+| --- | --- |
+| Тексты: «Как учим», таблица сравнения, шаги урока, «Если боитесь воды», детский серфинг, вопросы | `src/data/lessons.json` |
+| Цены и фото форматов, «что входит», программа абонементов | `src/data/prices.json` (общие с главной) |
+| Блоки страницы | `src/components/lessons/*.astro` |
+| Порядок блоков, Title, description, JSON-LD | `src/pages/uroki-serfinga/index.astro` |
+
+Шапка внутренних страниц с хлебными крошками — `src/components/PageHero.astro`, сами крошки — `Crumbs.astro`.

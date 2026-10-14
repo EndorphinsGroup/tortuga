@@ -1,0 +1,43 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import lessons from '../../data/lessons.json';
+const f = lessons.fear;
+---
+<Section rail="Как проходит урок" bold="Как проходит" light="урок">
+  <ol class="steps">
+    {lessons.steps.map((s, i) => (
+      <li class="card"><span class="steps__n">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3><p>{s.text}</p></li>
+    ))}
+  </ol>
+
+  <div class="fear photo-bg">
+    <img class="photo-bg__img" src="/img/ph-water.webp" alt="Ученик сидит на доске в воде и ждёт волну" loading="lazy">
+    <span class="photo-bg__shade"></span>
+    <div class="fear__body">
+      <h2 class="fear__title">{f.title}</h2>
+      <ul>{f.points.map((p) => <li><Icon name="check" size={20} />{p}</li>)}</ul>
+      <p>{f.text}</p>
+      <a class="btn btn--light" href="#individualnyj">Индивидуальный урок</a>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: var(--gap); }
+  .steps li { padding: 26px; display: flex; flex-direction: column; gap: 8px; }
+  .steps__n { font-size: 40px; font-weight: 300; line-height: 1; color: var(--terra); letter-spacing: -.03em; }
+  .steps h3 { margin-top: 18px; font-size: 21px; line-height: 1.15; text-transform: uppercase; font-weight: 800; }
+  .steps p { font-size: 15px; color: var(--muted); }
+
+  .fear { margin-top: var(--gap); border-radius: var(--r-l); padding: clamp(28px, 4vw, 56px); min-height: 440px; display: flex; align-items: center; }
+  .fear > .photo-bg__img { object-position: 70% 40%; }
+  .fear > .photo-bg__shade { background: linear-gradient(90deg, rgb(15 29 34 / .9) 0%, rgb(15 29 34 / .7) 50%, rgb(15 29 34 / .15) 90%); }
+  .fear__body { max-width: 560px; display: flex; flex-direction: column; gap: 18px; color: var(--on-dark); }
+  .fear__title { color: #fff; text-transform: uppercase; font-size: clamp(28px, 3.2vw, 44px); line-height: 1; letter-spacing: -.02em; font-weight: 800; }
+  .fear ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .fear li { display: flex; gap: 10px; align-items: flex-start; }
+  .fear li :global(svg) { flex: none; color: var(--sea-2); margin-top: 2px; }
+  .fear .btn { align-self: flex-start; }
+  @media (max-width: 700px) { .fear > .photo-bg__shade { background: rgb(15 29 34 / .78); } }
+</style>

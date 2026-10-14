@@ -1,5 +1,7 @@
 ---
 import site from '../../data/site.json';
+interface Props { quiz?: string; }
+const { quiz = '#quiz' } = Astro.props;
 const wa = `${site.whatsapp.href}?text=${encodeURIComponent(site.whatsapp.text)}`;
 ---
 <section class="photo-bg final">
@@ -10,7 +12,7 @@ const wa = `${site.whatsapp.href}?text=${encodeURIComponent(site.whatsapp.text)}
     <p>Отвечаем в Telegram и WhatsApp {site.hours} по времени Нячанга.</p>
   </div>
   <div class="btns">
-    <a class="btn btn--primary" href="#quiz">Подобрать урок</a>
+    <a class="btn btn--primary" href={quiz}>Подобрать урок</a>
     <a class="btn btn--light" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_final">Telegram</a>
     <a class="btn btn--light" href={wa} target="_blank" rel="noopener" data-goal="wa_final">WhatsApp</a>
   </div>

@@ -1,0 +1,46 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import prices from '../../data/prices.json';
+---
+<Section rail="Что дальше" bold="Что" light="дальше" lead="Один урок — знакомство. Чтобы кататься самостоятельно, берут абонемент на 3–10 занятий: так дешевле, чем разово.">
+  <ol class="next">
+    {prices.course.map((c) => (
+      <li><span class="next__n">{c.n}</span><b>{c.title}</b><span>{c.text}</span></li>
+    ))}
+  </ol>
+  <div class="next__links">
+    <a class="btn btn--dark" href="/kursy-serfinga/">Абонементы и курсы для продолжающих <Icon name="arrow" size={20} /></a>
+  </div>
+
+  <a class="photo-bg plankton" href="/svetyashchijsya-plankton/">
+    <img class="photo-bg__img" src="/img/c-sea.webp" alt="Бирюзовое море с волнами у берега" loading="lazy">
+    <span class="photo-bg__shade"></span>
+    <span class="plankton__text">
+      <span class="badge badge--peach">Сезон с апреля по сентябрь</span>
+      <b class="h3">А вечером — ночная экскурсия к светящемуся планктону</b>
+      <span>SUP-прогулка и снорклинг, потом BBQ-ужин на базе. Трансфер включён.</span>
+    </span>
+    <span class="plankton__price">{prices.plankton.vnd} ₫<small>≈ ${prices.plankton.usd}</small></span>
+  </a>
+</Section>
+
+<style>
+  .next { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: var(--gap); counter-reset: none; }
+  .next li { background: var(--sand-2); border-radius: var(--r-l); padding: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; color: var(--muted); }
+  .next b { font-size: 18px; color: var(--ink); }
+  .next__n { font-size: 44px; font-weight: 800; line-height: 1; color: var(--sea); letter-spacing: -.03em; margin-bottom: 10px; }
+  .next__links { margin-top: 20px; }
+  .next__links .btn { white-space: normal; height: auto; min-height: 52px; padding: 12px 24px; text-align: left; }
+  @media (max-width: 700px) {
+    .next li { display: grid; grid-template-columns: 56px 1fr; column-gap: 12px; padding: 16px 18px; }
+    .next__n { grid-row: span 2; margin: 0; font-size: 36px; align-self: center; }
+  }
+
+  .plankton { margin-top: var(--gap); border-radius: var(--r-l); display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; padding: 32px; min-height: 180px; text-decoration: none; }
+  .plankton .photo-bg__shade { background: linear-gradient(90deg, rgb(15 29 34 / .92) 0%, rgb(15 29 34 / .6) 60%, rgb(15 29 34 / .3) 100%); }
+  .plankton__text { display: flex; flex-direction: column; gap: 8px; max-width: 60ch; color: var(--on-dark-2); }
+  .plankton__text .h3 { color: #fff; font-size: 26px; }
+  .plankton__price { font-size: 34px; font-weight: 800; line-height: 1.1; white-space: nowrap; }
+  .plankton__price small { display: block; font-size: 17px; font-weight: 500; opacity: .75; }
+</style>

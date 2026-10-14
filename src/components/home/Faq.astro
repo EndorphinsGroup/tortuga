@@ -1,14 +1,16 @@
 ---
 import Section from '../Section.astro';
 import faq from '../../data/faq.json';
+interface Props { items?: { q: string; a: string }[]; more?: { label: string; href: string }; }
+const { items = faq, more = { label: 'все вопросы о серфинге и экскурсии', href: '/faq/' } } = Astro.props;
 ---
 <Section id="faq" rail="Вопросы" bold="Частые" light="вопросы">
   <div class="faq">
-    {faq.map((f) => (
+    {items.map((f) => (
       <details><summary>{f.q}<span class="faq__plus" aria-hidden="true">+</span></summary><p>{f.a}</p></details>
     ))}
   </div>
-  <a class="link more" href="/faq/">все вопросы о серфинге и экскурсии</a>
+  <a class="link more" href={more.href}>{more.label}</a>
 </Section>
 
 <style>

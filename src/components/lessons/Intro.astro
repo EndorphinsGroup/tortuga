@@ -1,0 +1,24 @@
+---
+import Section from '../Section.astro';
+import lessons from '../../data/lessons.json';
+---
+<Section rail="Об уроках" bold="Как учим" light="с нуля">
+  <div class="intro">
+    <div class="intro__text">
+      {lessons.about.map((p, i) => <p class:list={{ muted: i > 0 }}>{p}</p>)}
+    </div>
+    <div class="intro__facts">
+      <div class="card fact"><b>2,5 часа</b><span>длится урок</span></div>
+      <div class="card fact"><b>1-й урок</b><span>большинство уже встаёт на доску</span></div>
+      <div class="card fact"><b>5–7 уроков</b><span>до самостоятельного катания</span></div>
+      <div class="card fact"><b>RU · EN</b><span>инструкторы говорят по-русски и по-английски</span></div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .intro { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 32px clamp(32px, 5vw, 80px); align-items: start; }
+  .intro__text { display: flex; flex-direction: column; gap: 18px; font-size: clamp(19px, 1.6vw, 23px); line-height: 1.45; }
+  .intro__facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .intro__facts .card { padding: 20px; }
+</style>

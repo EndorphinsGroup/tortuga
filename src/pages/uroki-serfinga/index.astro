@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Intro from '../../components/lessons/Intro.astro';
+import Formats from '../../components/lessons/Formats.astro';
+import Included from '../../components/lessons/Included.astro';
+import Steps from '../../components/lessons/Steps.astro';
+import Kids from '../../components/lessons/Kids.astro';
+import Next from '../../components/lessons/Next.astro';
+import Reviews from '../../components/home/Reviews.astro';
+import Faq from '../../components/home/Faq.astro';
+import FinalCta from '../../components/home/FinalCta.astro';
+import site from '../../data/site.json';
+import prices from '../../data/prices.json';
+import lessons from '../../data/lessons.json';
+
+const url = `${site.url}/uroki-serfinga/`;
+const offer = (name: string, vnd: string) => ({ '@type': 'Offer', name, price: vnd.replace(/\s/g, ''), priceCurrency: 'VND', availability: 'https://schema.org/InStock' });
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Service', '@id': `${url}#service`, name: 'Уроки серфинга в Нячанге', serviceType: 'Обучение серфингу',
+      description: 'Индивидуальные, парные и групповые уроки серфинга с нуля на пляже Бай Дай. Урок 2,5 часа, трансфер из отеля, экипировка, обед, фото и видео включены.',
+      provider: { '@id': `${site.url}/#school` }, areaServed: ['Нячанг', 'Камрань'], url,
+      offers: [
+        ...prices.lessons.filter((l) => l.id !== 'kids').map((l) => offer(`${l.title} урок серфинга, 2,5 часа`, l.vnd)),
+        ...lessons.kids.prices.map((p) => offer(`Детский урок серфинга, ${p.label}`, p.vnd)),
+      ] },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Уроки серфинга', item: url },
+    ] },
+    { '@type': 'FAQPage', mainEntity: lessons.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  ],
+};
+---
+<Base
+  title="Обучение серфингу в Нячанге — индивидуальные и парные уроки с нуля, детский серфинг | Tortuga"
+  description="Уроки серфинга для начинающих на пляже Бай Дай: индивидуально, вдвоём или в группе до 4 человек, дети с 7 лет. Урок 2,5 часа, трансфер из отеля, экипировка, обед, фото и видео включены."
+  ogImage={`${site.url}/img/bg-aerial.webp`}
+  jsonld={jsonld}
+>
+  <link slot="head" rel="preload" as="image" href="/img/bg-aerial.webp">
+  <PageHero
+    img="/img/bg-aerial.webp"
+    alt="Ученики с досками на песке у кромки воды"
+    crumbs={[{ label: 'Уроки серфинга' }]}
+    title={[{ text: 'Уроки серфинга' }, { text: 'в Нячанге', light: true }, { text: 'для начинающих', light: true }]}
+    lead="Индивидуально, вдвоём или в небольшой группе — с нуля и с русскоговорящим инструктором. Трансфер из отеля, доска, лайкра и обед уже в цене."
+    facts={[
+      ['2,5 часа', 'урок: песок, вода, разбор'],
+      [`от ${prices.lessons.find((l) => l.id === 'group')!.vnd} ₫`, `≈ $${prices.lessons.find((l) => l.id === 'group')!.usd} с человека`],
+      ['Трансфер включён', 'из отелей Нячанга и Камрани'],
+      ['С 7 лет', 'детей берём на отдельный урок'],
+    ]}
+  >
+    <div class="btns">
+      <a class="btn btn--primary" href="#formaty">Выбрать формат</a>
+      <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_lessons_hero">Написать в Telegram</a>
+    </div>
+  </PageHero>
+  <Intro />
+  <Formats />
+  <Included />
+  <Steps />
+  <Kids />
+  <Next />
+  <Reviews />
+  <Faq items={lessons.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
+  <FinalCta quiz="/#quiz" />
+</Base>
