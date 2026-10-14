@@ -32,6 +32,11 @@ import site from '../../data/site.json';
     </ul>
   </div>
 
+  <a class="passes-teaser" href="/uroki-serfinga/#abonementy">
+    <span>На доску встают уже на первом уроке. А чтобы ловить волны самостоятельно, нужна практика — для этого есть абонементы.</span>
+    <span class="btn btn--dark">Выбрать абонемент</span>
+  </a>
+
   <a class="photo-bg plankton" href="/svetyashchijsya-plankton/">
     <img class="photo-bg__img" src="/img/c-sea.webp" alt="Бирюзовое море с волнами у берега" loading="lazy">
     <span class="photo-bg__shade"></span>
@@ -59,11 +64,16 @@ import site from '../../data/site.json';
   .lesson__body .btn { margin-top: auto; }
 
   .included { margin-top: var(--gap); border-radius: var(--r-l); background: var(--peach); padding: 28px; }
-  .included__list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 18px 24px; }
+  .included__list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 32px; }
+  @media (max-width: 1000px) { .included__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .included__list { grid-template-columns: 1fr; } }
   .included__list li { display: flex; gap: 14px; align-items: flex-start; font-size: 15px; color: var(--ink-soft); }
   .included__list b { display: block; color: var(--ink); font-size: 17px; }
   .included__icon { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--sea); color: #fff; display: grid; place-items: center; }
 
+  .passes-teaser { margin-top: var(--gap); display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; padding: 24px 28px; border-radius: var(--r-l); border: 1px solid var(--line); text-decoration: none; }
+  .passes-teaser > span:first-child { flex: 1 1 420px; font-size: 18px; line-height: 1.45; max-width: 62ch; }
+  .passes-teaser:hover .btn { filter: brightness(.94); }
   .plankton { margin-top: var(--gap); border-radius: var(--r-l); display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; padding: 32px; min-height: 180px; text-decoration: none; }
   .plankton .photo-bg__shade { background: linear-gradient(90deg, rgb(15 29 34 / .92) 0%, rgb(15 29 34 / .6) 60%, rgb(15 29 34 / .3) 100%); }
   .plankton__text { display: flex; flex-direction: column; gap: 8px; max-width: 60ch; color: var(--on-dark-2); }
