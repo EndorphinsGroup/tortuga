@@ -1,0 +1,38 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import p from '../../data/plankton.json';
+---
+<Section id="programma" rail="Программа вечера" bold="Программа" light="вечера">
+  <ol class="prog">
+    {p.program.map((s, i) => (
+      <li><span class="prog__n">{i + 1}</span><div><h3>{s.title}</h3><p>{s.text}</p></div></li>
+    ))}
+  </ol>
+
+  <div class="pinc">
+    <h3 class="h3">Что входит в стоимость</h3>
+    <ul>
+      {p.included.map((i) => <li><span class="pinc__icon"><Icon name={i.icon} /></span><span><b>{i.title}</b>{i.text}</span></li>)}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .prog { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .prog li { display: flex; gap: 16px; align-items: flex-start; padding: 22px; border-radius: var(--r-l); background: var(--sand-2); }
+  .prog li:nth-child(3), .prog li:nth-child(4) { background: var(--night); color: #fff; }
+  .prog li:nth-child(3) p, .prog li:nth-child(4) p { color: var(--on-dark); }
+  .prog__n { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--sea); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+  .prog li:nth-child(3) .prog__n, .prog li:nth-child(4) .prog__n { background: #9FF4F0; color: var(--night); box-shadow: 0 0 14px rgb(110 230 230 / .6); }
+  @media (max-width: 1000px) { .prog { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .prog { grid-template-columns: 1fr; } }
+  .prog h3 { font-size: 19px; line-height: 1.15; margin: 6px 0 6px; }
+  .prog p { font-size: 15px; color: var(--muted); }
+
+  .pinc { margin-top: var(--gap); border-radius: var(--r-l); background: var(--peach); padding: 28px; }
+  .pinc ul { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 18px 24px; }
+  .pinc li { display: flex; gap: 14px; align-items: flex-start; font-size: 15px; color: var(--ink-soft); }
+  .pinc b { display: block; color: var(--ink); font-size: 17px; }
+  .pinc__icon { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--sea); color: #fff; display: grid; place-items: center; }
+</style>

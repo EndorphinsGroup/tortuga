@@ -58,3 +58,14 @@ npm run build    # готовый сайт в dist/
 | Цены абонементов, блок «Катаетесь сами?» | `src/data/prices.json` (общие с главной) |
 | Блоки страницы | `src/components/courses/*.astro` + общие из `home/` (Passes, Riders, Seasons, Reviews, Faq, FinalCta) |
 | Порядок блоков, Title, description, JSON-LD | `src/pages/kursy-serfinga/index.astro` |
+
+## Страница «Светящийся планктон» — /svetyashchijsya-plankton/
+
+| Что | Файл |
+| --- | --- |
+| Тексты: что это, программа вечера, что входит, кому подходит, когда видно, «кусается?», что взять, цитаты гостя, вопросы | `src/data/plankton.json` |
+| Цена | `src/data/prices.json` → `plankton` (общая с главной) |
+| Блоки страницы | `src/components/plankton/*.astro` |
+| Порядок блоков, Title, description, JSON-LD | `src/pages/svetyashchijsya-plankton/index.astro` |
+
+Кадры `public/img/pl-*.webp` вырезаны из видеоотзыва `guest-plankton.mp4` — заменить на фото школы, когда будут.

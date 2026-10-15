@@ -1,0 +1,34 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import p from '../../data/plankton.json';
+---
+<Section rail="С собой" bold="Что взять" light="с собой">
+  <div class="cross">
+    <div class="card card--peach bring">
+      <ul>{p.bring.map((b) => <li><Icon name="check" size={18} />{b}</li>)}</ul>
+      <p>Лайкру, маску с трубкой и жилет выдаём на базе.</p>
+    </div>
+    <a class="photo-bg day" href="/uroki-serfinga/">
+      <img class="photo-bg__img" src="/img/ph-wave.webp" alt="Ученик встаёт на доску на волне" loading="lazy">
+      <span class="photo-bg__shade"></span>
+      <b class="h3">Днём — урок серфинга на Бай Дай</b>
+      <span>2,5 часа с инструктором, трансфер и обед включены.</span>
+      <span class="btn btn--light">Уроки серфинга <Icon name="arrow" size={20} /></span>
+    </a>
+  </div>
+</Section>
+
+<style>
+  .cross { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--gap); }
+  .bring { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .bring ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 18px; }
+  .bring li { display: flex; gap: 10px; align-items: center; }
+  .bring li :global(svg) { color: var(--sea); }
+  .bring p { margin-top: auto; font-size: 15px; color: var(--muted); }
+  .day { border-radius: var(--r-l); padding: 28px; min-height: 340px; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; text-decoration: none; color: var(--on-dark); }
+  .day > .photo-bg__img { object-position: center 35%; }
+  .day > .photo-bg__shade { background: linear-gradient(0deg, rgb(var(--shade) / .9) 0%, rgb(var(--shade) / .35) 70%, transparent 100%); }
+  .day .h3 { color: #fff; font-size: 26px; }
+  .day .btn { align-self: flex-start; margin-top: 8px; }
+</style>

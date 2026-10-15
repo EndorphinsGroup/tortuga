@@ -1,0 +1,52 @@
+---
+import Crumbs from '../Crumbs.astro';
+import site from '../../data/site.json';
+import prices from '../../data/prices.json';
+const wa = `${site.whatsapp.href}?text=${encodeURIComponent('Здравствуйте! Хочу на светящийся планктон, дата: ')}`;
+// Deterministic "plankton" dots so every build looks the same.
+let seed = 7;
+const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+const dots = Array.from({ length: 140 }, () => ({
+  x: (rnd() * 100).toFixed(2), y: (40 + rnd() * 60).toFixed(2),
+  s: (1.5 + rnd() * 3).toFixed(1), d: (rnd() * 6).toFixed(2), t: (2.5 + rnd() * 4).toFixed(2),
+}));
+---
+<section class="nhero">
+  <div class="nhero__sky" aria-hidden="true">
+    {dots.map((p) => <i style={`left:${p.x}%;top:${p.y}%;width:${p.s}px;height:${p.s}px;animation-delay:-${p.d}s;animation-duration:${p.t}s`}></i>)}
+  </div>
+  <Crumbs items={[{ label: 'Светящийся планктон' }]} dark />
+  <div class="nhero__body">
+    <h1 class="nhero__title"><span>Светящийся планктон</span><span class="l">в Нячанге:</span><span>ночной снорклинг</span><span class="l">и SUP-прогулка</span></h1>
+    <p class="nhero__lead">Ночная экскурсия на пляже Бай Дай. Выходим на сапах в тёмное море, ныряем с маской — и вода светится от каждого движения. Потом горячий душ и BBQ-ужин на базе.</p>
+    <div class="btns">
+      <a class="btn btn--primary" href={wa} target="_blank" rel="noopener" data-goal="wa_plankton_hero">Записаться</a>
+      <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_plankton_hero">Написать в Telegram</a>
+    </div>
+  </div>
+  <div class="nhero__facts">
+    <div class="glass"><b>{prices.plankton.vnd} ₫</b>≈ ${prices.plankton.usd} с человека</div>
+    <div class="glass"><b>≈ 5 часов</b>вечер вместе с дорогой</div>
+    <div class="glass"><b>Трансфер и ужин</b>уже в цене</div>
+    <div class="glass"><b>Апрель — сентябрь</b>сезон спокойного моря</div>
+  </div>
+</section>
+
+<style>
+  .nhero { position: relative; overflow: hidden; isolation: isolate; color: #fff; border-radius: 0 0 var(--r-xl) var(--r-xl); min-height: min(calc(100vh - 74px), 780px); display: flex; flex-direction: column; padding: 24px var(--gutter) clamp(20px, 3.5vh, 36px) calc(var(--rail) + var(--gutter));
+    background: radial-gradient(120% 60% at 70% 100%, #123842 0%, transparent 60%), linear-gradient(180deg, #070F12 0%, var(--night) 45%, #0E2C33 100%); }
+  .nhero__sky { position: absolute; inset: 0; z-index: -1; }
+  .nhero__sky i { position: absolute; border-radius: 50%; background: #9FF4F0; box-shadow: 0 0 6px 2px rgb(110 230 230 / .7), 0 0 18px 4px rgb(60 200 210 / .25); opacity: .15; animation: glow ease-in-out infinite; }
+  @keyframes glow { 0%, 100% { opacity: .12; } 50% { opacity: .95; } }
+  .nhero__body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: clamp(32px, 6vh, 72px); }
+  .nhero__title { text-transform: uppercase; font-size: clamp(32px, min(5vw, 8vh), 84px); line-height: .96; letter-spacing: -.035em; font-weight: 800; }
+  .nhero__title span { display: block; }
+  .nhero__title .l { font-weight: 300; }
+  .nhero__lead { margin: clamp(14px, 2.6vh, 28px) 0 clamp(16px, 3vh, 32px); font-size: clamp(16px, 1.3vw, 19px); max-width: 54ch; color: var(--on-dark); }
+  .nhero__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: clamp(16px, 3vh, 32px); max-width: var(--max); font-size: 14px; line-height: 1.35; color: var(--on-dark); }
+  .nhero__facts b { display: block; color: #fff; font-size: 19px; margin-bottom: 2px; }
+  @media (max-width: 900px) {
+    .nhero { min-height: calc(100svh - 74px); padding-left: var(--gutter); }
+    .nhero__facts { grid-template-columns: 1fr 1fr; }
+  }
+</style>

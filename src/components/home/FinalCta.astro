@@ -1,18 +1,18 @@
 ---
 import site from '../../data/site.json';
-interface Props { quiz?: string; }
-const { quiz = '#quiz' } = Astro.props;
-const wa = `${site.whatsapp.href}?text=${encodeURIComponent(site.whatsapp.text)}`;
+interface Props { quiz?: string; light?: string; bold?: string; waText?: string; }
+const { quiz = '#quiz', light = 'Напишите даты —', bold = 'подберём волну', waText = site.whatsapp.text } = Astro.props;
+const wa = `${site.whatsapp.href}?text=${encodeURIComponent(waText)}`;
 ---
 <section class="photo-bg final">
   <img class="photo-bg__img" src="/img/bg-beach.webp" alt="" loading="lazy">
   <span class="photo-bg__shade"></span>
   <div class="final__text">
-    <h2 class="final__title"><span class="l">Напишите даты —</span><span>подберём волну</span></h2>
+    <h2 class="final__title"><span class="l">{light}</span><span>{bold}</span></h2>
     <p>Отвечаем в Telegram и WhatsApp {site.hours} по времени Нячанга.</p>
   </div>
   <div class="btns">
-    <a class="btn btn--primary" href={quiz}>Подобрать урок</a>
+    {quiz && <a class="btn btn--primary" href={quiz}>Подобрать урок</a>}
     <a class="btn btn--light" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_final">Telegram</a>
     <a class="btn btn--light" href={wa} target="_blank" rel="noopener" data-goal="wa_final">WhatsApp</a>
   </div>

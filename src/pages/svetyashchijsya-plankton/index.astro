@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/plankton/Hero.astro';
+import About from '../../components/plankton/About.astro';
+import Program from '../../components/plankton/Program.astro';
+import Fit from '../../components/plankton/Fit.astro';
+import Media from '../../components/plankton/Media.astro';
+import Cross from '../../components/plankton/Cross.astro';
+import Faq from '../../components/home/Faq.astro';
+import FinalCta from '../../components/home/FinalCta.astro';
+import site from '../../data/site.json';
+import prices from '../../data/prices.json';
+import p from '../../data/plankton.json';
+
+const url = `${site.url}/svetyashchijsya-plankton/`;
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'TouristTrip', '@id': `${url}#trip`, name: 'Светящийся планктон в Нячанге: ночной снорклинг и SUP-прогулка',
+      description: 'Ночная экскурсия на пляже Бай Дай: SUP-прогулка, снорклинг среди светящегося планктона, горячий душ и BBQ-ужин. Трансфер из отелей Нячанга и Камрани включён.',
+      touristType: 'Взрослые и дети с 7 лет', url, image: `${site.url}/img/pl-grill.webp`,
+      provider: { '@id': `${site.url}/#school` },
+      itinerary: { '@type': 'ItemList', itemListElement: p.program.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.title, description: s.text })) },
+      offers: { '@type': 'Offer', price: prices.plankton.vnd.replace(/\s/g, ''), priceCurrency: 'VND', availability: 'https://schema.org/InStock', url } },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Светящийся планктон', item: url },
+    ] },
+    { '@type': 'FAQPage', mainEntity: p.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  ],
+};
+---
+<Base
+  title="Светящийся планктон и снорклинг в Нячанге — ночная экскурсия на SUP с BBQ и трансфером | Tortuga"
+  description={`Ночная экскурсия к светящемуся планктону на пляже Бай Дай: SUP-прогулка, снорклинг, горячий душ и BBQ-ужин. ${prices.plankton.vnd} ₫ (≈ $${prices.plankton.usd}), трансфер из отеля включён. Сезон — апрель–сентябрь, дети с 7 лет.`}
+  ogImage={`${site.url}/img/pl-grill.webp`}
+  jsonld={jsonld}
+>
+  <Hero />
+  <About />
+  <Program />
+  <Fit />
+  <Media />
+  <Cross />
+  <Faq items={p.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
+  <FinalCta quiz="" light="Напишите дату —" bold="поедем к планктону" waText="Здравствуйте! Хочу на светящийся планктон, дата: " />
+</Base>

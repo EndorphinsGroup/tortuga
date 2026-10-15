@@ -1,0 +1,37 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import p from '../../data/plankton.json';
+---
+<Section rail="Кому подходит" bold="Кому" light="подходит">
+  <div class="fit">
+    {p.fit.map(([b, t]) => <div class="card fact"><b>{b}</b><span>{t}</span></div>)}
+  </div>
+
+  <div class="duo">
+    <div class="card glowc">
+      <h3 class="h3">Когда лучше видно</h3>
+      <ul>{p.glow.points.map((t) => <li><Icon name="check" size={20} /><span>{t}</span></li>)}</ul>
+      <p class="muted">{p.glow.honest}</p>
+      <a class="link" href="/sezony/">сезон планктона по месяцам</a>
+    </div>
+    <div id="kusaetsya" class="card card--dark bite">
+      <h3 class="h3">{p.bite.title}</h3>
+      <p>{p.bite.text}</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .fit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--gap); }
+  .fit .card { padding: 22px; }
+  .duo { margin-top: var(--gap); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--gap); }
+  .duo .card { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .glowc ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .glowc li { display: flex; gap: 10px; align-items: flex-start; }
+  .glowc li :global(svg) { flex: none; color: var(--sea); margin-top: 2px; }
+  .glowc p { font-size: 15px; }
+  .glowc .link { margin-top: auto; align-self: flex-start; }
+  .bite { background: var(--night); }
+  .bite p { color: var(--on-dark); }
+</style>

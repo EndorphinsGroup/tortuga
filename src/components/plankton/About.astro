@@ -1,0 +1,21 @@
+---
+import Section from '../Section.astro';
+import p from '../../data/plankton.json';
+---
+<Section rail="Что это" bold="Что такое" light="светящийся планктон">
+  <div class="pab">
+    <div class="pab__text">{p.about.map((t, i) => <p class:list={{ muted: i > 0 }}>{t}</p>)}</div>
+    <div class="card card--dark pab__note">
+      <b>Почему здесь нет фото свечения</b>
+      <p>Планктон светится слишком слабо для камеры телефона — снять его почти невозможно. Поэтому на этой странице только честные кадры с вечера, без картинок с Мальдив. Как это выглядит, расскажут гости.</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .pab { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 32px clamp(32px, 5vw, 80px); align-items: start; }
+  .pab__text { display: flex; flex-direction: column; gap: 18px; font-size: clamp(19px, 1.6vw, 23px); line-height: 1.45; }
+  .pab__note { padding: 28px; display: flex; flex-direction: column; gap: 10px; background: var(--night); }
+  .pab__note b { font-size: 20px; }
+  .pab__note p { color: var(--on-dark); font-size: 16px; }
+</style>
