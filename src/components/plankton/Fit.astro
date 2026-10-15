@@ -13,7 +13,6 @@ import p from '../../data/plankton.json';
       <h3 class="h3">Когда лучше видно</h3>
       <ul>{p.glow.points.map((t) => <li><Icon name="check" size={20} /><span>{t}</span></li>)}</ul>
       <p class="muted">{p.glow.honest}</p>
-      <a class="link" href="/sezony/">сезон планктона по месяцам</a>
     </div>
     <div id="kusaetsya" class="card card--dark bite">
       <h3 class="h3">{p.bite.title}</h3>
@@ -31,7 +30,6 @@ import p from '../../data/plankton.json';
   .glowc li { display: flex; gap: 10px; align-items: flex-start; }
   .glowc li :global(svg) { flex: none; color: var(--sea); margin-top: 2px; }
   .glowc p { font-size: 15px; }
-  .glowc .link { margin-top: auto; align-self: flex-start; }
   .bite { background: var(--night); }
   .bite p { color: var(--on-dark); }
 </style>

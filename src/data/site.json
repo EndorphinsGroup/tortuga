@@ -22,7 +22,6 @@
     ]},
     { "label": "Светящийся планктон", "href": "/svetyashchijsya-plankton/" },
     { "label": "Полезное", "children": [
-      { "label": "Сезоны", "href": "/sezony/" },
       { "label": "FAQ", "href": "/faq/" },
       { "label": "Блог", "href": "/blog/" }
     ]},
@@ -38,7 +37,6 @@
     ]},
     { "title": "Полезное", "links": [
       { "label": "Пляж Бай Дай", "href": "/plyazh-bai-dai/" },
-      { "label": "Сезоны", "href": "/sezony/" },
       { "label": "FAQ", "href": "/faq/" },
       { "label": "Отзывы", "href": "/otzyvy/" },
       { "label": "Блог", "href": "/blog/" }
