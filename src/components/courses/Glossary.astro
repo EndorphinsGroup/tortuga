@@ -1,0 +1,16 @@
+---
+import Section from '../Section.astro';
+import courses from '../../data/courses.json';
+---
+<Section id="slovar" rail="Словарь" bold="Словарь" light="сёрфера" lead="Слова, которые услышите от инструктора с первых уроков.">
+  <dl class="gl">
+    {courses.glossary.map(([t, d]) => <div><dt>{t}</dt><dd>{d}</dd></div>)}
+  </dl>
+</Section>
+
+<style>
+  .gl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 0 40px; }
+  .gl div { padding: 20px 0; border-top: 1px solid var(--line); }
+  .gl dt { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .gl dd { margin: 0; font-size: 15px; color: var(--ink-soft); max-width: 52ch; }
+</style>

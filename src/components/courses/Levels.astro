@@ -1,0 +1,39 @@
+---
+import Section from '../Section.astro';
+import courses from '../../data/courses.json';
+import site from '../../data/site.json';
+const wa = (n: string) => `${site.whatsapp.href}?text=${encodeURIComponent(`Здравствуйте! Хочу абонемент на ${n} уроков серфинга, дата начала: `)}`;
+---
+<Section id="kakoj-kurs" rail="Какой курс подходит" bold="Какой курс" light="мне подходит" lead="Сравните, что уже получается, — и смотрите, куда приведёт курс. Не уверены — напишите, подскажем по видео или после первого урока.">
+  <ol class="lv">
+    {courses.levels.map((l) => (
+      <li class="lv__item">
+        <div class="lv__head"><span class="lv__n">{l.n}</span><div><b>{l.title}</b><span>{l.goal}</span></div></div>
+        <div class="lv__col"><span class="lv__k">Вам подходит, если</span><p>{l.fit}</p></div>
+        <div class="lv__col"><span class="lv__k">Научитесь</span><p>{l.learn}</p></div>
+        <a class="btn btn--outline btn--sm" href={wa(l.n)} target="_blank" rel="noopener" data-goal={`wa_course_${l.n}`}>Записаться</a>
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<style>
+  .lv { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap); }
+  .lv__item { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 24px 32px; align-items: center; padding: 24px 28px; border-radius: var(--r-l); background: var(--sand-2); }
+  .lv__item:nth-child(even) { background: var(--cream); }
+  .lv__head { display: flex; gap: 18px; align-items: center; }
+  .lv__head b { display: block; font-size: 20px; text-transform: uppercase; font-weight: 800; line-height: 1.1; }
+  .lv__head span:not(.lv__n) { font-size: 15px; color: var(--muted); }
+  .lv__n { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--sea); color: #fff; display: grid; place-items: center; font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+  .lv__k { display: block; font-size: 13px; color: var(--muted-2); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+  .lv__col p { font-size: 15px; color: var(--ink-soft); }
+  @media (max-width: 1000px) {
+    .lv__item { grid-template-columns: 1fr 1fr; }
+    .lv__head { grid-column: 1 / -1; }
+    .lv__item .btn { grid-column: 1 / -1; justify-self: start; }
+  }
+  @media (max-width: 600px) {
+    .lv__item { grid-template-columns: 1fr; gap: 16px; padding: 20px; }
+    .lv__n { width: 52px; height: 52px; font-size: 22px; }
+  }
+</style>

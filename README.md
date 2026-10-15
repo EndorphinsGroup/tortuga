@@ -49,3 +49,12 @@ npm run build    # готовый сайт в dist/
 | Порядок блоков, Title, description, JSON-LD | `src/pages/uroki-serfinga/index.astro` |
 
 Шапка внутренних страниц с хлебными крошками — `src/components/PageHero.astro`, сами крошки — `Crumbs.astro`.
+
+## Страница «Курсы для продолжающих» — /kursy-serfinga/
+
+| Что | Файл |
+| --- | --- |
+| Тексты: «От пены к зелёным волнам», уровни курсов («подходит, если» / «научитесь»), словарь, вопросы | `src/data/courses.json` |
+| Цены абонементов, блок «Катаетесь сами?» | `src/data/prices.json` (общие с главной) |
+| Блоки страницы | `src/components/courses/*.astro` + общие из `home/` (Passes, Riders, Seasons, Reviews, Faq, FinalCta) |
+| Порядок блоков, Title, description, JSON-LD | `src/pages/kursy-serfinga/index.astro` |

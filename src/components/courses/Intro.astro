@@ -1,0 +1,25 @@
+---
+import Section from '../Section.astro';
+import courses from '../../data/courses.json';
+---
+<Section rail="О курсах" bold="От пены" light="к зелёным волнам">
+  <div class="intro">
+    <div class="intro__text">
+      {courses.about.map((p, i) => <p class:list={{ muted: i > 0 }}>{p}</p>)}
+    </div>
+    <div class="intro__facts">
+      <div class="card fact"><b>3 · 5 · 7 · 10</b><span>уроков в абонементе</span></div>
+      <div class="card fact"><b>2 месяца</b><span>действует абонемент</span></div>
+      <div class="card fact"><b>Сёрф-скейт</b><span>повороты на суше — с курса на 7 занятий</span></div>
+      <div class="card fact"><b>Риф</b><span>ноябрь — февраль, в курсе на 10 занятий</span></div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .intro { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 32px clamp(32px, 5vw, 80px); align-items: start; }
+  .intro__text { display: flex; flex-direction: column; gap: 18px; font-size: clamp(19px, 1.6vw, 23px); line-height: 1.45; }
+  .intro__facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .intro__facts .card { padding: 20px; }
+  @media (max-width: 520px) { .intro__facts .card { padding: 16px; } .intro__facts .fact b { font-size: 19px; hyphens: none; } }
+</style>

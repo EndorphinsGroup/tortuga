@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Intro from '../../components/courses/Intro.astro';
+import Levels from '../../components/courses/Levels.astro';
+import Glossary from '../../components/courses/Glossary.astro';
+import Passes from '../../components/home/Passes.astro';
+import Riders from '../../components/home/Riders.astro';
+import Seasons from '../../components/home/Seasons.astro';
+import Reviews from '../../components/home/Reviews.astro';
+import Faq from '../../components/home/Faq.astro';
+import FinalCta from '../../components/home/FinalCta.astro';
+import site from '../../data/site.json';
+import prices from '../../data/prices.json';
+import courses from '../../data/courses.json';
+
+const url = `${site.url}/kursy-serfinga/`;
+const offers = prices.passes.rows.flatMap((r) => r.cells.map((c, i) => c && /^\d/.test(c[0])
+  ? { '@type': 'Offer', name: `Абонемент: ${r.title.toLowerCase()}, ${prices.passes.columns[i]}`, price: c[0].replace(/\s/g, ''), priceCurrency: 'VND' }
+  : null).filter(Boolean));
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Service', '@id': `${url}#service`, name: 'Курсы серфинга для продолжающих', serviceType: 'Обучение серфингу',
+      description: 'Абонементы на 3, 5, 7 и 10 уроков серфинга на пляже Бай Дай: от пены к зелёным волнам, сёрф-скейт и выезды на рифовый спот.',
+      provider: { '@id': `${site.url}/#school` }, areaServed: ['Нячанг', 'Камрань'], url, offers },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Уроки серфинга', item: `${site.url}/uroki-serfinga/` },
+      { '@type': 'ListItem', position: 3, name: 'Курсы для продолжающих', item: url },
+    ] },
+    { '@type': 'FAQPage', mainEntity: courses.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  ],
+};
+const min = prices.passes.rows[0].cells[0]!;
+---
+<Base
+  title="Курсы серфинга в Нячанге для продолжающих — зелёные волны, сёрф-скейт и выезды на риф | Tortuga"
+  description="Абонементы на 3, 5, 7 и 10 уроков серфинга на пляже Бай Дай: из пены на лайн-ап и зелёные волны. В группе, вдвоём или индивидуально, трансфер и экипировка включены."
+  ogImage={`${site.url}/img/bg-couple.webp`}
+  jsonld={jsonld}
+>
+  <link slot="head" rel="preload" as="image" href="/img/bg-couple.webp">
+  <PageHero
+    img="/img/bg-couple.webp"
+    alt="Двое сёрферов в гидрокостюмах идут по кромке воды с досками"
+    crumbs={[{ label: 'Уроки серфинга', href: '/uroki-serfinga/' }, { label: 'Курсы для продолжающих' }]}
+    title={[{ text: 'Курсы серфинга' }, { text: 'для продолжающих', light: true }]}
+    lead="От пены к зелёным волнам: абонементы на 3–10 уроков, чтобы выйти на лайн-ап, научиться поворачивать и ехать вдоль волны."
+    facts={[
+      ['3–10 уроков', 'в абонементе, 2 месяца'],
+      [`от ${min[0]} ₫`, `≈ $${min[1]} за 3 урока в группе`],
+      ['Сёрф-скейт', 'повороты отрабатываем на суше'],
+      ['Рифовый спот', 'ноябрь — февраль, 2–3 дня в неделю'],
+    ]}
+  >
+    <div class="btns">
+      <a class="btn btn--primary" href="#kakoj-kurs">Подобрать курс</a>
+      <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_courses_hero">Написать в Telegram</a>
+    </div>
+  </PageHero>
+  <Intro />
+  <Levels />
+  <Passes id="abonementy" bold="Цены" light="абонементов" learn={false} />
+  <Riders img="/img/ph-camp.webp" alt="База школы: навесы, доски и мотобайки под деревьями" flip={false} />
+  <Glossary />
+  <Seasons />
+  <Reviews />
+  <Faq items={courses.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
+  <FinalCta quiz="/#quiz" />
+</Base>

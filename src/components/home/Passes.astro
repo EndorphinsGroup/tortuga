@@ -2,8 +2,10 @@
 import Section from '../Section.astro';
 import Icon from '../Icon.astro';
 import prices from '../../data/prices.json';
+interface Props { learn?: boolean; id?: string; bold?: string; light?: string; }
+const { learn = true, id = 'passes', bold = 'Абонементы', light = 'и курсы' } = Astro.props;
 ---
-<Section id="passes" rail="Абонементы и курсы" bold="Абонементы" light="и курсы" lead="Больше практики — быстрее результат. Цены за человека, абонемент действует 2 месяца.">
+<Section id={id} rail="Абонементы и курсы" bold={bold} light={light} lead="Больше практики — быстрее результат. Цены за человека, абонемент действует 2 месяца.">
   <div class="passes" role="region" aria-label="Цены абонементов" tabindex="0">
     <table>
       <thead><tr><th scope="col">Формат</th>{prices.passes.columns.map((c) => <th scope="col">{c}</th>)}</tr></thead>
@@ -18,7 +20,7 @@ import prices from '../../data/prices.json';
     </table>
   </div>
 
-  <div class="learn">
+  {learn && <div class="learn">
     <div class="card learn__steps">
       <h3 class="h3">Что даёт каждый курс</h3>
       <ol>
@@ -34,7 +36,7 @@ import prices from '../../data/prices.json';
       </ul>
       <p class="learn__note">Главное для первых шагов — ваше желание и умение плавать. Хорошая физическая форма поможет быстрее, но быть спортсменом не обязательно.</p>
     </div>
-  </div>
+  </div>}
 </Section>
 
 <style>
