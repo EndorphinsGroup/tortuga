@@ -22,7 +22,6 @@
     ]},
     { "label": "Светящийся планктон", "href": "/svetyashchijsya-plankton/" },
     { "label": "Полезное", "children": [
-      { "label": "Пляж Бай Дай", "href": "/plyazh-bai-dai/" },
       { "label": "Сезоны", "href": "/sezony/" },
       { "label": "FAQ", "href": "/faq/" },
       { "label": "Блог", "href": "/blog/" }
