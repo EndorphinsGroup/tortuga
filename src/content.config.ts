@@ -14,6 +14,7 @@ const blog = defineCollection({
     cover: z.string(),              // /img/...webp
     coverAlt: z.string(),
     service: z.enum(['lessons', 'courses', 'plankton', 'beach']), // куда ведёт CTA в конце
+    order: z.number().optional(),  // порядок в списке среди статей с одной датой (меньше — выше)
     draft: z.boolean().default(false),
   }),
 });

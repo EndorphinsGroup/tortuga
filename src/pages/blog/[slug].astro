@@ -104,8 +104,12 @@ const jsonld = {
   .prose :global(li::marker) { color: var(--terra); }
   .prose :global(blockquote) { margin-inline: 0; padding: 20px 24px; border-radius: var(--r-m); background: var(--sand-2); color: var(--ink); }
   .prose :global(img) { width: 100%; border-radius: var(--r-l); }
+  .prose :global(figure) { margin: 2em 0; }
+  .prose :global(figure img) { display: block; aspect-ratio: 16 / 10; object-fit: cover; background: var(--sand-2); }
+  .prose :global(figcaption) { margin-top: 10px; font-size: 15px; line-height: 1.45; color: var(--muted); }
+  .prose :global(.note) { padding: 16px 20px; border-radius: var(--r-m); border: 1px solid var(--line); font-size: 15px; color: var(--muted); }
   .prose :global(table) { width: 100%; border-collapse: collapse; font-size: 16px; }
-  @media (max-width: 600px) { .prose :global(table) { display: block; overflow-x: auto; } }
+  @media (max-width: 600px) { .prose :global(table) { display: block; overflow-x: auto; } .prose :global(th), .prose :global(td) { min-width: 8.5em; } }
   .prose :global(th), .prose :global(td) { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
   .prose :global(th) { color: var(--ink); font-weight: 600; background: var(--sand-2); }
 </style>

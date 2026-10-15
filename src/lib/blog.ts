@@ -6,7 +6,7 @@ export type Post = CollectionEntry<'blog'>;
 
 export async function posts(): Promise<Post[]> {
   const all = await getCollection('blog', (p) => !p.data.draft);
-  return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || (a.data.order ?? 99) - (b.data.order ?? 99));
 }
 
 export const fmtDate = (d: Date) => d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });

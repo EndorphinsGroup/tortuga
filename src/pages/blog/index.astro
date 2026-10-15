@@ -40,14 +40,14 @@ const useful = [
     alt="Пляж Бай Дай с высоты"
     crumbs={[{ label: 'Блог' }]}
     title={[{ text: 'Блог' }, { text: 'о море в Нячанге', light: true }]}
-    lead="Пишут инструкторы и основатель школы: про волны, планктон, снорклинг и отдых в Нячанге и Камрани — из своего опыта, а не пересказом чужих статей."
+    lead="Пишут инструкторы и основатель школы: про волны, планктон, снорклинг и отдых в Нячанге и Камрани — с сезонами, ценами и ссылками на источники."
   />
 
   {list.length > 0 ? (
     <Section rail="Статьи" class="bl">
       <div class="bl__list">
         <PostCard post={first} big />
-        {rest.length > 0 && <div class="grid" style="--min: 300px">{rest.map((p) => <PostCard post={p} />)}</div>}
+        {rest.length > 0 && <div class="grid" style="--min: 340px">{rest.map((p) => <PostCard post={p} />)}</div>}
       </div>
     </Section>
   ) : (

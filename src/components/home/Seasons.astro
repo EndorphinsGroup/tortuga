@@ -5,7 +5,7 @@ const surf = ['hi', 'hi', 'hi', 'lo', 'lo', 'lo', 'lo', 'lo', 'lo', 'hi', 'hi', 
 const reef = [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
 const plankton = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0];
 ---
-<Section rail="Сезоны" bold="Когда" light="ехать">
+<Section id="seasons" rail="Сезоны" bold="Когда" light="ехать">
   <div class="months" role="img" aria-label="Уроки серфинга круглый год, когда есть волны: с октября по март волны сильнее, с апреля по сентябрь небольшие волны для новичков. Рифовый спот — с ноября по февраль. Планктон — с апреля по сентябрь.">
     <span></span>{months.map((m) => <span class="months__h">{m}</span>)}
     <span class="months__row">Серфинг</span>{surf.map((s) => <span class={`months__c months__c--${s}`}></span>)}
