@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+const links = [
+  { label: 'Уроки серфинга', href: '/uroki-serfinga/' },
+  { label: 'Абонементы и курсы', href: '/kursy-serfinga/' },
+  { label: 'Светящийся планктон', href: '/svetyashchijsya-plankton/' },
+  { label: 'Пляж Бай Дай', href: '/plyazh-bai-dai/' },
+  { label: 'Вопросы и ответы', href: '/faq/' },
+];
+---
+<Base title="Страница не найдена | Tortuga Surf Camp" description="Такой страницы нет. Перейдите на главную или в нужный раздел." noindex>
+  <section class="nf">
+    <p class="nf__code">404</p>
+    <h1>Волна ушла — <span class="l">такой страницы нет</span></h1>
+    <p class="muted">Возможно, ссылка устарела после переезда сайта. Вот куда можно пойти:</p>
+    <div class="nf__links">
+      <a class="btn btn--primary" href="/">На главную</a>
+      {links.map((l) => <a class="btn btn--outline" href={l.href}>{l.label}</a>)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding: clamp(56px, 10vw, 140px) var(--gutter); max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+  .nf__code { font-size: clamp(80px, 14vw, 180px); font-weight: 800; line-height: .9; letter-spacing: -.05em; color: var(--terra); }
+  .nf h1 { text-transform: uppercase; font-size: clamp(30px, 4.4vw, 60px); line-height: 1; letter-spacing: -.03em; font-weight: 800; }
+  .nf h1 .l { font-weight: 300; }
+  .nf__links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+</style>

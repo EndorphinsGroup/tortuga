@@ -1,0 +1,5 @@
+{
+  "_comment": "Только реальные отзывы и с согласия авторов. service: surf | kids | plankton. date: ГГГГ-ММ-ДД. photo — путь в public/img/reviews/ или пусто. source — где отзыв оставлен (необязательно). Пока список пуст, блок с текстовыми отзывами на /otzyvy/ не показывается.",
+  "_example": { "name": "Анна", "city": "Москва", "date": "2026-11-20", "service": "surf", "rating": 5, "text": "Текст отзыва без правок по смыслу.", "photo": "/img/reviews/anna.webp", "source": "Google Карты" },
+  "items": []
+}

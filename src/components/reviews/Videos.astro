@@ -1,0 +1,59 @@
+---
+/** Video reviews from guests + the quote from the plankton video. */
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import p from '../../data/plankton.json';
+const reels = [
+  { poster: '/img/ph-wave.webp', video: '/video/guest-surf.mp4', label: 'первый урок серфинга', link: { label: 'уроки серфинга', href: '/uroki-serfinga/' } },
+  { poster: '/img/pl-dinner.webp', video: '/video/guest-plankton.mp4', label: 'ночная SUP-прогулка и BBQ', link: { label: 'светящийся планктон', href: '/svetyashchijsya-plankton/' } },
+];
+---
+<Section id="video" rail="Видео" bold="Видеоотзывы" light="гостей" lead="Гости сами рассказывают, как прошёл день. Без монтажа под рекламу.">
+  <div class="rv">
+    {reels.map((r) => (
+      <figure class="rv__item">
+        <div class="reel">
+          <img src={r.poster} alt="" loading="lazy">
+          <video src={r.video} preload="none" playsinline hidden></video>
+          <button type="button" class="reel__play" aria-label={`Смотреть видеоотзыв: ${r.label}`}><Icon name="play" size={26} /></button>
+        </div>
+        <figcaption>Видеоотзыв: {r.label} · <a class="link" href={r.link.href}>{r.link.label}</a></figcaption>
+      </figure>
+    ))}
+    <blockquote class="card card--peach rv__quote">
+      <span class="rv__mark" aria-hidden="true">“</span>
+      {p.quote.map((q) => <p>{q}</p>)}
+      <footer>Гость школы о ночной экскурсии к планктону, из видеоотзыва</footer>
+    </blockquote>
+  </div>
+</Section>
+
+<style>
+  .rv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); align-items: stretch; }
+  .rv__item { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .rv__item figcaption { font-size: 15px; color: var(--muted); }
+  .reel { position: relative; flex: 1; min-height: 520px; border-radius: var(--r-l); overflow: hidden; background: var(--night); }
+  .reel img, .reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .reel video { z-index: 2; background: #000; }
+  .reel video[hidden] { display: none; }
+  .reel__play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 72px; height: 72px; border-radius: 50%; border: 0; background: var(--cream); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+  .reel.playing .reel__play { display: none; }
+  .rv__quote { margin: 0 0 34px; padding: 32px; display: flex; flex-direction: column; gap: 14px; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; }
+  .rv__mark { font-size: 96px; line-height: .6; font-weight: 800; color: var(--terra); height: 40px; }
+  .rv__quote footer { margin-top: auto; font-size: 14px; color: var(--muted); }
+  @media (max-width: 1000px) {
+    .rv { grid-template-columns: 1fr 1fr; }
+    .rv__quote { grid-column: 1 / -1; margin: 0; }
+  }
+  @media (max-width: 640px) {
+    .rv { grid-template-columns: 1fr; }
+    .reel { min-height: 560px; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.rv .reel').forEach((r) => {
+    const v = r.querySelector('video')!;
+    r.querySelector('.reel__play')!.addEventListener('click', () => { r.classList.add('playing'); v.hidden = false; v.controls = true; v.play(); });
+  });
+</script>

@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import PostCard from '../../components/blog/PostCard.astro';
+import FinalCta from '../../components/home/FinalCta.astro';
+import site from '../../data/site.json';
+import { posts } from '../../lib/blog';
+
+const list = await posts();
+const [first, ...rest] = list;
+const url = `${site.url}/blog/`;
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Blog', '@id': `${url}#blog`, name: 'Блог Tortuga Surf Camp', url, inLanguage: 'ru',
+      blogPost: list.map((p) => ({ '@type': 'BlogPosting', headline: p.data.h1, url: `${url}${p.id}/`, datePublished: p.data.date.toISOString().slice(0, 10) })) },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Блог', item: url },
+    ] },
+  ],
+};
+const useful = [
+  { label: 'Пляж Бай Дай: как добраться', href: '/plyazh-bai-dai/' },
+  { label: 'Светящийся планктон в Нячанге', href: '/svetyashchijsya-plankton/' },
+  { label: 'Уроки серфинга для начинающих', href: '/uroki-serfinga/' },
+  { label: 'Вопросы и ответы', href: '/faq/' },
+];
+---
+<Base
+  title="Блог школы серфинга Tortuga — серфинг, планктон и отдых в Нячанге"
+  description="Статьи инструкторов Tortuga: экскурсии в Нячанге, светящийся и кусачий планктон, снорклинг, серфинг во Вьетнаме и отдых в Камрани."
+  jsonld={jsonld}
+  noindex={list.length === 0}
+>
+  <PageHero
+    compact
+    img="/img/bg-aerial.webp"
+    alt="Пляж Бай Дай с высоты"
+    crumbs={[{ label: 'Блог' }]}
+    title={[{ text: 'Блог' }, { text: 'о море в Нячанге', light: true }]}
+    lead="Пишут инструкторы и основатель школы: про волны, планктон, снорклинг и отдых в Нячанге и Камрани — из своего опыта, а не пересказом чужих статей."
+  />
+
+  {list.length > 0 ? (
+    <Section rail="Статьи" class="bl">
+      <div class="bl__list">
+        <PostCard post={first} big />
+        {rest.length > 0 && <div class="grid" style="--min: 300px">{rest.map((p) => <PostCard post={p} />)}</div>}
+      </div>
+    </Section>
+  ) : (
+    <Section rail="Статьи" bold="Первые статьи" light="готовятся" lead="А пока — самое полезное на сайте.">
+      <div class="grid" style="--min: 240px">
+        {useful.map((u) => <a class="card bl__link" href={u.href}>{u.label}<span aria-hidden="true">→</span></a>)}
+      </div>
+    </Section>
+  )}
+
+  <FinalCta quiz="/#quiz" />
+</Base>
+
+<style>
+  .bl__list { display: flex; flex-direction: column; gap: var(--gap); }
+  .bl__link { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; min-height: 140px; text-decoration: none; font-weight: 600; font-size: 19px; }
+  .bl__link:hover { background: var(--peach); }
+</style>

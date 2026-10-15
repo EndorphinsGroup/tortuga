@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import PostCard from '../../components/blog/PostCard.astro';
+import site from '../../data/site.json';
+import authors from '../../data/authors.json';
+import { render } from 'astro:content';
+import { posts, services, fmtDate, isoDate, type Post } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  const list = await posts();
+  return list.map((post) => ({ params: { slug: post.id }, props: { post, list } }));
+}
+
+const { post, list } = Astro.props as { post: Post; list: Post[] };
+const d = post.data;
+const author = (authors as Record<string, any>)[d.author];
+if (!author) throw new Error(`Статья ${post.id}: автор «${d.author}» не найден в src/data/authors.json`);
+const cta = services[d.service];
+const { Content } = await render(post);
+const more = list.filter((p) => p.id !== post.id).slice(0, 2);
+const url = `${site.url}/blog/${post.id}/`;
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Article', '@id': `${url}#article`, headline: d.h1, description: d.description, image: site.url + d.cover,
+      datePublished: isoDate(d.date), dateModified: isoDate(d.updated ?? d.date), inLanguage: 'ru', mainEntityOfPage: url,
+      author: { '@type': 'Person', name: author.name, jobTitle: author.role },
+      publisher: { '@id': `${site.url}/#org` } },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Блог', item: `${site.url}/blog/` },
+      { '@type': 'ListItem', position: 3, name: d.h1, item: url },
+    ] },
+  ],
+};
+---
+<Base title={d.title} description={d.description} ogImage={site.url + d.cover} ogType="article" jsonld={jsonld}>
+  <article class="art">
+    <header class="art__head">
+      <Crumbs items={[{ label: 'Блог', href: '/blog/' }, { label: d.h1 }]} />
+      <h1 class="art__title">{d.h1}</h1>
+      <div class="art__meta">
+        {author.photo ? <img src={author.photo} alt="" width="52" height="52"> : <span class="art__ava" aria-hidden="true">{author.name[0]}</span>}
+        <div>
+          <b>{author.name}</b>, {author.role}<br>
+          <span class="muted">
+            <time datetime={isoDate(d.date)}>{fmtDate(d.date)}</time>
+            {d.updated && isoDate(d.updated) !== isoDate(d.date) && <> · обновлено <time datetime={isoDate(d.updated)}>{fmtDate(d.updated)}</time></>}
+          </span>
+        </div>
+      </div>
+    </header>
+    <img class="art__cover" src={d.cover} alt={d.coverAlt} fetchpriority="high">
+    <div class="art__body prose"><Content /></div>
+
+    <aside class="photo-bg art__cta">
+      <img class="photo-bg__img" src={cta.img} alt="" loading="lazy">
+      <span class="photo-bg__shade"></span>
+      <div>
+        {cta.price && <span class="badge badge--peach">{cta.price}</span>}
+        <h2>{cta.title}</h2>
+        <p>{cta.text}</p>
+      </div>
+      <div class="btns">
+        <a class="btn btn--primary" href={cta.href}>{cta.btn}</a>
+        <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_blog">Спросить в Telegram</a>
+      </div>
+    </aside>
+  </article>
+
+  {more.length > 0 && (
+    <section class="sec">
+      <span class="sec__rail">Блог</span>
+      <div class="wrap">
+        <div class="sec__head"><h2 class="h2">Ещё <span class="l">статьи</span></h2></div>
+        <div class="grid" style="--min: 300px">{more.map((p) => <PostCard post={p} />)}</div>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .art { padding: 28px var(--gutter) 0; }
+  .art__head, .art__body, .art__cta { max-width: 760px; margin-inline: auto; }
+  .art__title { margin: clamp(28px, 4vw, 48px) 0 24px; font-size: clamp(32px, 4.2vw, 56px); line-height: 1.04; letter-spacing: -.03em; font-weight: 800; }
+  .art__meta { display: flex; gap: 14px; align-items: center; font-size: 15px; line-height: 1.4; }
+  .art__meta img, .art__ava { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; }
+  .art__ava { display: grid; place-items: center; background: var(--peach); font-weight: 700; font-size: 20px; }
+  .art__cover { display: block; width: 100%; max-width: 1100px; margin: clamp(28px, 4vw, 48px) auto; aspect-ratio: 16 / 8; object-fit: cover; border-radius: var(--r-xl); }
+  .art__cta { margin-top: clamp(48px, 6vw, 72px); padding: clamp(28px, 4vw, 44px); display: flex; flex-direction: column; gap: 24px; }
+  .art__cta > .photo-bg__shade { background: rgb(var(--shade) / .72); }
+  .art__cta h2 { margin: 12px 0 10px; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.1; font-weight: 800; }
+  .art__cta p { color: var(--on-dark); max-width: 52ch; }
+
+  .prose { font-size: 18px; line-height: 1.65; color: var(--ink-soft); }
+  .prose :global(> * + *) { margin-top: 1.1em; }
+  .prose :global(h2) { margin-top: 1.9em; color: var(--ink); font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; letter-spacing: -.015em; font-weight: 800; }
+  .prose :global(h3) { margin-top: 1.6em; color: var(--ink); font-size: 21px; line-height: 1.25; font-weight: 700; }
+  .prose :global(strong) { color: var(--ink); }
+  .prose :global(a) { color: var(--ink); font-weight: 500; text-underline-offset: 4px; text-decoration-color: var(--terra); text-decoration-thickness: 2px; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.3em; }
+  .prose :global(li + li) { margin-top: .4em; }
+  .prose :global(li::marker) { color: var(--terra); }
+  .prose :global(blockquote) { margin-inline: 0; padding: 20px 24px; border-radius: var(--r-m); background: var(--sand-2); color: var(--ink); }
+  .prose :global(img) { width: 100%; border-radius: var(--r-l); }
+  .prose :global(table) { width: 100%; border-collapse: collapse; font-size: 16px; }
+  @media (max-width: 600px) { .prose :global(table) { display: block; overflow-x: auto; } }
+  .prose :global(th), .prose :global(td) { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .prose :global(th) { color: var(--ink); font-weight: 600; background: var(--sand-2); }
+</style>

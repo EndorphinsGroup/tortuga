@@ -1,0 +1,55 @@
+---
+/** Written reviews from src/data/reviews.json with a filter by service. Renders nothing while the list is empty. */
+import Section from '../Section.astro';
+import data from '../../data/reviews.json';
+type R = { name: string; city?: string; date: string; service: 'surf' | 'kids' | 'plankton'; rating?: number; text: string; photo?: string; source?: string };
+const items = ([...(data.items as R[])]).sort((a, b) => b.date.localeCompare(a.date));
+const labels = { surf: 'Серфинг', kids: 'Дети', plankton: 'Планктон' } as const;
+const present = (Object.keys(labels) as (keyof typeof labels)[]).filter((k) => items.some((r) => r.service === k));
+const fmt = (d: string) => new Date(d).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
+---
+{items.length > 0 && (
+  <Section id="texts" rail="Отзывы" bold="Что пишут" light="гости">
+    {present.length > 1 && (
+      <div class="tr__filter" role="group" aria-label="Фильтр по услуге">
+        <button type="button" class="chip on" data-f="all">Все</button>
+        {present.map((k) => <button type="button" class="chip" data-f={k}>{labels[k]}</button>)}
+      </div>
+    )}
+    <div class="tr">
+      {items.map((r) => (
+        <article class="card tr__item" data-s={r.service}>
+          <header>
+            {r.photo ? <img src={r.photo} alt="" width="48" height="48" loading="lazy"> : <span class="tr__ava" aria-hidden="true">{r.name[0]}</span>}
+            <div><b>{r.name}</b>{r.city && <span class="muted">, {r.city}</span>}<br><span class="muted">{fmt(r.date)} · {labels[r.service]}</span></div>
+          </header>
+          {r.rating && <span class="tr__stars" aria-label={`Оценка ${r.rating} из 5`}>{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</span>}
+          <p>{r.text}</p>
+          {r.source && <span class="muted tr__src">{r.source}</span>}
+        </article>
+      ))}
+    </div>
+  </Section>
+)}
+
+<style>
+  .tr__filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .tr__filter .chip { border: 0; cursor: pointer; font: inherit; font-size: 15px; padding: 8px 16px; }
+  .tr__filter .chip.on { background: var(--ink); color: var(--cream); }
+  .tr { columns: 3 320px; column-gap: var(--gap); }
+  .tr__item { break-inside: avoid; margin-bottom: var(--gap); display: flex; flex-direction: column; gap: 12px; }
+  .tr__item[hidden] { display: none; }
+  .tr__item header { display: flex; gap: 12px; align-items: center; font-size: 15px; line-height: 1.35; }
+  .tr__item img, .tr__ava { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: none; }
+  .tr__ava { display: grid; place-items: center; background: var(--peach); font-weight: 700; }
+  .tr__stars { color: var(--terra); letter-spacing: 2px; }
+  .tr__src { font-size: 14px; }
+</style>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.tr__filter button');
+  btns.forEach((b) => b.addEventListener('click', () => {
+    btns.forEach((x) => x.classList.toggle('on', x === b));
+    document.querySelectorAll<HTMLElement>('.tr__item').forEach((it) => { it.hidden = b.dataset.f !== 'all' && it.dataset.s !== b.dataset.f; });
+  }));
+</script>

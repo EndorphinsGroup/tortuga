@@ -1,0 +1,39 @@
+---
+/** External review platforms (only those with a real link) + «leave a review» card. */
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import site from '../../data/site.json';
+const placeId = site.mapsUrl.split('place_id:')[1];
+const platforms = site.reviews.filter((r) => r.href && r.href !== '#');
+---
+<Section id="platforms" rail="Площадки" bold="Отзывы" light="на площадках">
+  <div class="pf">
+    <div class="card pf__list">
+      <h3 class="h3">Где почитать</h3>
+      <p class="muted">Отзывы на картах мы не редактируем и не удаляем. В Instagram — фото и сторис гостей.</p>
+      <div class="pf__links">
+        {platforms.map((r) => <a href={r.href} target="_blank" rel="noopener">{r.label} <Icon name="out" size={18} /></a>)}
+        <a href={site.instagram} target="_blank" rel="noopener">Instagram <Icon name="out" size={18} /></a>
+      </div>
+    </div>
+    <div class="card card--dark pf__leave">
+      <h3 class="h3">Были у нас?</h3>
+      <p>Расскажите, как прошёл урок или вечер с планктоном. Отзыв на карте помогает другим туристам найти школу, а нам — понять, что улучшить.</p>
+      <div class="btns">
+        {placeId && <a class="btn btn--primary" href={`https://search.google.com/local/writereview?placeid=${placeId}`} target="_blank" rel="noopener">Оставить отзыв в Google</a>}
+        <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener">Написать в Telegram</a>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .pf { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+  .pf .card { padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 14px; min-height: 340px; }
+  .pf__links { margin-top: auto; display: flex; flex-direction: column; }
+  .pf__links a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 0; border-top: 1px solid var(--line); text-decoration: none; font-weight: 500; font-size: 18px; }
+  .pf__links a:last-child { border-bottom: 1px solid var(--line); }
+  .pf__leave p { color: var(--on-dark); max-width: 46ch; }
+  .pf__leave .btns { margin-top: auto; }
+  @media (max-width: 800px) { .pf { grid-template-columns: 1fr; } .pf .card { min-height: 0; } }
+</style>

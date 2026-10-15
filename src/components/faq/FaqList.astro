@@ -1,0 +1,119 @@
+---
+/** All questions grouped by topic: sticky topic nav + search on the left, accordions with H3 and anchors on the right. */
+import site from '../../data/site.json';
+import type { FaqGroup } from '../../lib/faq';
+interface Props { groups: FaqGroup[] }
+const { groups } = Astro.props;
+const wa = `${site.whatsapp.href}?text=${encodeURIComponent('Здравствуйте! У меня вопрос: ')}`;
+---
+<section class="sec fq" aria-label="Вопросы и ответы">
+  <span class="sec__rail">Вопросы</span>
+  <div class="wrap fq__layout">
+    <aside class="fq__side">
+      <label class="fq__search">
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8"/></svg>
+        <input type="search" placeholder="Поиск по вопросам" aria-label="Поиск по вопросам" autocomplete="off">
+      </label>
+      <nav class="fq__nav" aria-label="Темы">
+        {groups.map((g) => <a href={`#${g.id}`}>{g.title}<span>{g.items.length}</span></a>)}
+      </nav>
+    </aside>
+
+    <div class="fq__main">
+      {groups.map((g) => (
+        <div class="fq__group" id={g.id}>
+          <h2 class="fq__title">{g.title}</h2>
+          {g.items.map((f) => (
+            <details id={f.id}>
+              <summary><h3>{f.q}</h3><span class="fq__plus" aria-hidden="true">+</span></summary>
+              <div class="fq__a">
+                <p>{f.a}</p>
+                {f.link && <a class="link" href={f.link.href}>{f.link.label}</a>}
+              </div>
+            </details>
+          ))}
+        </div>
+      ))}
+      <div class="card fq__empty" hidden>
+        <b>Такого вопроса пока нет.</b>
+        <p class="muted">Напишите нам — ответим и добавим его сюда.</p>
+        <div class="btns">
+          <a class="btn btn--primary btn--sm" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_faq">Telegram</a>
+          <a class="btn btn--outline btn--sm" href={wa} target="_blank" rel="noopener" data-goal="wa_faq">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fq__layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .fq__side { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 20px; }
+  .fq__search { display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 18px; border-radius: var(--pill); background: var(--cream); box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); }
+  .fq__search:focus-within { box-shadow: inset 0 0 0 1.5px var(--terra); }
+  .fq__search input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; font-size: 16px; color: var(--ink); outline: none; }
+  .fq__nav { display: flex; flex-direction: column; }
+  .fq__nav a { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); text-decoration: none; font-weight: 500; }
+  .fq__nav a:last-child { border-bottom: 1px solid var(--line); }
+  .fq__nav a:hover, .fq__nav a.on { color: var(--terra); }
+  .fq__nav span { color: var(--muted-2); font-weight: 400; font-variant-numeric: tabular-nums; }
+  .fq__group { scroll-margin-top: 100px; }
+  .fq__group + .fq__group { margin-top: clamp(48px, 6vw, 80px); }
+  .fq__title { text-transform: uppercase; font-size: clamp(26px, 2.6vw, 38px); line-height: 1; letter-spacing: -.02em; font-weight: 800; margin-bottom: 12px; }
+  details { border-top: 1px solid var(--line); scroll-margin-top: 100px; }
+  .fq__group details:last-of-type { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 22px 0; }
+  summary::-webkit-details-marker { display: none; }
+  summary h3 { font-size: clamp(18px, 1.5vw, 21px); font-weight: 600; line-height: 1.3; }
+  .fq__plus { font-size: 24px; font-weight: 300; line-height: 1; transition: transform .2s; }
+  details[open] .fq__plus { transform: rotate(45deg); }
+  details:target summary h3, details.hit summary h3 { color: var(--terra); }
+  .fq__a { padding: 0 0 24px; max-width: 66ch; color: var(--ink-soft); display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .fq__empty { display: flex; flex-direction: column; gap: 12px; padding: 28px; }
+  .fq__empty[hidden] { display: none; }
+  @media (max-width: 900px) {
+    .fq__layout { grid-template-columns: 1fr; }
+    .fq__side { position: static; }
+    .fq__nav { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    .fq__nav a, .fq__nav a:last-child { border: 0; padding: 8px 14px; border-radius: var(--pill); background: var(--sand-2); font-size: 15px; gap: 8px; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector('.fq')!;
+  const items = [...root.querySelectorAll<HTMLDetailsElement>('details')];
+  const groups = [...root.querySelectorAll<HTMLElement>('.fq__group')];
+  const empty = root.querySelector<HTMLElement>('.fq__empty')!;
+  const input = root.querySelector<HTMLInputElement>('.fq__search input')!;
+
+  // open the question from the link (#anchor)
+  const openHash = () => {
+    const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (el instanceof HTMLDetailsElement) { el.open = true; el.scrollIntoView({ block: 'start' }); }
+  };
+  openHash();
+  addEventListener('hashchange', openHash);
+
+  // search
+  const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е');
+  const text = items.map((d) => norm(d.textContent || ''));
+  input.addEventListener('input', () => {
+    const q = norm(input.value.trim());
+    items.forEach((d, i) => {
+      const hit = !q || text[i].includes(q);
+      d.hidden = !hit;
+      d.classList.toggle('hit', !!q && hit);
+      if (q.length >= 3) d.open = hit;
+      else if (!q) d.open = false;
+    });
+    groups.forEach((g) => { g.hidden = !g.querySelector('details:not([hidden])'); });
+    empty.hidden = !q || groups.some((g) => !g.hidden);
+  });
+
+  // highlight current topic in the nav
+  const links = new Map([...root.querySelectorAll<HTMLAnchorElement>('.fq__nav a')].map((a) => [a.hash.slice(1), a]));
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) { links.forEach((a) => a.classList.remove('on')); links.get(e.target.id)?.classList.add('on'); }
+  }), { rootMargin: '-30% 0px -60% 0px' });
+  groups.forEach((g) => io.observe(g));
+</script>

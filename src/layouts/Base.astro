@@ -5,8 +5,8 @@ import Footer from '../components/Footer.astro';
 import StickyBook from '../components/StickyBook.astro';
 import site from '../data/site.json';
 
-interface Props { title: string; description: string; canonical?: string; ogImage?: string; jsonld?: object; }
-const { title, description, canonical = site.url + Astro.url.pathname, ogImage = site.url + '/img/bg-beach.webp', jsonld } = Astro.props;
+interface Props { title: string; description: string; canonical?: string; ogImage?: string; ogType?: string; jsonld?: object; noindex?: boolean; }
+const { title, description, canonical = site.url + Astro.url.pathname, ogImage = site.url + '/img/bg-beach.webp', ogType = 'website', jsonld, noindex = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="ru">
@@ -16,7 +16,8 @@ const { title, description, canonical = site.url + Astro.url.pathname, ogImage =
   <title>{title}</title>
   <meta name="description" content={description}>
   <link rel="canonical" href={canonical}>
-  <meta property="og:type" content="website">
+  {noindex && <meta name="robots" content="noindex, follow">}
+  <meta property="og:type" content={ogType}>
   <meta property="og:locale" content="ru_RU">
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>

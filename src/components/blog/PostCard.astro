@@ -1,0 +1,29 @@
+---
+import { fmtDate, isoDate, type Post } from '../../lib/blog';
+interface Props { post: Post; big?: boolean }
+const { post, big = false } = Astro.props;
+const d = post.data;
+---
+<a class:list={['pc', { 'pc--big': big }]} href={`/blog/${post.id}/`}>
+  <img src={d.cover} alt={d.coverAlt} loading="lazy">
+  <div class="pc__body">
+    <time datetime={isoDate(d.date)} class="muted">{fmtDate(d.date)}</time>
+    <h3>{d.h1}</h3>
+    <p class="muted">{d.description}</p>
+  </div>
+</a>
+
+<style>
+  .pc { display: flex; flex-direction: column; border-radius: var(--r-l); overflow: hidden; background: var(--sand-2); text-decoration: none; color: var(--ink); transition: transform .2s; }
+  .pc:hover { transform: translateY(-3px); }
+  .pc img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .pc__body { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 10px; }
+  .pc time { font-size: 14px; }
+  .pc h3 { font-size: 21px; line-height: 1.25; font-weight: 700; }
+  .pc p { font-size: 15px; }
+  .pc--big { display: grid; grid-template-columns: 1.3fr 1fr; }
+  .pc--big img { height: 100%; aspect-ratio: auto; min-height: 340px; }
+  .pc--big .pc__body { justify-content: center; padding: clamp(24px, 3vw, 48px); }
+  .pc--big h3 { font-size: clamp(24px, 2.4vw, 34px); }
+  @media (max-width: 800px) { .pc--big { display: flex; } .pc--big img { min-height: 0; aspect-ratio: 16 / 10; } }
+</style>

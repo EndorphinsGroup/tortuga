@@ -7,10 +7,12 @@ interface Props {
   title: { text: string; light?: boolean }[];
   lead: string;
   facts?: [string, string][];
+  /** Shorter hero for info pages (FAQ, отзывы, блог). */
+  compact?: boolean;
 }
-const { img, alt, crumbs, title, lead, facts = [] } = Astro.props;
+const { img, alt, crumbs, title, lead, facts = [], compact = false } = Astro.props;
 ---
-<section class="phero photo-bg">
+<section class:list={['phero photo-bg', { 'phero--compact': compact }]}>
   <img class="photo-bg__img" src={img} alt={alt} fetchpriority="high">
   <span class="photo-bg__shade"></span>
   <Crumbs items={crumbs} dark />
@@ -35,8 +37,12 @@ const { img, alt, crumbs, title, lead, facts = [] } = Astro.props;
   .phero__lead { margin: clamp(14px, 2.6vh, 28px) 0 clamp(16px, 3vh, 32px); font-size: clamp(16px, 1.3vw, 19px); max-width: 52ch; color: var(--on-dark); }
   .phero__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: clamp(16px, 3vh, 32px); max-width: var(--max); font-size: 14px; line-height: 1.35; color: var(--on-dark); }
   .phero__facts b { display: block; color: #fff; font-size: 19px; margin-bottom: 2px; }
+  .phero--compact { min-height: min(62vh, 560px); }
+  .phero--compact .phero__title { font-size: clamp(34px, min(4.6vw, 8vh), 72px); }
   @media (max-width: 900px) {
     .phero { min-height: calc(100svh - 74px); padding-left: var(--gutter); }
+    .phero--compact { min-height: 0; padding-bottom: 32px; }
+    .phero--compact .photo-bg__shade { background: rgb(var(--shade) / .7); }
     .phero__facts { grid-template-columns: 1fr 1fr; }
   }
 </style>
