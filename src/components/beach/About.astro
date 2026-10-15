@@ -1,0 +1,18 @@
+---
+import Section from '../Section.astro';
+import b from '../../data/beach.json';
+---
+<Section rail="Где это" bold="Где" light="находится">
+  <div class="bab">
+    <div class="bab__text">
+      {b.about.map((t, i) => <p class:list={{ muted: i > 0 }}>{t}</p>)}
+      <p class="bab__note">{b.notPhuQuoc}</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .bab { max-width: 880px; }
+  .bab__text { display: flex; flex-direction: column; gap: 18px; font-size: clamp(19px, 1.6vw, 23px); line-height: 1.45; }
+  .bab__note { align-self: flex-start; font-size: 16px; padding: 14px 18px; border-left: 3px solid var(--terra); background: var(--cream); border-radius: 0 var(--r-m) var(--r-m) 0; color: var(--ink-soft); }
+</style>

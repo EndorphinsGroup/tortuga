@@ -1,0 +1,32 @@
+---
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import b from '../../data/beach.json';
+---
+<Section rail="Что делать" bold="Что делать" light="на пляже">
+  <div class="todo">
+    {b.todo.map((t) => (
+      <a class="todo__card" href={t.href}>
+        <span class="todo__img"><img src={t.img} alt={t.alt} loading="lazy"></span>
+        <span class="todo__body">
+          <b>{t.title}</b>
+          <span>{t.text}</span>
+          <span class="todo__link">{t.link} <Icon name="arrow" size={18} /></span>
+        </span>
+      </a>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .todo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+  .todo__card { display: flex; flex-direction: column; border-radius: var(--r-l); overflow: hidden; background: var(--sand-2); text-decoration: none; }
+  .todo__img { position: relative; aspect-ratio: 4 / 3; }
+  .todo__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .todo__card:hover img { transform: scale(1.04); }
+  .todo__body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; font-size: 15px; color: var(--ink-soft); }
+  .todo__body b { font-size: 20px; color: var(--ink); }
+  .todo__link { margin-top: auto; padding-top: 8px; display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--terra); }
+  @media (max-width: 1000px) { .todo { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .todo { grid-template-columns: 1fr; } }
+</style>

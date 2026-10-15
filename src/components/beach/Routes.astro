@@ -1,0 +1,66 @@
+---
+import Section from '../Section.astro';
+import b from '../../data/beach.json';
+import site from '../../data/site.json';
+---
+<Section id="kak-dobratsya" rail="Как добраться" bold="Как" light="добраться">
+  <div class="rt" role="region" aria-label="Способы добраться до пляжа Бай Дай" tabindex="0">
+    <table>
+      <thead><tr><th scope="col">Как</th><th scope="col">Откуда</th><th scope="col">Время в пути</th><th scope="col">Стоимость</th></tr></thead>
+      <tbody>
+        {b.routes.map((r) => (
+          <tr class:list={{ accent: r.accent }}>
+            <th scope="row">{r.how}</th>
+            <td data-label="Откуда">{r.from}</td>
+            <td data-label="Время">{r.time}</td>
+            <td data-label="Стоимость">{r.price}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="rmap">
+    <div class="card rnotes">
+      <h3 class="h3">Полезно знать</h3>
+      <ul>{b.routeNotes.map((n) => <li>{n}</li>)}</ul>
+      <div class="raddr">
+        <span class="muted">Точка встречи — база Tortuga</span>
+        <b>{site.address}</b>
+        <a class="btn btn--dark btn--sm" href={site.mapsUrl} target="_blank" rel="noopener">Открыть в Google Картах</a>
+      </div>
+    </div>
+    <iframe title="База Tortuga на пляже Бай Дай" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src={`https://www.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=13&output=embed`}></iframe>
+  </div>
+</Section>
+
+<style>
+  .rt { overflow-x: auto; border-radius: var(--r-l); background: var(--sand-2); }
+  .rt table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  .rt th, .rt td { padding: 18px 22px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+  .rt tr:last-child > * { border-bottom: 0; }
+  .rt thead th { font-size: 14px; font-weight: 500; color: var(--muted); }
+  .rt tbody th { font-weight: 700; white-space: nowrap; }
+  .rt td { color: var(--ink-soft); }
+  .rt tr.accent { background: var(--sea); }
+  .rt tr.accent > * { color: #fff; border-bottom-color: rgb(255 255 255 / .15); }
+  .rt tr.accent td:last-child { font-weight: 700; }
+  @media (max-width: 760px) {
+    .rt { background: none; overflow: visible; }
+    .rt thead { display: none; }
+    .rt table, .rt tbody { display: block; }
+    .rt tr { display: grid; grid-template-columns: 1fr; gap: 6px; background: var(--sand-2); border-radius: var(--r-m); padding: 16px 18px; margin-bottom: 10px; }
+    .rt th, .rt td { padding: 0; border: 0; }
+    .rt tbody th { font-size: 18px; white-space: normal; }
+    .rt td::before { content: attr(data-label) ': '; color: var(--muted); }
+    .rt tr.accent td::before { color: var(--on-dark); }
+  }
+
+  .rmap { margin-top: var(--gap); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--gap); }
+  .rnotes { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .rnotes ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--ink-soft); }
+  .raddr { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .raddr span { font-size: 14px; }
+  .raddr .btn { align-self: flex-start; margin-top: 8px; }
+  iframe { width: 100%; height: 100%; min-height: 420px; border: 0; border-radius: var(--r-l); background: var(--sand-3); }
+</style>

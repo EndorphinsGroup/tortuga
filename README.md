@@ -69,3 +69,13 @@ npm run build    # готовый сайт в dist/
 | Порядок блоков, Title, description, JSON-LD | `src/pages/svetyashchijsya-plankton/index.astro` |
 
 Кадры `public/img/pl-*.webp` вырезаны из видеоотзыва `guest-plankton.mp4` — заменить на фото школы, когда будут.
+
+## Страница «Пляж Бай Дай» — /plyazh-bai-dai/
+
+| Что | Файл |
+| --- | --- |
+| Тексты, таблица «как добраться» (время и цены), «полезно знать», «что делать», вопросы | `src/data/beach.json` |
+| Блоки страницы | `src/components/beach/*.astro` + общие Seasons, Faq, FinalCta |
+| Порядок блоков, Title, description, JSON-LD | `src/pages/plyazh-bai-dai/index.astro` |
+
+Цены на Grab, такси, байк и автобус — примерные на 2026 год, обновлять раз в сезон.
