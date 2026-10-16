@@ -16,6 +16,7 @@ import Route from '../components/home/Route.astro';
 import Seasons from '../components/home/Seasons.astro';
 import Faq from '../components/home/Faq.astro';
 import FinalCta from '../components/home/FinalCta.astro';
+import Schedule from '../components/Schedule.astro';
 import site from '../data/site.json';
 import prices from '../data/prices.json';
 import faq from '../data/faq.json';
@@ -47,6 +48,7 @@ const jsonld = {
   <Hero />
   <About />
   <Prices />
+  <Schedule light="даты" />
   <Passes />
   <Quiz />
   <CampMap />

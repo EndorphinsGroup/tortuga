@@ -1,5 +1,6 @@
 ---
 /** All questions grouped by topic: sticky topic nav + search on the left, accordions with H3 and anchors on the right. */
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 import type { FaqGroup } from '../../lib/faq';
 interface Props { groups: FaqGroup[] }
@@ -38,7 +39,7 @@ const wa = `${site.whatsapp.href}?text=${encodeURIComponent('Здравству�
         <b>Такого вопроса пока нет.</b>
         <p class="muted">Напишите нам — ответим и добавим его сюда.</p>
         <div class="btns">
-          <a class="btn btn--primary btn--sm" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_faq">Telegram</a>
+          <a class="btn btn--primary btn--sm" href={bot()} target="_blank" rel="noopener" data-goal="tg_faq">Telegram</a>
           <a class="btn btn--outline btn--sm" href={wa} target="_blank" rel="noopener" data-goal="wa_faq">WhatsApp</a>
         </div>
       </div>

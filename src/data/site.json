@@ -3,6 +3,7 @@
   "url": "https://tortuga-surf.com",
   "phone": { "label": "+84 77 597 3710", "href": "tel:+84775973710" },
   "telegram": { "label": "@Tortuga_Surf", "href": "https://t.me/Tortuga_Surf" },
+  "bot": { "username": "TortugaSurfBot", "href": "https://t.me/TortugaSurfBot" },
   "whatsapp": { "label": "+7 999 781 01 46", "href": "https://wa.me/79997810146", "text": "Здравствуйте! Хочу на урок серфинга" },
   "email": "tortuga.surfcamp@gmail.com",
   "instagram": "https://www.instagram.com/tortuga_surf_camp/",

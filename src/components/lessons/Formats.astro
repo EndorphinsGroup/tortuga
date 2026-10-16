@@ -2,6 +2,7 @@
 import Section from '../Section.astro';
 import prices from '../../data/prices.json';
 import lessons from '../../data/lessons.json';
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 const names: Record<string, string> = { individual: 'Индивидуальный урок', pair: 'Парный урок', group: 'Групповой урок' };
 const anchors: Record<string, string> = { individual: 'individualnyj', pair: 'parnyj', group: 'gruppovoj' };
@@ -22,7 +23,7 @@ const msg = (t: string) => `${site.whatsapp.href}?text=${encodeURIComponent(`З�
           <p>{l.text}</p>
           <p>{l.fit}</p>
           <div class="fmt__btns">
-            <a class:list={['btn', l.featured ? 'btn--primary' : 'btn--dark']} href={site.telegram.href} target="_blank" rel="noopener" data-goal={`tg_lesson_${l.id}`}>Telegram</a>
+            <a class:list={['btn', l.featured ? 'btn--primary' : 'btn--dark']} href={bot(l.id)} target="_blank" rel="noopener" data-goal={`tg_lesson_${l.id}`}>Telegram</a>
             <a class:list={['btn', l.featured ? 'btn--light' : 'btn--outline']} href={msg(names[l.id])} target="_blank" rel="noopener" data-goal={`wa_lesson_${l.id}`}>WhatsApp</a>
           </div>
         </div>

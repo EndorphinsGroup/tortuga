@@ -1,5 +1,6 @@
 ---
 import Crumbs from '../Crumbs.astro';
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 import prices from '../../data/prices.json';
 const wa = `${site.whatsapp.href}?text=${encodeURIComponent('Здравствуйте! Хочу на светящийся планктон, дата: ')}`;
@@ -21,7 +22,7 @@ const dots = Array.from({ length: 140 }, () => ({
     <p class="nhero__lead">Ночная экскурсия на пляже Бай Дай. Выходим на сапах в тёмное море, ныряем с маской — и вода светится от каждого движения. Потом горячий душ и BBQ-ужин на базе.</p>
     <div class="btns">
       <a class="btn btn--primary" href={wa} target="_blank" rel="noopener" data-goal="wa_plankton_hero">Записаться</a>
-      <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_plankton_hero">Написать в Telegram</a>
+      <a class="btn btn--ghost" href={bot('plank')} target="_blank" rel="noopener" data-goal="tg_plankton_hero">Написать в Telegram</a>
     </div>
   </div>
   <div class="nhero__facts">

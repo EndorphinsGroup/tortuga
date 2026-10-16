@@ -2,6 +2,7 @@
 /** External review platforms (only those with a real link) + «leave a review» card. */
 import Section from '../Section.astro';
 import Icon from '../Icon.astro';
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 const placeId = site.mapsUrl.split('place_id:')[1];
 const platforms = site.reviews.filter((r) => r.href && r.href !== '#');
@@ -21,7 +22,7 @@ const platforms = site.reviews.filter((r) => r.href && r.href !== '#');
       <p>Расскажите, как прошёл урок или вечер с планктоном. Отзыв на карте помогает другим туристам найти школу, а нам — понять, что улучшить.</p>
       <div class="btns">
         {placeId && <a class="btn btn--primary" href={`https://search.google.com/local/writereview?placeid=${placeId}`} target="_blank" rel="noopener">Оставить отзыв в Google</a>}
-        <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener">Написать в Telegram</a>
+        <a class="btn btn--ghost" href={bot()} target="_blank" rel="noopener">Написать в Telegram</a>
       </div>
     </div>
   </div>

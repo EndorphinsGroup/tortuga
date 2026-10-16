@@ -1,4 +1,5 @@
 ---
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 const levels = [['new', 'Нет, впервые'], ['some', 'Да, пару раз'], ['pro', 'Катаюсь сам']];
 const whos = [['solo', 'Один'], ['pair', 'Вдвоём'], ['kid', 'С ребёнком'], ['group', 'Компания 3–4']];
@@ -22,7 +23,7 @@ const whos = [['solo', 'Один'], ['pair', 'Вдвоём'], ['kid', 'С реб
       <b class="quiz__title" data-rec="title">Индивидуальный урок</b>
       <span class="quiz__price" data-rec="price">2 100 000 ₫ ≈ $80</span>
       <p data-rec="text">Самый быстрый старт: всё внимание инструктора вам, работа под ваш темп.</p>
-      <a class="btn btn--primary" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_quiz">Записаться на этот формат</a>
+      <a class="btn btn--primary" href={bot('q-solo')} target="_blank" rel="noopener" data-goal="tg_quiz" data-rec="link" data-bot={site.bot.href}>Записаться на этот формат</a>
     </div>
   </div>
 </section>
@@ -57,7 +58,10 @@ const whos = [['solo', 'Один'], ['pair', 'Вдвоём'], ['kid', 'С реб
   document.querySelectorAll<HTMLButtonElement>('.quiz__o').forEach((b) => b.addEventListener('click', () => {
     st[b.dataset.q!] = b.dataset.v!;
     document.querySelectorAll(`.quiz__o[data-q="${b.dataset.q}"]`).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    const [title, price, text] = RECS[pick()];
+    const key = pick();
+    const [title, price, text] = RECS[key];
+    const link = document.querySelector<HTMLAnchorElement>('[data-rec="link"]')!;
+    link.href = `${link.dataset.bot}?start=q-${key}`;
     document.querySelector('[data-rec="title"]')!.textContent = title;
     document.querySelector('[data-rec="price"]')!.textContent = price;
     document.querySelector('[data-rec="text"]')!.textContent = text;

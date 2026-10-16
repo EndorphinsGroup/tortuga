@@ -10,6 +10,7 @@ import Seasons from '../../components/home/Seasons.astro';
 import Reviews from '../../components/home/Reviews.astro';
 import Faq from '../../components/home/Faq.astro';
 import FinalCta from '../../components/home/FinalCta.astro';
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 import prices from '../../data/prices.json';
 import courses from '../../data/courses.json';
@@ -56,7 +57,7 @@ const min = prices.passes.rows[0].cells[0]!;
   >
     <div class="btns">
       <a class="btn btn--primary" href="#kakoj-kurs">Подобрать курс</a>
-      <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_courses_hero">Написать в Telegram</a>
+      <a class="btn btn--ghost" href={bot('courses')} target="_blank" rel="noopener" data-goal="tg_courses_hero">Написать в Telegram</a>
     </div>
   </PageHero>
   <Intro />
@@ -67,5 +68,5 @@ const min = prices.passes.rows[0].cells[0]!;
   <Seasons />
   <Reviews />
   <Faq items={courses.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
-  <FinalCta quiz="/#quiz" />
+  <FinalCta quiz="/#quiz" botCode="courses" />
 </Base>

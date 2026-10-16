@@ -127,3 +127,29 @@ npm run build    # готовый сайт в dist/
 | Страница 404 | `src/pages/404.astro` |
 | 301-редиректы со старых адресов Тильды | `public/_redirects` |
 | Карта сайта | `public/sitemap.xml` — новую страницу добавлять вручную |
+
+## Telegram-бот: заявки и расписание
+
+Бот живёт в этом же проекте как функции Cloudflare Pages и публикуется вместе с сайтом.
+
+| Что | Файл |
+| --- | --- |
+| Логика бота: тексты гостю, заявки админам, расписание | `bot/lib.js` |
+| Webhook Telegram | `functions/api/tg.js` → `/api/tg` |
+| Расписание для сайта (JSON) | `functions/api/schedule.js` → `/api/schedule` |
+| Разовая настройка webhook | `functions/api/tg-setup.js` → `/api/tg-setup?key=…` |
+| Имя бота и ссылка | `src/data/site.json` → `bot` |
+| Блок «Ближайшие даты» на главной, уроках, планктоне | `src/components/Schedule.astro` |
+| Ссылка записи с кодом выбора | `src/lib/bot.ts` → `bot('individual')` |
+
+Как работает:
+- Кнопка «Записаться» ведёт в бота с кодом: `t.me/<бот>?start=individual`. Коды — `bot/lib.js` → `LABELS` (`individual`, `pair`, `group`, `kids`, `rent`, `plank`, `courses`, `c5`, `q-solo`…, `s-<слот>`).
+- Гость видит, что выбрал, пишет дату. Админам приходит заявка с именем и ссылкой на гостя; ответ через Reply уходит гостю от имени бота.
+- Админы (`ADMINS`) кнопками добавляют и удаляют слоты; через минуту они появляются на сайте. Прошедшие слоты удаляются сами.
+- «👤 Режим гостя» — админ на 24 часа видит бота как клиент (для теста), `/admin` — назад.
+
+Настройка в Cloudflare Pages (Settings):
+1. Workers KV → создать namespace `tortuga-bot`; Settings → Bindings → KV namespace: имя переменной `BOT`.
+2. Variables and Secrets: `BOT_TOKEN` (секрет, от @BotFather), `WEBHOOK_SECRET` (секрет, любая длинная строка из букв и цифр), `ADMINS` = `Dikii_Voodoo,luffy19413`.
+3. Передеплоить сайт, открыть `https://<сайт>/api/tg-setup?key=<WEBHOOK_SECRET>` — бот подключён.
+4. Каждый админ один раз жмёт в боте «Старт».

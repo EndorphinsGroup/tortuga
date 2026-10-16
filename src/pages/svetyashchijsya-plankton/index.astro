@@ -8,6 +8,7 @@ import Media from '../../components/plankton/Media.astro';
 import Cross from '../../components/plankton/Cross.astro';
 import Faq from '../../components/home/Faq.astro';
 import FinalCta from '../../components/home/FinalCta.astro';
+import Schedule from '../../components/Schedule.astro';
 import site from '../../data/site.json';
 import prices from '../../data/prices.json';
 import p from '../../data/plankton.json';
@@ -39,9 +40,10 @@ const jsonld = {
   <Hero />
   <About />
   <Program />
+  <Schedule kind="plank" light="выходы" />
   <Fit />
   <Media />
   <Cross />
   <Faq items={p.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
-  <FinalCta quiz="" light="Напишите дату —" bold="поедем к планктону" waText="Здравствуйте! Хочу на светящийся планктон, дата: " />
+  <FinalCta quiz="" light="Напишите дату —" bold="поедем к планктону" waText="Здравствуйте! Хочу на светящийся планктон, дата: " botCode="plank" />
 </Base>

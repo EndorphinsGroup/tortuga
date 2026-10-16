@@ -10,6 +10,8 @@ import Next from '../../components/lessons/Next.astro';
 import Reviews from '../../components/home/Reviews.astro';
 import Faq from '../../components/home/Faq.astro';
 import FinalCta from '../../components/home/FinalCta.astro';
+import Schedule from '../../components/Schedule.astro';
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 import prices from '../../data/prices.json';
 import lessons from '../../data/lessons.json';
@@ -56,11 +58,12 @@ const jsonld = {
   >
     <div class="btns">
       <a class="btn btn--primary" href="#formaty">Выбрать формат</a>
-      <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_lessons_hero">Написать в Telegram</a>
+      <a class="btn btn--ghost" href={bot('individual')} target="_blank" rel="noopener" data-goal="tg_lessons_hero">Написать в Telegram</a>
     </div>
   </PageHero>
   <Intro />
   <Formats />
+  <Schedule kind="surf" />
   <Included />
   <Steps />
   <Kids />

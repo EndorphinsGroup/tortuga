@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Crumbs from '../../components/Crumbs.astro';
 import PostCard from '../../components/blog/PostCard.astro';
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 import authors from '../../data/authors.json';
 import { render } from 'astro:content';
@@ -64,7 +65,7 @@ const jsonld = {
       </div>
       <div class="btns">
         <a class="btn btn--primary" href={cta.href}>{cta.btn}</a>
-        <a class="btn btn--ghost" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_blog">Спросить в Telegram</a>
+        <a class="btn btn--ghost" href={bot()} target="_blank" rel="noopener" data-goal="tg_blog">Спросить в Telegram</a>
       </div>
     </aside>
   </article>

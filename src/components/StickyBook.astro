@@ -1,9 +1,10 @@
 ---
+import { bot } from '../lib/bot';
 import site from '../data/site.json';
 const wa = `${site.whatsapp.href}?text=${encodeURIComponent(site.whatsapp.text)}`;
 ---
 <div class="sticky" aria-label="Записаться">
-  <a class="btn btn--primary" href={site.telegram.href} target="_blank" rel="noopener" data-goal="tg_sticky">Telegram</a>
+  <a class="btn btn--primary" href={bot()} target="_blank" rel="noopener" data-goal="tg_sticky">Telegram</a>
   <a class="btn btn--light" href={wa} target="_blank" rel="noopener" data-goal="wa_sticky">WhatsApp</a>
 </div>
 

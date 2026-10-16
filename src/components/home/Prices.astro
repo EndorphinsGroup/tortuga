@@ -2,6 +2,7 @@
 import Section from '../Section.astro';
 import Icon from '../Icon.astro';
 import prices from '../../data/prices.json';
+import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 ---
 <Section id="prices" rail="Форматы и цены" bold="Форматы" light="и цены" lead={prices.note}>
@@ -17,7 +18,7 @@ import site from '../../data/site.json';
           <p class="lesson__price">{l.from && 'от '}{l.vnd} ₫ <span>≈ ${l.usd}</span></p>
           <p>{l.text}</p>
           <p>{l.fit}</p>
-          <a class:list={['btn', l.featured ? 'btn--primary' : 'btn--dark']} href={site.telegram.href} target="_blank" rel="noopener" data-goal={`tg_${l.id}`}>Записаться</a>
+          <a class:list={['btn', l.featured ? 'btn--primary' : 'btn--dark']} href={bot(l.id)} target="_blank" rel="noopener" data-goal={`tg_${l.id}`}>Записаться</a>
         </div>
       </article>
     ))}
