@@ -11,9 +11,8 @@ import Reviews from '../../components/home/Reviews.astro';
 import Faq from '../../components/home/Faq.astro';
 import FinalCta from '../../components/home/FinalCta.astro';
 import Schedule from '../../components/Schedule.astro';
-import Quiz from '../../components/Quiz.astro';
+import SurfQuiz from '../../components/SurfQuiz.astro';
 import Passes from '../../components/lessons/Passes.astro';
-import { lessonsQuiz } from '../../lib/quizzes';
 import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 import prices from '../../data/prices.json';
@@ -65,7 +64,7 @@ const jsonld = {
     </div>
   </PageHero>
   <Intro />
-  <Quiz {...lessonsQuiz} />
+  <SurfQuiz id="podbor-uroka" />
   <Formats />
   <Schedule kind="surf" />
   <Passes />

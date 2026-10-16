@@ -64,8 +64,19 @@ export function labelFor(code, slots = []) {
   }
   if (/^c\d+$/.test(code)) return `Абонемент на ${code.slice(1)} уроков`;
   const pass = code.match(/^p-(group|pair|individual)(\d+)$/);
-  if (pass) return `Абонемент: ${PASS[pass[1]]}, ${pass[2]} уроков`;
+  if (pass) return `Абонемент: ${PASS[pass[1]]}, ${pass[2]} ${+pass[2] < 5 ? 'урока' : 'уроков'}`;
   if (code.startsWith('k-') && COURSES[code.slice(2)]) return `Курс ${COURSES[code.slice(2)]}`;
+  const q = code.match(/^q-(new|some|pro)-(solo|pair|kid|group)-(week|two|four|month)-([a-z0-9]+?)(-pl)?$/);
+  if (q) {
+    const LV = { new: 'впервые', some: 'вставал пару раз', pro: 'катается сам' };
+    const WH = { solo: 'один', pair: 'вдвоём', kid: 'с ребёнком', group: 'компания 3–4' };
+    const ST = { week: 'до недели', two: '1–2 недели', four: '2–4 недели', month: 'месяц и больше' };
+    const f = { solo: 'individual', pair: 'pair', group: 'group', kid: 'individual' }[q[2]];
+    const r = q[4];
+    const rec = r === 's' ? LABELS[f] : r === 'rent' ? 'Аренда доски' : r === 'kids' ? 'Детский урок'
+      : /^p\d+$/.test(r) ? `Абонемент: ${PASS[f]}, ${r.slice(1)} ${+r.slice(1) < 5 ? 'урока' : 'уроков'}` : r.startsWith('k') && COURSES[r.slice(1)] ? `Курс ${COURSES[r.slice(1)]}` : 'Подбор';
+    return `${rec}${q[5] ? ' + светящийся планктон' : ''} (квиз: ${LV[q[1]]} · ${WH[q[2]]} · ${ST[q[3]]})`;
+  }
   return LABELS[code] || 'Запись с сайта';
 }
 

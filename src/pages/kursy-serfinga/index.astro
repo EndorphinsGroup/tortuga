@@ -4,8 +4,7 @@ import PageHero from '../../components/PageHero.astro';
 import Intro from '../../components/courses/Intro.astro';
 import Levels from '../../components/courses/Levels.astro';
 import Glossary from '../../components/courses/Glossary.astro';
-import Quiz from '../../components/Quiz.astro';
-import { coursesQuiz } from '../../lib/quizzes';
+import SurfQuiz from '../../components/SurfQuiz.astro';
 import Riders from '../../components/home/Riders.astro';
 import Seasons from '../../components/home/Seasons.astro';
 import Reviews from '../../components/home/Reviews.astro';
@@ -60,7 +59,7 @@ const min = prices.courses[0];
     </div>
   </PageHero>
   <Intro />
-  <Quiz {...coursesQuiz} />
+  <SurfQuiz id="podbor-kursa" rail="Какой курс подходит" bold="Какой курс" light="вам подходит" level="some" />
   <Levels />
   <Riders img="/img/kursy-sami.webp" alt="База школы: навесы, доски и мотобайки под деревьями" flip={false} />
   <Glossary />

@@ -1,22 +1,22 @@
 ---
 import Section from '../Section.astro';
 const zones = [
-  { id: 'base', name: 'Домик', left: 15.2, top: 48.8, img: '/img/z-base.webp', alt: 'Домик базы: стеклянный фасад, SUP-доски у стены',
+  { id: 'base', name: 'Домик', left: 9.2, top: 47.5, img: '/img/z-base.webp', alt: 'Домик базы: стеклянный фасад, SUP-доски у стены',
     text: 'Здесь переодеваются, подбирают лайкру или гидрокостюм и оставляют вещи на время урока. После воды — горячий душ.',
     chips: ['Горячий душ', 'Туалет', 'Переодевалка', 'Хранение вещей', 'Парковка байков'] },
-  { id: 'lounge', name: 'Лаундж', left: 43.9, top: 76.9, img: '/img/z-lounge.webp', alt: 'Лаундж под навесом у домика: кресла и диваны с подушками',
+  { id: 'lounge', name: 'Лаундж', left: 41.3, top: 81.6, img: '/img/z-lounge.webp', alt: 'Лаундж под навесом у домика: кресла и диваны с подушками',
     text: 'Терраса под навесом: диванчики, гамаки, кухня. Тут обедают после урока, знакомятся и ждут трансфер. Рядом обычно дремлет Калипсо — риджбек базы.',
     chips: ['Тень', 'Wi-Fi', 'Кухня', 'Вегетарианское меню'] },
-  { id: 'bbq', name: 'Гриль', left: 53.8, top: 56.8, img: '/img/z-bbq.webp', alt: 'Беседка с круглым столом, барной стойкой и каменным грилем',
+  { id: 'bbq', name: 'Гриль', left: 57.8, top: 60.3, img: '/img/z-bbq.webp', alt: 'Беседка с круглым столом, барной стойкой и каменным грилем',
     text: 'Беседка в глубине сада: каменный гриль, барная стойка и большой круглый стол. После ночной SUP-прогулки к светящемуся планктону здесь накрывают BBQ-ужин.',
     chips: ['BBQ-ужин', 'Стол на компанию'], link: { href: '/svetyashchijsya-plankton/', label: 'ночная экскурсия к светящемуся планктону' } },
-  { id: 'surf', name: 'Серф-пойнт', left: 42.9, top: 9.8, img: '/img/z-surf.webp', alt: 'Пляж с досками для серфинга и зонтом',
+  { id: 'surf', name: 'Серф-пойнт', left: 43.2, top: 12.8, img: '/img/z-surf.webp', alt: 'Пляж с досками для серфинга и зонтом',
     text: 'Из арки — направо по дороге, и через пару минут пляж. Песчаное дно, пологий вход, новички учатся в пене у берега. Пока вы в воде, близкие ждут в тени.',
     chips: ['Душ', 'Туалет', 'Переодевалка', 'Шезлонги в тени', 'Бар и Wi-Fi', 'Спасатель и аптечка'] },
-  { id: 'parking', name: 'Парковка', left: 69.5, top: 86,
+  { id: 'parking', name: 'Парковка', left: 68.0, top: 93.7,
     text: 'Байк оставляете на базе — за забором и под присмотром, а не на пляже, откуда их угоняют. До серф-пойнта пара минут пешком.',
     chips: ['Под присмотром', 'За забором', 'Камеры'] },
-  { id: 'kalipso', name: 'Калипсо', left: 31.8, top: 64,
+  { id: 'kalipso', name: 'Калипсо', left: 29.1, top: 83.3,
     text: 'Риджбек, который живёт на базе. Днём обычно дремлет в тени у лаунджа и встречает гостей. Со своим дружелюбным питомцем приезжать тоже можно — только предупредите заранее.',
     chips: ['Живёт на базе', 'Можно с питомцами'] },
 ];
@@ -25,7 +25,7 @@ const zones = [
   <div class="split camp">
     <div class="main camp__map">
       <div class="camp__in">
-        <img src="/img/map-camp.webp" alt="Иллюстрация базы Tortuga: арка у дороги, домик слева, лаундж и беседка с грилем в саду, серф-пойнт на пляже за деревьями" loading="lazy">
+        <img src="/img/map-camp.webp" alt="Иллюстрация базы Tortuga: арка у дороги, домик, лаундж и беседка с грилем в саду, парковка байков, серф-пойнт на пляже за деревьями" loading="lazy">
         {zones.map((z, i) => (
           <button type="button" class:list={['spot', { 'spot--right': z.right }]} data-zone={z.id} aria-pressed={String(i === 0)} style={`left:${z.left}%;top:${z.top}%`}>
             <span class="spot__dot"><span class="spot__ping"></span></span><span class="spot__name">{z.name}</span>
@@ -54,7 +54,7 @@ const zones = [
 
 <style>
   .camp__map { border-radius: var(--r-l); overflow: hidden; align-self: flex-start; }
-  .camp__in { position: relative; aspect-ratio: 1900 / 1070; }
+  .camp__in { position: relative; aspect-ratio: 2060 / 1410; }
   .camp__in > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .spot { position: absolute; transform: translate(-8px, -50%); display: flex; align-items: center; gap: 6px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; }
   .spot--right { flex-direction: row-reverse; transform: translate(calc(-100% + 8px), -50%); }
@@ -66,7 +66,10 @@ const zones = [
   .spot[aria-pressed="true"] .spot__name { background: var(--sea); color: #fff; }
   @keyframes ping { from { transform: scale(1); opacity: .9; } to { transform: scale(2.4); opacity: 0; } }
   .camp__card { background: var(--sand-2); border-radius: var(--r-l); overflow: hidden; }
-  .zone > img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .camp__card { display: flex; flex-direction: column; }
+  .zone { flex: 1; display: flex; flex-direction: column; }
+  .zone > img { width: 100%; flex: 1 1 0; min-height: 200px; object-fit: cover; }
+  @media (max-width: 700px) { .zone > img { flex: none; aspect-ratio: 16 / 10; min-height: 0; } }
   .zone__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; font-size: 16px; color: var(--ink-soft); }
   .zone__body .h3 { font-size: 26px; color: var(--ink); }
   .zone:not([hidden]) { animation: zin .28s ease-out; }
