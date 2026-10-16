@@ -15,19 +15,20 @@ export const homeQuiz = {
   bold: 'Подберём', light: 'урок',
   questions: [
     { key: 'level', legend: 'Вы уже стояли на доске?', options: [['new', 'Нет, впервые'], ['some', 'Да, пару раз'], ['pro', 'Катаюсь сам']] as [string, string][] },
-    { key: 'who', legend: 'Кто едет?', options: [['solo', 'Один'], ['pair', 'Вдвоём'], ['kid', 'С ребёнком'], ['group', 'Компания 3–4']] as [string, string][] },
+    { key: 'who', legend: 'Кто едет?', options: [['solo', 'Один'], ['pair', 'Вдвоём'], ['kid', 'С ребёнком'], ['group', 'Компания 3–4']] as [string, string][], show: { level: ['new'] } },
+    { key: 'days', legend: 'Сколько дней вы в Нячанге?', options: [['week', 'До недели'], ['two', 'Около 2 недель'], ['month', 'Месяц и больше']] as [string, string][], show: { level: ['some', 'pro'] } },
   ],
   recs: {
     solo: single('individual', 'Самый быстрый старт: всё внимание инструктора вам, работа под ваш темп.', 'q-solo'),
     pair: single('pair', 'Вы вдвоём и инструктор: больше внимания, чем в группе, одинаковый темп.', 'q-pair'),
     group: single('group', `До 4 человек на инструктора. ${prices.discount}`, 'q-group'),
     kid: single('kids', '1,5 или 2,5 часа, до двух детей на инструктора. Пока ребёнок в воде, вы ждёте в тени на пляже.', 'q-kid'),
-    some: { title: 'Курс для продолжающих', price: `от ${prices.courses[0].vnd} ₫ ≈ $${prices.courses[0].usd}`, text: 'Уроки в группе плюс аренда доски для самостоятельной практики. Подберём курс по вашему уровню и длине отпуска.', href: '/kursy-serfinga/#podbor-kursa', cta: 'Подобрать курс' },
-    pro: course('pro'),
+    holiday: course('holiday'), junior: course('junior'), pro: course('pro'), guru: course('guru'),
   },
   rules: [
-    { if: { level: 'pro' }, rec: 'pro' }, { if: { who: 'kid' }, rec: 'kid' }, { if: { level: 'some' }, rec: 'some' },
-    { if: { who: 'group' }, rec: 'group' }, { if: { who: 'pair' }, rec: 'pair' }, { if: {}, rec: 'solo' },
+    { if: { level: 'some', days: 'week' }, rec: 'holiday' }, { if: { level: 'some' }, rec: 'junior' },
+    { if: { level: 'pro', days: 'month' }, rec: 'guru' }, { if: { level: 'pro' }, rec: 'pro' },
+    { if: { who: 'kid' }, rec: 'kid' }, { if: { who: 'group' }, rec: 'group' }, { if: { who: 'pair' }, rec: 'pair' }, { if: {}, rec: 'solo' },
   ],
 };
 

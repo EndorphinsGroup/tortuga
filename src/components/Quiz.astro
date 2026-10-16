@@ -5,13 +5,15 @@ type Opt = [string, string];
 type Rec = { title: string; price?: string; text: string; code?: string; href?: string; cta?: string };
 interface Props {
   id?: string; rail?: string; bold: string; light?: string;
-  questions: { key: string; legend: string; options: Opt[] }[];
+  /** show: вопрос виден, только если ответ на другой вопрос входит в список, например { level: ['new'] }. */
+  questions: { key: string; legend: string; options: Opt[]; show?: Record<string, string[]> }[];
   recs: Record<string, Rec>;
   rules: { if: Record<string, string>; rec: string }[];
 }
 const { id = 'quiz', rail = 'Подбор', bold, light, questions, recs, rules } = Astro.props;
 const init = Object.fromEntries(questions.map((q) => [q.key, q.options[0][0]]));
 const first = recs[rules.find((r) => Object.entries(r.if).every(([k, v]) => init[k] === v))!.rec];
+const visible = (show?: Record<string, string[]>) => !show || Object.entries(show).every(([k, v]) => v.includes(init[k]));
 const link = (r: Rec) => r.href ?? `${site.bot.href}?start=${r.code ?? 'q'}`;
 ---
 <section id={id} class="sec">
@@ -20,7 +22,7 @@ const link = (r: Rec) => r.href ?? `${site.bot.href}?start=${r.code ?? 'q'}`;
     <div class="quiz__q">
       <h2 class="h2">{bold}{light && <span class="l"> {light}</span>}</h2>
       {questions.map((q) => (
-        <fieldset>
+        <fieldset data-show={q.show ? JSON.stringify(q.show) : undefined} hidden={!visible(q.show)}>
           <legend>{q.legend}</legend>
           <div class="quiz__opts">{q.options.map(([v, t], i) => <button type="button" class="quiz__o" data-q={q.key} data-v={v} aria-pressed={String(i === 0)}>{t}</button>)}</div>
         </fieldset>
@@ -62,6 +64,10 @@ const link = (r: Rec) => r.href ?? `${site.bot.href}?start=${r.code ?? 'q'}`;
     box.querySelectorAll<HTMLButtonElement>('.quiz__o').forEach((b) => b.addEventListener('click', () => {
       st[b.dataset.q!] = b.dataset.v!;
       box.querySelectorAll(`.quiz__o[data-q="${b.dataset.q}"]`).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      box.querySelectorAll<HTMLElement>('fieldset[data-show]').forEach((f) => {
+        const show = JSON.parse(f.dataset.show!) as Record<string, string[]>;
+        f.hidden = !Object.entries(show).every(([k, v]) => v.includes(st[k]));
+      });
       const r = cfg.recs[cfg.rules.find((x) => Object.entries(x.if).every(([k, v]) => st[k] === v))!.rec];
       $('title').textContent = r.title; $('price').textContent = r.price ?? ''; $('text').textContent = r.text;
       const a = $('link') as HTMLAnchorElement;
