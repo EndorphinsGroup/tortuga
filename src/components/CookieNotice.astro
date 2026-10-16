@@ -1,0 +1,30 @@
+---
+/** Уведомление о cookies (Яндекс Метрика и Google Analytics). Показывается, пока посетитель не нажмёт «Понятно»; выбор хранится в localStorage. */
+---
+<div class="cookie" role="region" aria-label="Уведомление о cookies" hidden>
+  <p>Мы используем cookies для статистики посещений: Яндекс Метрику и Google Analytics. <a href="/privacy/">Подробнее</a></p>
+  <button type="button" class="btn btn--dark btn--sm">Понятно</button>
+</div>
+
+<style>
+  .cookie { position: fixed; left: 24px; bottom: 24px; z-index: 70; max-width: 420px; display: flex; align-items: center; gap: 16px; padding: 16px 18px; background: var(--cream); color: var(--ink-soft); border-radius: var(--r-l); box-shadow: 0 12px 36px rgb(var(--shade) / .28); font-size: 14px; line-height: 1.45; }
+  .cookie a { color: var(--ink); }
+  .cookie .btn { flex: none; }
+  @media (max-width: 700px) {
+    .cookie { left: 12px; right: 12px; bottom: 88px; max-width: none; }
+  }
+</style>
+
+<script>
+  const box = document.querySelector<HTMLElement>('.cookie');
+  const KEY = 'cookie-ok';
+  let ok = false;
+  try { ok = localStorage.getItem(KEY) === '1'; } catch { /* storage unavailable: show notice */ }
+  if (box && !ok) {
+    box.hidden = false;
+    box.querySelector('button')!.addEventListener('click', () => {
+      box.hidden = true;
+      try { localStorage.setItem(KEY, '1'); } catch { /* ignore */ }
+    });
+  }
+</script>
