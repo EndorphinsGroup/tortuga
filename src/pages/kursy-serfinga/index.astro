@@ -37,12 +37,12 @@ const min = prices.courses[0];
 <Base
   title="Курсы серфинга в Нячанге для продолжающих — уроки, аренда доски и сёрфскейт | Tortuga"
   description="Курсы серфинга на пляже Бай Дай: Holiday Surf, Surf Junior, Стань PRO и Ocean Guru. Уроки в группе, аренда доски для самостоятельной практики, сёрфскейт и видеоразбор."
-  ogImage={`${site.url}/img/bg-couple.webp`}
+  ogImage={`${site.url}/img/h-kursy.webp`}
   jsonld={jsonld}
 >
-  <link slot="head" rel="preload" as="image" href="/img/bg-couple.webp">
+  <link slot="head" rel="preload" as="image" href="/img/h-kursy.webp">
   <PageHero
-    img="/img/bg-couple.webp"
+    img="/img/h-kursy.webp"
     alt="Двое сёрферов в гидрокостюмах идут по кромке воды с досками"
     crumbs={[{ label: 'Уроки серфинга', href: '/uroki-serfinga/' }, { label: 'Курсы для продолжающих' }]}
     title={[{ text: 'Курсы серфинга' }, { text: 'для продолжающих', light: true }]}
@@ -62,10 +62,10 @@ const min = prices.courses[0];
   <Intro />
   <Quiz {...coursesQuiz} />
   <Levels />
-  <Riders img="/img/ph-camp.webp" alt="База школы: навесы, доски и мотобайки под деревьями" flip={false} />
+  <Riders img="/img/kursy-sami.webp" alt="База школы: навесы, доски и мотобайки под деревьями" flip={false} />
   <Glossary />
   <Seasons />
   <Reviews />
   <Faq items={courses.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
-  <FinalCta quiz="/#quiz" botCode="courses" />
+  <FinalCta quiz="/#quiz" botCode="courses" img="/img/cta-kursy.webp" />
 </Base>

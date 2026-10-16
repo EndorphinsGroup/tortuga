@@ -19,7 +19,7 @@ const jsonld = {
   '@graph': [
     { '@type': 'TouristTrip', '@id': `${url}#trip`, name: 'Светящийся планктон в Нячанге: ночной снорклинг и SUP-прогулка',
       description: 'Ночная экскурсия на пляже Бай Дай: SUP-прогулка, снорклинг среди светящегося планктона, горячий душ и BBQ-ужин. Трансфер из отелей Нячанга и Камрани включён.',
-      touristType: 'Взрослые и дети с 7 лет', url, image: `${site.url}/img/pl-grill.webp`,
+      touristType: 'Взрослые и дети с 7 лет', url, image: `${site.url}/img/h-plankton.webp`,
       provider: { '@id': `${site.url}/#school` },
       itinerary: { '@type': 'ItemList', itemListElement: p.program.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.title, description: s.text })) },
       offers: { '@type': 'Offer', price: prices.plankton.vnd.replace(/\s/g, ''), priceCurrency: 'VND', availability: 'https://schema.org/InStock', url } },
@@ -34,7 +34,7 @@ const jsonld = {
 <Base
   title="Светящийся планктон и снорклинг в Нячанге — ночная экскурсия на SUP с BBQ и трансфером | Tortuga"
   description={`Ночная экскурсия к светящемуся планктону на пляже Бай Дай: SUP-прогулка, снорклинг, горячий душ и BBQ-ужин. ${prices.plankton.vnd} ₫ (≈ $${prices.plankton.usd}), трансфер из отеля включён. Сезон — апрель–сентябрь, дети с 7 лет.`}
-  ogImage={`${site.url}/img/pl-grill.webp`}
+  ogImage={`${site.url}/img/h-plankton.webp`}
   jsonld={jsonld}
 >
   <Hero />
@@ -45,5 +45,5 @@ const jsonld = {
   <Media />
   <Cross />
   <Faq items={p.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
-  <FinalCta quiz="" light="Напишите дату —" bold="поедем к планктону" waText="Здравствуйте! Хочу на светящийся планктон, дата: " botCode="plank" />
+  <FinalCta quiz="" light="Напишите дату —" bold="поедем к планктону" waText="Здравствуйте! Хочу на светящийся планктон, дата: " botCode="plank" img="/img/cta-plankton.webp" />
 </Base>

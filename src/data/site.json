@@ -13,8 +13,8 @@
   "mapsUrl": "https://www.google.com/maps/place/?q=place_id:ChIJmRs2GrJncDERfiarPyZ55kQ",
   "reviews": [
     { "label": "Google Карты", "href": "https://www.google.com/maps/place/?q=place_id:ChIJmRs2GrJncDERfiarPyZ55kQ" },
-    { "label": "Яндекс Карты", "href": "#" },
-    { "label": "TripAdvisor", "href": "#" }
+    { "label": "Яндекс Карты", "href": "https://yandex.com/profile/86987646883" },
+    { "label": "TripAdvisor", "href": "https://www.tripadvisor.ru/Attraction_Review-g18928520-d27776092-Reviews-Tortuga_Surf_Camp-Cam_Hai_Dong_Cam_Lam_District_Khanh_Hoa_Province.html" }
   ],
   "menu": [
     { "label": "Серфинг", "children": [

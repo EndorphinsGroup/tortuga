@@ -6,7 +6,7 @@ import p from '../../data/plankton.json';
 <Section rail="Как это было" bold="Как это" light="было у гостей">
   <div class="pm">
     <div class="reel">
-      <img src="/img/pl-dinner.webp" alt="" loading="lazy">
+      <img src="/img/r-plankton.webp" alt="" loading="lazy">
       <video src="/video/guest-plankton.mp4" preload="none" playsinline hidden></video>
       <button type="button" class="reel__play" aria-label="Смотреть видеоотзыв о ночной экскурсии к планктону"><Icon name="play" size={26} /></button>
       <span class="reel__cap">Видеоотзыв: ночная SUP-прогулка и BBQ</span>
@@ -35,12 +35,12 @@ import p from '../../data/plankton.json';
   .pm__side { display: flex; flex-direction: column; gap: var(--gap); }
   .quote { margin: 0; padding: 28px; display: flex; flex-direction: column; gap: 12px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.45; }
   .quote footer { font-size: 14px; color: var(--muted); }
-  .pm__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); flex: 1; }
+  .pm__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); flex: 1; }
   .pm__grid figure { margin: 0; position: relative; border-radius: var(--r-m); overflow: hidden; min-height: 180px; background: var(--night); }
   .pm__grid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .pm__grid figcaption { position: absolute; left: 8px; right: 8px; bottom: 8px; font-size: 13px; color: #fff; background: rgb(var(--shade) / .7); padding: 6px 10px; border-radius: 10px; }
   @media (max-width: 1000px) { .pm { grid-template-columns: 1fr; } .reel { min-height: 560px; } }
-  @media (max-width: 700px) { .pm__grid { grid-template-columns: 1fr 1fr 1fr; } .pm__grid figure { min-height: 140px; } .pm__grid figcaption { font-size: 11px; padding: 4px 8px; } }
+  @media (max-width: 700px) { .pm__grid { grid-template-columns: 1fr 1fr; } .pm__grid figure { min-height: 140px; } .pm__grid figcaption { font-size: 11px; padding: 4px 8px; } }
 </style>
 
 <script>

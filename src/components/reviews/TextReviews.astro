@@ -6,7 +6,8 @@ type R = { name: string; city?: string; date: string; service: 'surf' | 'kids' |
 const items = ([...(data.items as R[])]).sort((a, b) => b.date.localeCompare(a.date));
 const labels = { surf: 'Серфинг', kids: 'Дети', plankton: 'Планктон' } as const;
 const present = (Object.keys(labels) as (keyof typeof labels)[]).filter((k) => items.some((r) => r.service === k));
-const fmt = (d: string) => new Date(d).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
+// Dates may be full, year-month or year only (Google shows only «N months ago»).
+const fmt = (d: string) => (d.length === 4 ? d : new Date(d.length === 7 ? `${d}-01` : d).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' }));
 ---
 {items.length > 0 && (
   <Section id="texts" rail="Отзывы" bold="Что пишут" light="гости">

@@ -13,6 +13,7 @@ const dots = Array.from({ length: 140 }, () => ({
 }));
 ---
 <section class="nhero">
+  <img class="nhero__photo" src="/img/h-plankton.webp" alt="Гости на сапах ночью в светящейся воде" fetchpriority="high">
   <div class="nhero__sky" aria-hidden="true">
     {dots.map((p) => <i style={`left:${p.x}%;top:${p.y}%;width:${p.s}px;height:${p.s}px;animation-delay:-${p.d}s;animation-duration:${p.t}s`}></i>)}
   </div>
@@ -36,7 +37,9 @@ const dots = Array.from({ length: 140 }, () => ({
 <style>
   .nhero { position: relative; overflow: hidden; isolation: isolate; color: #fff; border-radius: 0 0 var(--r-xl) var(--r-xl); min-height: min(calc(100vh - 74px), 780px); display: flex; flex-direction: column; padding: 24px var(--gutter) clamp(20px, 3.5vh, 36px) calc(var(--rail) + var(--gutter));
     background: radial-gradient(120% 60% at 70% 100%, #123842 0%, transparent 60%), linear-gradient(180deg, #070F12 0%, var(--night) 45%, #0E2C33 100%); }
-  .nhero__sky { position: absolute; inset: 0; z-index: -1; }
+  .nhero__photo { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; object-position: 60% 60%; }
+  .nhero::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgb(7 15 18 / .88) 0%, rgb(7 15 18 / .6) 45%, rgb(7 15 18 / .15) 85%), linear-gradient(0deg, rgb(7 15 18 / .7) 0%, transparent 40%); }
+  .nhero__sky { position: absolute; inset: 0; z-index: -1; opacity: .5; }
   .nhero__sky i { position: absolute; border-radius: 50%; background: #9FF4F0; box-shadow: 0 0 6px 2px rgb(110 230 230 / .7), 0 0 18px 4px rgb(60 200 210 / .25); opacity: .15; animation: glow ease-in-out infinite; }
   @keyframes glow { 0%, 100% { opacity: .12; } 50% { opacity: .95; } }
   .nhero__body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: clamp(32px, 6vh, 72px); }

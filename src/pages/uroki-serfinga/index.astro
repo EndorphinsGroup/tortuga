@@ -42,12 +42,12 @@ const jsonld = {
 <Base
   title="Обучение серфингу в Нячанге — индивидуальные и парные уроки с нуля, детский серфинг | Tortuga"
   description="Уроки серфинга для начинающих на пляже Бай Дай: индивидуально, вдвоём или в группе до 4 человек, дети с 7 лет. Урок 2,5 часа, трансфер из отеля, экипировка, обед, фото и видео включены."
-  ogImage={`${site.url}/img/bg-aerial.webp`}
+  ogImage={`${site.url}/img/h-uroki.webp`}
   jsonld={jsonld}
 >
-  <link slot="head" rel="preload" as="image" href="/img/bg-aerial.webp">
+  <link slot="head" rel="preload" as="image" href="/img/h-uroki.webp">
   <PageHero
-    img="/img/bg-aerial.webp"
+    img="/img/h-uroki.webp"
     alt="Ученики с досками на песке у кромки воды"
     crumbs={[{ label: 'Уроки серфинга' }]}
     title={[{ text: 'Уроки серфинга' }, { text: 'в Нячанге', light: true }, { text: 'для начинающих', light: true }]}
@@ -75,5 +75,5 @@ const jsonld = {
   <Next />
   <Reviews />
   <Faq items={lessons.faq} more={{ label: 'все вопросы о серфинге и планктоне', href: '/faq/' }} />
-  <FinalCta quiz="/#quiz" />
+  <FinalCta quiz="/#quiz" img="/img/cta-uroki.webp" />
 </Base>
