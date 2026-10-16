@@ -1,4 +1,5 @@
 ---
+import prices from '../../data/prices.json';
 import { bot } from '../../lib/bot';
 import site from '../../data/site.json';
 ---
@@ -17,7 +18,7 @@ import site from '../../data/site.json';
   </div>
   <div class="hero__facts">
     <div class="glass"><b>2,5 часа</b>урок: песок, вода, разбор</div>
-    <div class="glass"><b>от 1 400 000 ₫</b>≈ $52 с человека</div>
+    <div class="glass"><b>от {prices.lessons.find((l) => l.id === 'group')!.vnd} ₫</b>≈ ${prices.lessons.find((l) => l.id === 'group')!.usd} с человека</div>
     <div class="glass"><b>Трансфер включён</b>из отелей Нячанга и Камрани</div>
     <div class="glass"><b>RU · EN</b>инструкторы говорят по-русски и по-английски</div>
   </div>

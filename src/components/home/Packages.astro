@@ -1,0 +1,42 @@
+---
+/** Главная: вместо таблицы абонементов — две развилки «абонемент или курс». */
+import Section from '../Section.astro';
+import Icon from '../Icon.astro';
+import prices from '../../data/prices.json';
+const minPass = prices.passes.rows.find((r) => r.id === 'group')!.cells[0];
+const minCourse = prices.courses[0];
+---
+<Section id="passes" rail="Абонементы и курсы" bold="Больше" light="одного урока" lead="Больше практики — быстрее результат. Выберите, как хотите учиться дальше.">
+  <div class="pk">
+    <a class="pk__card" href="/uroki-serfinga/#abonementy">
+      <span class="pk__k">Абонемент</span>
+      <b class="h3">3–10 уроков с инструктором</b>
+      <p>Те же уроки, что разовые, пакетом — дешевле за урок. В группе, вдвоём или индивидуально.</p>
+      <span class="pk__price">от {minPass.vnd} ₫ <small>≈ ${minPass.usd}</small></span>
+      <span class="pk__go">Смотреть абонементы <Icon name="arrow" size={18} /></span>
+    </a>
+    <a class="pk__card pk__card--dark" href="/kursy-serfinga/">
+      <span class="pk__k">Курс</span>
+      <b class="h3">Уроки + самостоятельная практика</b>
+      <p>Для тех, кто уже вставал на доску: уроки в группе, аренда доски, сёрфскейт и видеоразбор.</p>
+      <span class="pk__price">от {minCourse.vnd} ₫ <small>≈ ${minCourse.usd}</small></span>
+      <span class="pk__go">Смотреть курсы <Icon name="arrow" size={18} /></span>
+    </a>
+  </div>
+</Section>
+
+<style>
+  .pk { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: var(--gap); }
+  .pk__card { display: flex; flex-direction: column; gap: 12px; padding: clamp(24px, 3vw, 36px); border-radius: var(--r-l); background: var(--sand-2); color: var(--ink); text-decoration: none; transition: transform .2s; }
+  .pk__card--dark { background: var(--sea); color: #fff; }
+  .pk__card:hover, .pk__card:focus-visible { transform: translateY(-3px); }
+  .pk__k { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .pk__card--dark .pk__k { color: var(--sea-2); }
+  .pk__card p { font-size: 16px; color: var(--ink-soft); }
+  .pk__card--dark p { color: var(--on-dark-2); }
+  .pk__price { margin-top: auto; padding-top: 8px; font-size: 24px; font-weight: 700; }
+  .pk__price small { font-size: 15px; font-weight: 400; opacity: .75; }
+  .pk__go { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--terra); }
+  .pk__card--dark .pk__go { color: var(--peach); }
+  @media (prefers-reduced-motion: reduce) { .pk__card { transition: none; } }
+</style>

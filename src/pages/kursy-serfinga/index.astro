@@ -4,7 +4,8 @@ import PageHero from '../../components/PageHero.astro';
 import Intro from '../../components/courses/Intro.astro';
 import Levels from '../../components/courses/Levels.astro';
 import Glossary from '../../components/courses/Glossary.astro';
-import Passes from '../../components/home/Passes.astro';
+import Quiz from '../../components/Quiz.astro';
+import { coursesQuiz } from '../../lib/quizzes';
 import Riders from '../../components/home/Riders.astro';
 import Seasons from '../../components/home/Seasons.astro';
 import Reviews from '../../components/home/Reviews.astro';
@@ -16,14 +17,12 @@ import prices from '../../data/prices.json';
 import courses from '../../data/courses.json';
 
 const url = `${site.url}/kursy-serfinga/`;
-const offers = prices.passes.rows.flatMap((r) => r.cells.map((c, i) => c && /^\d/.test(c[0])
-  ? { '@type': 'Offer', name: `Абонемент: ${r.title.toLowerCase()}, ${prices.passes.columns[i]}`, price: c[0].replace(/\s/g, ''), priceCurrency: 'VND' }
-  : null).filter(Boolean));
+const offers = prices.courses.map((c) => ({ '@type': 'Offer', name: `Курс ${c.name}`, price: c.vnd.replace(/\s/g, ''), priceCurrency: 'VND' }));
 const jsonld = {
   '@context': 'https://schema.org',
   '@graph': [
     { '@type': 'Service', '@id': `${url}#service`, name: 'Курсы серфинга для продолжающих', serviceType: 'Обучение серфингу',
-      description: 'Абонементы на 3, 5, 7 и 10 уроков серфинга на пляже Бай Дай: от пены к зелёным волнам, сёрф-скейт и выезды на рифовый спот.',
+      description: 'Курсы серфинга на пляже Бай Дай для тех, кто уже вставал на доску: уроки в группе, аренда доски для самостоятельной практики, сёрфскейт и видеоразбор.',
       provider: { '@id': `${site.url}/#school` }, areaServed: ['Нячанг', 'Камрань'], url, offers },
     { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
@@ -33,11 +32,11 @@ const jsonld = {
     { '@type': 'FAQPage', mainEntity: courses.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
   ],
 };
-const min = prices.passes.rows[0].cells[0]!;
+const min = prices.courses[0];
 ---
 <Base
-  title="Курсы серфинга в Нячанге для продолжающих — зелёные волны, сёрф-скейт и выезды на риф | Tortuga"
-  description="Абонементы на 3, 5, 7 и 10 уроков серфинга на пляже Бай Дай: из пены на лайн-ап и зелёные волны. В группе, вдвоём или индивидуально, трансфер и экипировка включены."
+  title="Курсы серфинга в Нячанге для продолжающих — уроки, аренда доски и сёрфскейт | Tortuga"
+  description="Курсы серфинга на пляже Бай Дай: Holiday Surf, Surf Junior, Стань PRO и Ocean Guru. Уроки в группе, аренда доски для самостоятельной практики, сёрфскейт и видеоразбор."
   ogImage={`${site.url}/img/bg-couple.webp`}
   jsonld={jsonld}
 >
@@ -47,22 +46,22 @@ const min = prices.passes.rows[0].cells[0]!;
     alt="Двое сёрферов в гидрокостюмах идут по кромке воды с досками"
     crumbs={[{ label: 'Уроки серфинга', href: '/uroki-serfinga/' }, { label: 'Курсы для продолжающих' }]}
     title={[{ text: 'Курсы серфинга' }, { text: 'для продолжающих', light: true }]}
-    lead="От пены к зелёным волнам: абонементы на 3–10 уроков, чтобы выйти на лайн-ап, научиться поворачивать и ехать вдоль волны."
+    lead="Для тех, кто уже вставал на доску: уроки в группе плюс дни самостоятельной практики, чтобы выйти на лайн-ап, научиться поворачивать и ехать вдоль волны."
     facts={[
-      ['3–10 уроков', 'в абонементе, 2 месяца'],
-      [`от ${min[0]} ₫`, `≈ $${min[1]} за 3 урока в группе`],
-      ['Сёрф-скейт', 'повороты отрабатываем на суше'],
-      ['Рифовый спот', 'ноябрь — февраль, 2–3 дня в неделю'],
+      ['4 курса', 'от 3 до 10 уроков'],
+      [`от ${min.vnd} ₫`, `≈ $${min.usd} — ${min.name}`],
+      ['Аренда доски', 'дни самостоятельной практики'],
+      ['Сёрфскейт', 'и видеоразбор в старших курсах'],
     ]}
   >
     <div class="btns">
-      <a class="btn btn--primary" href="#kakoj-kurs">Подобрать курс</a>
+      <a class="btn btn--primary" href="#podbor-kursa">Подобрать курс</a>
       <a class="btn btn--ghost" href={bot('courses')} target="_blank" rel="noopener" data-goal="tg_courses_hero">Написать в Telegram</a>
     </div>
   </PageHero>
   <Intro />
+  <Quiz {...coursesQuiz} />
   <Levels />
-  <Passes id="abonementy" bold="Цены" light="абонементов" learn={false} />
   <Riders img="/img/ph-camp.webp" alt="База школы: навесы, доски и мотобайки под деревьями" flip={false} />
   <Glossary />
   <Seasons />

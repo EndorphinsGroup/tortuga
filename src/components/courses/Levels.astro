@@ -1,39 +1,66 @@
 ---
+/** Четыре курса лесенкой: состав, цена, «подходит, если» и «научитесь». */
 import Section from '../Section.astro';
+import Icon from '../Icon.astro';
 import courses from '../../data/courses.json';
-import site from '../../data/site.json';
-const wa = (n: string) => `${site.whatsapp.href}?text=${encodeURIComponent(`Здравствуйте! Хочу абонемент на ${n} уроков серфинга, дата начала: `)}`;
+import prices from '../../data/prices.json';
+import { bot } from '../../lib/bot';
+const lv = Object.fromEntries(courses.levels.map((l) => [l.id, l]));
 ---
-<Section id="kakoj-kurs" rail="Какой курс подходит" bold="Какой курс" light="мне подходит" lead="Сравните, что уже получается, — и смотрите, куда приведёт курс. Не уверены — напишите, подскажем по видео или после первого урока.">
-  <ol class="lv">
-    {courses.levels.map((l) => (
-      <li class="lv__item">
-        <div class="lv__head"><span class="lv__n">{l.n}</span><div><b>{l.title}</b><span>{l.goal}</span></div></div>
-        <div class="lv__col"><span class="lv__k">Вам подходит, если</span><p>{l.fit}</p></div>
-        <div class="lv__col"><span class="lv__k">Научитесь</span><p>{l.learn}</p></div>
-        <a class="btn btn--outline btn--sm" href={wa(l.n)} target="_blank" rel="noopener" data-goal={`wa_course_${l.n}`}>Записаться</a>
+<Section id="kursy" rail="Курсы" bold="Четыре" light="курса" lead="Уроки идут в группе до 4 человек, аренда доски — ваша самостоятельная практика. Цены за человека.">
+  <ol class="cs">
+    {prices.courses.map((c, i) => (
+      <li class="cs__item">
+        <div class="cs__head">
+          <span class="cs__step">{i + 1}</span>
+          <div><b>{c.name}</b><span>{lv[c.id].goal}</span></div>
+        </div>
+        <ul class="cs__items">{c.items.map((t) => <li><Icon name="check" size={18} />{t}</li>)}</ul>
+        <div class="cs__col"><span class="cs__k">Вам подходит, если</span><p>{lv[c.id].fit}</p></div>
+        <div class="cs__col"><span class="cs__k">Научитесь</span><p>{lv[c.id].learn}</p></div>
+        <div class="cs__buy">
+          <b>{c.vnd} ₫</b><span>≈ ${c.usd}</span>
+          <a class="btn btn--primary btn--sm" href={bot(`k-${c.id}`)} target="_blank" rel="noopener" data-goal={`tg_course_${c.id}`}>Записаться</a>
+        </div>
       </li>
     ))}
   </ol>
+  <div class="cs__notes">
+    <div class="card"><b>Аренда доски</b><p>Самостоятельная практика: берёте доску на базе на 2 часа и катаетесь сами. Трансфер и обед в дни аренды не входят.</p></div>
+    <div class="card"><b>Сёрфскейт</b><p>Скейт, который поворачивает как доска для серфинга. На нём отрабатывают повороты на суше — так быстрее прогресс в воде.</p></div>
+    <div class="card card--peach"><b>Нужны просто уроки?</b><p>Уроки с инструктором вдвоём или индивидуально — в <a href="/uroki-serfinga/#abonementy">абонементах</a>.</p></div>
+  </div>
 </Section>
 
 <style>
-  .lv { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap); }
-  .lv__item { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 24px 32px; align-items: center; padding: 24px 28px; border-radius: var(--r-l); background: var(--sand-2); }
-  .lv__item:nth-child(even) { background: var(--cream); }
-  .lv__head { display: flex; gap: 18px; align-items: center; }
-  .lv__head b { display: block; font-size: 20px; text-transform: uppercase; font-weight: 800; line-height: 1.1; }
-  .lv__head span:not(.lv__n) { font-size: 15px; color: var(--muted); }
-  .lv__n { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--sea); color: #fff; display: grid; place-items: center; font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
-  .lv__k { display: block; font-size: 13px; color: var(--muted-2); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
-  .lv__col p { font-size: 15px; color: var(--ink-soft); }
-  @media (max-width: 1000px) {
-    .lv__item { grid-template-columns: 1fr 1fr; }
-    .lv__head { grid-column: 1 / -1; }
-    .lv__item .btn { grid-column: 1 / -1; justify-self: start; }
+  .cs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap); }
+  .cs__item { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.1fr) auto; gap: 20px 28px; align-items: start; padding: 24px 28px; border-radius: var(--r-l); background: var(--sand-2); }
+  .cs__item:nth-child(even) { background: var(--cream); box-shadow: inset 0 0 0 1px var(--line); }
+  .cs__head { display: flex; gap: 14px; align-items: center; }
+  .cs__head b { display: block; font-size: 20px; text-transform: uppercase; font-weight: 800; line-height: 1.1; }
+  .cs__head span:not(.cs__step) { font-size: 14px; color: var(--muted); }
+  .cs__step { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--sea); color: #fff; display: grid; place-items: center; font-size: 18px; font-weight: 800; }
+  .cs__items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
+  .cs__items li { display: flex; gap: 8px; align-items: flex-start; }
+  .cs__items :global(svg) { flex: none; color: var(--sea); margin-top: 2px; }
+  .cs__k { display: block; font-size: 12px; color: var(--muted-2); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+  .cs__col p { font-size: 15px; color: var(--ink-soft); }
+  .cs__buy { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .cs__buy b { font-size: 22px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .cs__buy span { font-size: 14px; color: var(--muted); }
+  .cs__buy .btn { margin-top: 10px; }
+  .cs__notes { margin-top: var(--gap); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--gap); }
+  .cs__notes .card { padding: 22px; display: flex; flex-direction: column; gap: 6px; }
+  .cs__notes p { font-size: 15px; color: var(--ink-soft); }
+  .cs__notes a { color: var(--terra); }
+  @media (max-width: 1100px) {
+    .cs__item { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .cs__head { grid-column: 1 / -1; }
+    .cs__buy { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+    .cs__buy .btn { margin: 0 0 0 auto; }
   }
   @media (max-width: 600px) {
-    .lv__item { grid-template-columns: 1fr; gap: 16px; padding: 20px; }
-    .lv__n { width: 52px; height: 52px; font-size: 22px; }
+    .cs__item { grid-template-columns: 1fr; padding: 20px; }
+    .cs__buy .btn { margin: 8px 0 0; }
   }
 </style>

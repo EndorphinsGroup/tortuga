@@ -1,0 +1,72 @@
+---
+/** Квиз «ответьте на 2 вопроса → вам подойдёт…». Логика — в данных: rules проверяются по порядку, первое совпадение даёт рекомендацию. */
+import site from '../data/site.json';
+type Opt = [string, string];
+type Rec = { title: string; price?: string; text: string; code?: string; href?: string; cta?: string };
+interface Props {
+  id?: string; rail?: string; bold: string; light?: string;
+  questions: { key: string; legend: string; options: Opt[] }[];
+  recs: Record<string, Rec>;
+  rules: { if: Record<string, string>; rec: string }[];
+}
+const { id = 'quiz', rail = 'Подбор', bold, light, questions, recs, rules } = Astro.props;
+const init = Object.fromEntries(questions.map((q) => [q.key, q.options[0][0]]));
+const first = recs[rules.find((r) => Object.entries(r.if).every(([k, v]) => init[k] === v))!.rec];
+const link = (r: Rec) => r.href ?? `${site.bot.href}?start=${r.code ?? 'q'}`;
+---
+<section id={id} class="sec">
+  <span class="sec__rail">{rail}</span>
+  <div class="wrap quiz" data-quiz={JSON.stringify({ recs, rules, init, bot: site.bot.href })}>
+    <div class="quiz__q">
+      <h2 class="h2">{bold}{light && <span class="l"> {light}</span>}</h2>
+      {questions.map((q) => (
+        <fieldset>
+          <legend>{q.legend}</legend>
+          <div class="quiz__opts">{q.options.map(([v, t], i) => <button type="button" class="quiz__o" data-q={q.key} data-v={v} aria-pressed={String(i === 0)}>{t}</button>)}</div>
+        </fieldset>
+      ))}
+    </div>
+    <div class="quiz__rec" aria-live="polite">
+      <span class="quiz__hint">Вам подойдёт</span>
+      <b class="quiz__title" data-rec="title">{first.title}</b>
+      <span class="quiz__price" data-rec="price">{first.price}</span>
+      <p data-rec="text">{first.text}</p>
+      <a class="btn btn--primary" href={link(first)} target={first.href ? undefined : '_blank'} rel="noopener" data-goal={`tg_quiz_${id}`} data-rec="link">{first.cta ?? 'Записаться на этот формат'}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quiz { background: var(--sea); color: #fff; border-radius: 32px; padding: clamp(28px, 4vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 40px; }
+  .quiz .h2 { font-size: clamp(32px, 4vw, 60px); }
+  .quiz__q { display: flex; flex-direction: column; gap: 28px; }
+  fieldset { border: 0; margin: 0; padding: 0; }
+  legend { font-weight: 600; margin-bottom: 12px; padding: 0; }
+  .quiz__opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .quiz__o { height: 44px; padding: 0 18px; border-radius: var(--pill); border: 0; font: 500 15px var(--font); cursor: pointer; background: rgb(255 255 255 / .1); color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .3); }
+  .quiz__o[aria-pressed="true"] { background: var(--terra); box-shadow: none; }
+  .quiz__rec { background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); border-radius: var(--r-l); padding: 32px; display: flex; flex-direction: column; gap: 14px; color: var(--on-dark-2); }
+  .quiz__hint { font-size: 15px; color: var(--sea-2); }
+  .quiz__title { font-size: clamp(22px, 2.4vw, 32px); line-height: 1.1; text-transform: uppercase; color: #fff; }
+  .quiz__price { font-size: 24px; font-weight: 700; color: #fff; }
+  .quiz__price:empty { display: none; }
+  .quiz__rec .btn { margin-top: auto; align-self: flex-start; }
+</style>
+
+<script>
+  type Rec = { title: string; price?: string; text: string; code?: string; href?: string; cta?: string };
+  document.querySelectorAll<HTMLElement>('[data-quiz]').forEach((box) => {
+    const cfg = JSON.parse(box.dataset.quiz!) as { recs: Record<string, Rec>; rules: { if: Record<string, string>; rec: string }[]; init: Record<string, string>; bot: string };
+    const st = { ...cfg.init };
+    const $ = (k: string) => box.querySelector<HTMLElement>(`[data-rec="${k}"]`)!;
+    box.querySelectorAll<HTMLButtonElement>('.quiz__o').forEach((b) => b.addEventListener('click', () => {
+      st[b.dataset.q!] = b.dataset.v!;
+      box.querySelectorAll(`.quiz__o[data-q="${b.dataset.q}"]`).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      const r = cfg.recs[cfg.rules.find((x) => Object.entries(x.if).every(([k, v]) => st[k] === v))!.rec];
+      $('title').textContent = r.title; $('price').textContent = r.price ?? ''; $('text').textContent = r.text;
+      const a = $('link') as HTMLAnchorElement;
+      a.href = r.href ?? `${cfg.bot}?start=${r.code ?? 'q'}`; a.textContent = r.cta ?? 'Записаться на этот формат';
+      if (r.href) a.removeAttribute('target'); else a.target = '_blank';
+    }));
+  });
+</script>

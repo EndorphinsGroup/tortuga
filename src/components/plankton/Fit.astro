@@ -2,10 +2,18 @@
 import Section from '../Section.astro';
 import Icon from '../Icon.astro';
 import p from '../../data/plankton.json';
+import prices from '../../data/prices.json';
+import { bot } from '../../lib/bot';
 ---
 <Section rail="Кому подходит" bold="Кому" light="подходит">
   <div class="fit">
     {p.fit.map(([b, t]) => <div class="card fact"><b>{b}</b><span>{t}</span></div>)}
+  </div>
+
+  <div class="card card--peach private">
+    <div><b class="h3">Частный выход</b><p>Только ваша компания и инструктор. Цена с человека:</p></div>
+    <ul>{prices.plankton.private.map(([w, v]) => <li><span>{w}</span><b>{v} ₫</b></li>)}</ul>
+    <a class="btn btn--dark btn--sm" href={bot('plank-private')} target="_blank" rel="noopener" data-goal="tg_plankton_private">Узнать даты</a>
   </div>
 
   <div class="duo">
@@ -22,6 +30,13 @@ import p from '../../data/plankton.json';
 </Section>
 
 <style>
+  .private { margin-top: var(--gap); padding: 24px 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; }
+  .private p { font-size: 15px; color: var(--ink-soft); margin-top: 4px; }
+  .private ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+  .private li { display: flex; flex-direction: column; font-size: 14px; color: var(--muted); }
+  .private li b { font-size: 20px; color: var(--ink); white-space: nowrap; }
+  .private .btn { margin-left: auto; }
+  @media (max-width: 700px) { .private .btn { margin-left: 0; } }
   .fit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--gap); }
   .fit .card { padding: 22px; }
   .duo { margin-top: var(--gap); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--gap); }

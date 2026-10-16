@@ -1,0 +1,57 @@
+---
+/** Абонементы: те же уроки с инструктором пакетом. Переключатель формата + 4 карточки, без таблицы 3×4. */
+import Section from '../Section.astro';
+import prices from '../../data/prices.json';
+import { bot } from '../../lib/bot';
+const rows = prices.passes.rows;
+const def = 'individual';
+const single = Object.fromEntries(prices.lessons.map((l) => [l.id, l.vnd]));
+---
+<Section id="abonementy" rail="Абонементы" bold="Абонементы" light="с инструктором" lead={`Те же уроки, что разовые, только пакетом — и дешевле за урок. Цены за человека, абонемент действует ${prices.passes.validity}.`}>
+  <div class="pp">
+    <div class="pp__tabs" role="tablist" aria-label="Формат уроков">
+      {rows.map((r) => <button type="button" role="tab" id={`pp-t-${r.id}`} aria-controls={`pp-${r.id}`} aria-selected={String(r.id === def)} data-pp={r.id}>{r.title}<span>{r.sub}</span></button>)}
+    </div>
+    {rows.map((r) => (
+      <div class="pp__grid" role="tabpanel" id={`pp-${r.id}`} aria-labelledby={`pp-t-${r.id}`} hidden={r.id !== def}>
+        {r.cells.map((c) => (
+          <article class="pp__card">
+            <span class="pp__n">{c.n} уроков</span>
+            <b class="pp__price">{c.vnd} ₫</b>
+            <span class="pp__usd">≈ ${c.usd}</span>
+            <span class="pp__per">≈ {c.per} ₫ за урок <s>{single[r.id]}</s></span>
+            <a class="btn btn--dark btn--sm" href={bot(`p-${r.id}${c.n}`)} target="_blank" rel="noopener" data-goal={`tg_pass_${r.id}${c.n}`}>Записаться</a>
+          </article>
+        ))}
+      </div>
+    ))}
+    <p class="pp__note">В каждый урок абонемента входит то же, что в разовый: трансфер, экипировка, обед, фото и видео. Хотите больше практики без инструктора — посмотрите <a href="/kursy-serfinga/">курсы с арендой доски и сёрфскейтом</a>.</p>
+  </div>
+</Section>
+
+<style>
+  .pp__tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .pp__tabs button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 12px 20px; border: 0; border-radius: var(--r-m); background: var(--sand-2); color: var(--ink); font: 600 17px var(--font); cursor: pointer; text-align: left; }
+  .pp__tabs button span { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .pp__tabs button[aria-selected="true"] { background: var(--sea); color: #fff; }
+  .pp__tabs button[aria-selected="true"] span { color: var(--sea-2); }
+  .pp__tabs button:focus-visible { outline: 2px solid var(--terra); outline-offset: 2px; }
+  .pp__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--gap); }
+  .pp__card { display: flex; flex-direction: column; gap: 4px; padding: 24px; border-radius: var(--r-l); background: var(--cream); box-shadow: inset 0 0 0 1px var(--line); }
+  .pp__n { font-size: 15px; color: var(--muted); }
+  .pp__price { font-size: clamp(24px, 2.4vw, 30px); line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pp__usd { font-size: 15px; color: var(--muted); }
+  .pp__per { margin-top: 10px; font-size: 15px; color: var(--sea); font-weight: 600; }
+  .pp__per s { margin-left: 4px; font-weight: 400; color: var(--muted-2); }
+  .pp__card .btn { margin-top: 16px; align-self: flex-start; }
+  .pp__note { margin-top: 16px; font-size: 15px; color: var(--muted); max-width: 70ch; }
+  .pp__note a { color: var(--terra); }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-pp]').forEach((b) => b.addEventListener('click', () => {
+    const box = b.closest('.pp')!;
+    box.querySelectorAll<HTMLButtonElement>('[data-pp]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+    box.querySelectorAll<HTMLElement>('.pp__grid').forEach((g) => { g.hidden = g.id !== `pp-${b.dataset.pp}`; });
+  }));
+</script>

@@ -3,14 +3,10 @@ import Section from '../Section.astro';
 import Icon from '../Icon.astro';
 import prices from '../../data/prices.json';
 ---
-<Section rail="Что дальше" bold="Что" light="дальше" lead="Один урок — знакомство. Чтобы кататься самостоятельно, берут абонемент на 3–10 занятий: так дешевле, чем разово.">
-  <ol class="next">
-    {prices.course.map((c) => (
-      <li><span class="next__n">{c.n}</span><b>{c.title}</b><span>{c.text}</span></li>
-    ))}
-  </ol>
+<Section rail="Что дальше" bold="Что" light="дальше" lead="Один урок — знакомство. Дальше два пути: больше уроков с инструктором или курс, где часть дней вы катаетесь сами.">
   <div class="next__links">
-    <a class="btn btn--dark" href="/kursy-serfinga/">Абонементы и курсы для продолжающих <Icon name="arrow" size={20} /></a>
+    <a class="btn btn--dark" href="#abonementy">Абонементы с инструктором <Icon name="arrow" size={20} /></a>
+    <a class="btn btn--outline" href="/kursy-serfinga/">Курсы с самостоятельной практикой <Icon name="arrow" size={20} /></a>
   </div>
 
   <a class="photo-bg plankton" href="/svetyashchijsya-plankton/">
