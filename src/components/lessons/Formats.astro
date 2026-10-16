@@ -30,18 +30,6 @@ const msg = (t: string) => `${site.whatsapp.href}?text=${encodeURIComponent(`З�
       </article>
     ))}
   </div>
-
-  <div class="cmp" role="region" aria-label="Сравнение форматов" tabindex="0">
-    <table>
-      <thead><tr><th scope="col"><span class="sr">Параметр</span></th>{fmts.map((l) => <th scope="col">{l.title}</th>)}</tr></thead>
-      <tbody>
-        {lessons.compare.rows.map((r) => (
-          <tr><th scope="row">{r.label}</th>{r.values.map((v) => <td>{v}</td>)}</tr>
-        ))}
-        <tr><th scope="row">Цена с человека</th>{fmts.map((l) => <td><b>{l.vnd} ₫</b> ≈ ${l.usd}</td>)}</tr>
-      </tbody>
-    </table>
-  </div>
 </Section>
 
 <style>
@@ -60,15 +48,4 @@ const msg = (t: string) => `${site.whatsapp.href}?text=${encodeURIComponent(`З�
   .fmt__btns .btn { padding: 0 12px; }
   .fmt--featured .btn--light { background: rgb(255 255 255 / .14); color: #fff; box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .6); }
 
-  .cmp { margin-top: var(--gap); overflow-x: auto; border-radius: var(--r-l); background: var(--cream); }
-  .cmp table { width: 100%; min-width: 720px; border-collapse: collapse; font-size: 15px; }
-  .cmp th, .cmp td { padding: 16px 22px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
-  .cmp tr:last-child > * { border-bottom: 0; }
-  .cmp thead th { font-size: 17px; font-weight: 700; }
-  .cmp thead th:nth-child(2), .cmp td:nth-child(2) { background: rgb(30 77 87 / .07); }
-  .cmp tbody th { font-weight: 500; color: var(--muted); width: 24%; }
-  .cmp td { color: var(--ink-soft); }
-  .cmp td b { color: var(--ink); }
-  @media (max-width: 700px) { .cmp { display: none; } }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
