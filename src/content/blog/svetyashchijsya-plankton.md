@@ -81,10 +81,3 @@ service: plankton
 ## Светящийся планктон кусается?
 
 Нет. Динофлагелляты не жалят: в воде можно почувствовать разве что лёгкое покалывание. «Кусачим планктоном» во Вьетнаме называют совсем других обитателей моря — личинок медуз и мелких медуз. Чем они отличаются и что делать, если обожгло, — в статье [«Кусачий планктон во Вьетнаме»](/blog/kusachij-plankton/).
-
-## Источники
-
-- [UC San Diego, Scripps: как и зачем светятся динофлагелляты](https://sqonline.ucsd.edu/?p=104066)
-- [Университет Гамбурга: биолюминесценция динофлагеллят](https://www-archiv.fdm.uni-hamburg.de/b-online/library/bioluminescence/Dino_bl.html)
-- [Local Vietnam: светящийся планктон на Катбе и в бухте Ланха](https://localvietnam.com/hai-phong/cat-ba-island/bioluminescent-plankton-in-cat-ba-halong-bay/)
-- [Phu Quoc Island Guide: где искать светящийся планктон на Фукуоке](https://phuquocislandguide.com/things-to-do/bioluminescent-plankton/)

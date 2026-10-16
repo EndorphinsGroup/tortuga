@@ -91,9 +91,3 @@ service: lessons
 4. **Не записывайтесь на все уроки на фиксированные даты заранее.** Хорошая школа ставит время урока под прогноз волн.
 
 Когда в Нячанге лучше всего с волнами в каждом месяце — смотрите блок «Когда ехать» на [главной странице школы](/#seasons) и на странице [пляжа Бай Дай](/plyazh-bai-dai/).
-
-## Источники
-
-- [Vietnam Tourism: серфинг во Вьетнаме — сезоны, споты и где учиться](https://www.vietnamtourism.com/en/surfing-in-vietnam-seasons-breaks-and-where-to-learn)
-- [Surf-Forecast: My Khe, Дананг](https://www.surf-forecast.com/breaks/My-Khe)
-- [VinWonders: серфинг на Фукуоке](https://vinwonders.com/en/wonderpedia/news/phu-quoc-surfing/)

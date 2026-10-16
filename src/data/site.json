@@ -34,7 +34,8 @@
       { "label": "Уроки серфинга", "href": "/uroki-serfinga/" },
       { "label": "Абонементы и курсы", "href": "/kursy-serfinga/" },
       { "label": "Светящийся планктон", "href": "/svetyashchijsya-plankton/" },
-      { "label": "Аренда доски", "href": "/#arenda" }
+      { "label": "Аренда доски", "href": "/#arenda" },
+        { "label": "Подарочные сертификаты", "href": "/faq/#mozhno-podarit-urok" }
     ]},
     { "title": "Полезное", "links": [
       { "label": "Пляж Бай Дай", "href": "/plyazh-bai-dai/" },

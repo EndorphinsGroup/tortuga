@@ -116,13 +116,3 @@ service: plankton
 - **Экскурсии на русском** есть почти у всех крупных операторов — спрашивайте при бронировании.
 
 Живёте в Камрани или на Бай Дай? Многие поездки оттуда удобнее, чем из Нячанга, — смотрите [«Отдых в Камрани и на пляже Бай Дай»](/blog/otdyh-v-kamrani/). А если хочется не только смотреть, но и попробовать новое, — днём можно взять [индивидуальный урок серфинга в Нячанге](/uroki-serfinga/) на том же пляже, где вечером светится планктон.
-
-## Источники
-
-- [Vietnam Tourism: лучшее время для поездки в Нячанг, условия для дайвинга](https://www.vietnamtourism.com/en/the-best-time-to-visit-nha-trang-weather-seasons-and-diving-conditions)
-- [Vietnam National Authority of Tourism: остров Хон Мун](https://vietnamtourism.vn/en/index.php/tourism/items/890)
-- [Local Vietnam: острова Нячанга и форматы лодочных туров](https://localvietnam.com/khanh-hoa/nha-trang/best-islands-in-nha-trang/)
-- [Local Vietnam: остров Зьеп Шон](https://localvietnam.com/khanh-hoa/diep-son-island/)
-- [Tisland: экскурсия на Хон Мун](https://www.tisland.travel/en/nha-trang/excursions/hon-mun)
-- [Tisland: канатная дорога и VinWonders](https://www.tisland.travel/en/blog/vinperl-vinwonders-nyachang)
-- [VietnamSpot: что посмотреть рядом с Камранью](https://vietnamspot.ru/en/blog/cam-ranh-attractions)

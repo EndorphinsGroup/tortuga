@@ -1,19 +1,18 @@
 ---
 import Section from '../Section.astro';
 const team = [
-  ['Евгения', 'Основатель школы. Русский, английский.', '/img/t-evgeniya.webp'],
-  ['Максим', 'КМС по плаванию. Русский, английский.', '/img/t-maksim.webp'],
-  ['Михаил', 'Сертифицированный инструктор. Русский, английский.', '/img/t-mihail.webp'],
-  ['Кирилл', 'Инструктор. Русский, английский.', '/img/t-kirill.webp'],
+  ['Евгения', '/img/t-evgeniya.webp'],
+  ['Максим', '/img/t-maksim.webp'],
+  ['Михаил', '/img/t-mihail.webp'],
+  ['Кирилл', '/img/t-kirill.webp'],
 ];
 ---
 <Section rail="Инструкторы" bold="Кто будет" light="рядом в воде">
   <div class="grid" style="--min: 220px">
-    {team.map(([name, about, img]) => (
+    {team.map(([name, img]) => (
       <div class="person">
         <img src={img} alt={`${name}, инструктор школы Tortuga`} loading="lazy">
         <h3 class="h3">{name}</h3>
-        <p class="muted">{about}</p>
       </div>
     ))}
   </div>
@@ -22,5 +21,4 @@ const team = [
 <style>
   .person img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--r-l); }
   .person .h3 { margin-top: 16px; }
-  .person p { margin-top: 4px; font-size: 15px; }
 </style>

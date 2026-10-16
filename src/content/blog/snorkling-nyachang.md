@@ -98,11 +98,3 @@ service: plankton
 - **Водонепроницаемый чехол для телефона** — если хотите снимать днём. Свечение планктона телефон не снимет.
 
 Если боитесь жалящих медуз — в статье [«Кусачий планктон во Вьетнаме»](/blog/kusachij-plankton/) рассказали, кто жжётся в воде и что делать при ожоге.
-
-## Источники
-
-- [Vietnam Tourism: лучшее время для поездки в Нячанг, видимость по месяцам](https://www.vietnamtourism.com/en/the-best-time-to-visit-nha-trang-weather-seasons-and-diving-conditions)
-- [Vietnam National Authority of Tourism: остров Хон Мун](https://vietnamtourism.vn/en/index.php/tourism/items/890)
-- [Tisland: экскурсия на Хон Мун, правила заповедника](https://www.tisland.travel/en/nha-trang/excursions/hon-mun)
-- [Local Vietnam: острова Нячанга и форматы туров](https://localvietnam.com/khanh-hoa/nha-trang/best-islands-in-nha-trang/)
-- [Getmyboat: места для снорклинга в Нячанге](https://getmyboat.com/journal/experiences/snorkeling/best-snorkeling-in-nha-trang)

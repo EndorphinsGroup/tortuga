@@ -5,6 +5,7 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--sand); color: var(--ink); font: 400 var(--fs-body)/1.55 var(--font); -webkit-font-smoothing: antialiased; }
 img, video { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
 a { color: inherit; }
 h1, h2, h3, p { margin: 0; }
 :focus-visible { outline: 3px solid var(--terra); outline-offset: 3px; border-radius: 6px; }

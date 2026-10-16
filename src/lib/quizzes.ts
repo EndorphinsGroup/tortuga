@@ -23,7 +23,7 @@ export const homeQuiz = {
     group: single('group', `До 4 человек на инструктора. ${prices.discount}`, 'q-group'),
     kid: single('kids', '1,5 или 2,5 часа, до двух детей на инструктора. Пока ребёнок в воде, вы ждёте в тени на пляже.', 'q-kid'),
     some: { title: 'Курс для продолжающих', price: `от ${prices.courses[0].vnd} ₫ ≈ $${prices.courses[0].usd}`, text: 'Уроки в группе плюс аренда доски для самостоятельной практики. Подберём курс по вашему уровню и длине отпуска.', href: '/kursy-serfinga/#podbor-kursa', cta: 'Подобрать курс' },
-    pro: { title: 'Аренда доски', price: '200 000 ₫ ≈ $8', text: 'Берёте доску на базе и катаетесь сами. Лайкра, цинк, панамка, парковка и хранение вещей — на базе, кухня работает.', code: 'q-pro' },
+    pro: course('pro'),
   },
   rules: [
     { if: { level: 'pro' }, rec: 'pro' }, { if: { who: 'kid' }, rec: 'kid' }, { if: { level: 'some' }, rec: 'some' },

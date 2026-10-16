@@ -1,18 +1,21 @@
 ---
 import Section from '../Section.astro';
 const zones = [
-  { id: 'base', name: 'Домик', left: 27.5, top: 46, img: '/img/z-base.webp', alt: 'Домик базы: стеклянный фасад, SUP-доски у стены',
+  { id: 'base', name: 'Домик', left: 15.2, top: 48.8, img: '/img/z-base.webp', alt: 'Домик базы: стеклянный фасад, SUP-доски у стены',
     text: 'Здесь переодеваются, подбирают лайкру или гидрокостюм и оставляют вещи на время урока. После воды — горячий душ.',
     chips: ['Горячий душ', 'Туалет', 'Переодевалка', 'Хранение вещей', 'Парковка байков'] },
-  { id: 'lounge', name: 'Лаундж', left: 49, top: 67, img: '/img/z-lounge.webp', alt: 'Лаундж под навесом у домика: кресла и диваны с подушками',
+  { id: 'lounge', name: 'Лаундж', left: 43.9, top: 76.9, img: '/img/z-lounge.webp', alt: 'Лаундж под навесом у домика: кресла и диваны с подушками',
     text: 'Терраса под навесом: диванчики, гамаки, кухня. Тут обедают после урока, знакомятся и ждут трансфер. Рядом обычно дремлет Калипсо — риджбек базы.',
     chips: ['Тень', 'Wi-Fi', 'Кухня', 'Вегетарианское меню'] },
-  { id: 'bbq', name: 'Гриль', left: 56, top: 52, img: '/img/z-bbq.webp', alt: 'Беседка с круглым столом, барной стойкой и каменным грилем',
+  { id: 'bbq', name: 'Гриль', left: 53.8, top: 56.8, img: '/img/z-bbq.webp', alt: 'Беседка с круглым столом, барной стойкой и каменным грилем',
     text: 'Беседка в глубине сада: каменный гриль, барная стойка и большой круглый стол. После ночной SUP-прогулки к светящемуся планктону здесь накрывают BBQ-ужин.',
     chips: ['BBQ-ужин', 'Стол на компанию'], link: { href: '/svetyashchijsya-plankton/', label: 'ночная экскурсия к светящемуся планктону' } },
-  { id: 'surf', name: 'Серф-пойнт', left: 48, top: 17, img: '/img/z-surf.webp', alt: 'Пляж с досками для серфинга и зонтом',
+  { id: 'surf', name: 'Серф-пойнт', left: 42.9, top: 9.8, img: '/img/z-surf.webp', alt: 'Пляж с досками для серфинга и зонтом',
     text: 'Из арки — направо по дороге, и через пару минут пляж. Песчаное дно, пологий вход, новички учатся в пене у берега. Пока вы в воде, близкие ждут в тени.',
     chips: ['Душ', 'Туалет', 'Переодевалка', 'Шезлонги в тени', 'Бар и Wi-Fi', 'Спасатель и аптечка'] },
+  { id: 'kalipso', name: 'Калипсо', left: 28.9, top: 61.7,
+    text: 'Риджбек, который живёт на базе. Днём обычно дремлет в тени у лаунджа и встречает гостей. Со своим дружелюбным питомцем приезжать тоже можно — только предупредите заранее.',
+    chips: ['Живёт на базе', 'Можно с питомцами'] },
 ];
 ---
 <Section id="base" rail="База" bold="Наша" light="база" lead="Домик с горячим душем, лаундж с кухней и гриль в тропическом саду. До пляжа пара минут по дороге. Нажмите на точку.">
@@ -33,7 +36,7 @@ const zones = [
     <div class="side camp__card">
       {zones.map((z, i) => (
         <div class="zone" data-zone={z.id} hidden={i !== 0}>
-          <img src={z.img} alt={z.alt} loading="lazy">
+          {z.img && <img src={z.img} alt={z.alt} loading="lazy">}
           <div class="zone__body">
             <h3 class="h3">{z.name}</h3>
             <p>{z.text}</p>
@@ -48,7 +51,7 @@ const zones = [
 
 <style>
   .camp__map { border-radius: var(--r-l); overflow: hidden; align-self: flex-start; }
-  .camp__in { position: relative; aspect-ratio: 2576 / 1438; }
+  .camp__in { position: relative; aspect-ratio: 1900 / 1070; }
   .camp__in > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .spot { position: absolute; transform: translate(-11px, -50%); display: flex; align-items: center; gap: 8px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; }
   .spot--right { flex-direction: row-reverse; transform: translate(calc(-100% + 11px), -50%); }
